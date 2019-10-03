@@ -1,55 +1,98 @@
 package ca.mcgill.ecse321.tutoringservice321.model;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import java.util.Set;
-import java.util.HashSet;
+import javax.persistence.ManyToMany;
+import java.sql.Time;
+import javax.persistence.Id;
 
-public class Availability {
-   /**
-    * <pre>
-    *           0..*     0..*
-    * Availability ------------------------- SpecificAvailability
-    *           availability1        &lt;       specificAvailability
-    * </pre>
-    */
-   private Set<SpecificAvailability> specificAvailability;
+@Entity
+public class Availability{
+   private String date;
    
-   public Set<SpecificAvailability> getSpecificAvailability() {
-      if (this.specificAvailability == null) {
-         this.specificAvailability = new HashSet<SpecificAvailability>();
-      }
-      return this.specificAvailability;
+   public void setDate(String value) {
+      this.date = value;
    }
    
-   /**
-    * <pre>
-    *           0..*     0..*
-    * Availability ------------------------- Tutor
-    *           availability        &gt;       tutor
-    * </pre>
-    */
-   private Set<Tutor> tutor;
-   
-   public Set<Tutor> getTutor() {
-      if (this.tutor == null) {
-         this.tutor = new HashSet<Tutor>();
-      }
-      return this.tutor;
+   public String getDate() {
+      return this.date;
    }
    
-   /**
-    * <pre>
-    *           1..1     0..*
-    * Availability ------------------------- TutoringService321
-    *           availability1        &gt;       tutoringService321
-    * </pre>
-    */
-   private Set<TutoringService321> tutoringService321;
+   private TutoringService321 tutoringService321;
    
-   public Set<TutoringService321> getTutoringService321() {
-      if (this.tutoringService321 == null) {
-         this.tutoringService321 = new HashSet<TutoringService321>();
-      }
+   @ManyToOne(optional=false)
+   public TutoringService321 getTutoringService321() {
       return this.tutoringService321;
    }
    
+   public void setTutoringService321(TutoringService321 tutoringService321) {
+      this.tutoringService321 = tutoringService321;
    }
+   
+   private Set<Session> session;
+   
+   @ManyToMany
+   public Set<Session> getSession() {
+      return this.session;
+   }
+   
+   public void setSession(Set<Session> sessions) {
+      this.session = sessions;
+   }
+   
+   /**
+    * <pre>
+    *           1..1     1..1
+    * Availability ------------------------> Time
+    *           &lt;       startTime
+    * </pre>
+    */
+   private Time startTime;
+   
+   public void setStartTime(Time value) {
+      this.startTime = value;
+   }
+   
+   public Time getStartTime() {
+      return this.startTime;
+   }
+   
+   /**
+    * <pre>
+    *           1..1     1..1
+    * Availability ------------------------> Time
+    *           &lt;       endTime
+    * </pre>
+    */
+   private Time endTime;
+   
+   public void setEndTime(Time value) {
+      this.endTime = value;
+   }
+   
+   public Time getEndTime() {
+      return this.endTime;
+   }
+   
+   private Set<Tutor> tutor;
+   
+   @ManyToMany
+   public Set<Tutor> getTutor() {
+      return this.tutor;
+   }
+   
+   public void setTutor(Set<Tutor> tutors) {
+      this.tutor = tutors;
+   }
+   
+   private int availabilityID;
+
+public void setAvailabilityID(int value) {
+    this.availabilityID = value;
+}
+@Id
+public int getAvailabilityID() {
+    return this.availabilityID;
+}
+}
