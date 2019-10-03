@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.tutoringservice321.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.ManyToMany;
 
@@ -32,7 +34,6 @@ public class Course{
 public void setCourseCode(String value) {
     this.courseCode = value;
 }
-@Id
 public String getCourseCode() {
     return this.courseCode;
 }

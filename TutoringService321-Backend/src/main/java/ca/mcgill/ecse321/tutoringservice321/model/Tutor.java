@@ -1,14 +1,27 @@
 package ca.mcgill.ecse321.tutoringservice321.model;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
 import java.util.Set;
 import javax.persistence.ManyToMany;
-import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
 import java.sql.Date;
 import java.sql.Time;
 
 @Entity
-public class Tutor extends User {
+public class Tutor extends ServiceUser {
+private Set<Subject> subject;
+   
+   @ManyToMany(cascade = { CascadeType.ALL })
+   public Set<Subject> getSubject() {
+      return this.subject;
+   }
+   
+   public void setSubject(Set<Subject> subjects) {
+      this.subject = subjects;
+   }
+   
 	private int hourlyRate;
 
 	public void setHourlyRate(int value) {
@@ -49,17 +62,6 @@ public class Tutor extends User {
 
 	public float getRating() {
 		return this.rating;
-	}
-
-	private Set<Subject> subject;
-
-	@ManyToMany
-	public Set<Subject> getSubject() {
-		return this.subject;
-	}
-
-	public void setSubject(Set<Subject> subjects) {
-		this.subject = subjects;
 	}
 
 	public void updateAvailability(Availability availabilty) {

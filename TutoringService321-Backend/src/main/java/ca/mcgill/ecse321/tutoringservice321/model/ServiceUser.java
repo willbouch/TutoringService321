@@ -3,9 +3,15 @@ package ca.mcgill.ecse321.tutoringservice321.model;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @Entity
-public class User{
+@Inheritance(
+	strategy = InheritanceType.JOINED
+)
+
+public class ServiceUser{
    private TutoringService321 tutoringService321;
    
    @ManyToOne(optional=false)
