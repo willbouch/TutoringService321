@@ -1,25 +1,14 @@
 package ca.mcgill.ecse321.tutoringservice321.model;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import java.util.Set;
-import javax.persistence.ManyToMany;
+import java.sql.Date;
 import java.sql.Time;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Availability{
-   private String date;
-   
-   public void setDate(String value) {
-      this.date = value;
-   }
-   
-   public String getDate() {
-      return this.date;
-   }
-   
-   private TutoringService321 tutoringService321;
+private TutoringService321 tutoringService321;
    
    @ManyToOne(optional=false)
    public TutoringService321 getTutoringService321() {
@@ -30,69 +19,49 @@ public class Availability{
       this.tutoringService321 = tutoringService321;
    }
    
-   private Set<Session> session;
+   private Tutor tutor;
    
-   @ManyToMany
-   public Set<Session> getSession() {
-      return this.session;
-   }
-   
-   public void setSession(Set<Session> sessions) {
-      this.session = sessions;
-   }
-   
-   /**
-    * <pre>
-    *           1..1     1..1
-    * Availability ------------------------> Time
-    *           &lt;       startTime
-    * </pre>
-    */
-   private Time startTime;
-   
-   public void setStartTime(Time value) {
-      this.startTime = value;
-   }
-   
-   public Time getStartTime() {
-      return this.startTime;
-   }
-   
-   /**
-    * <pre>
-    *           1..1     1..1
-    * Availability ------------------------> Time
-    *           &lt;       endTime
-    * </pre>
-    */
-   private Time endTime;
-   
-   public void setEndTime(Time value) {
-      this.endTime = value;
-   }
-   
-   public Time getEndTime() {
-      return this.endTime;
-   }
-   
-   private Set<Tutor> tutor;
-   
-   @ManyToMany
-   public Set<Tutor> getTutor() {
+   @ManyToOne(optional=false)
+   public Tutor getTutor() {
       return this.tutor;
    }
    
-   public void setTutor(Set<Tutor> tutors) {
-      this.tutor = tutors;
+   public void setTutor(Tutor tutor) {
+      this.tutor = tutor;
    }
    
-   private int availabilityID;
+   private Date date;
 
-public void setAvailabilityID(int value) {
+private void setDate(Date value) {
+    this.date = value;
+}
+private Date getDate() {
+    return this.date;
+}
+private Time startTime;
+
+private void setStartTime(Time value) {
+    this.startTime = value;
+}
+private Time getStartTime() {
+    return this.startTime;
+}
+private Time endTime;
+
+private void setEndTime(Time value) {
+    this.endTime = value;
+}
+private Time getEndTime() {
+    return this.endTime;
+}
+private int availabilityID;
+
+private void setAvailabilityID(int value) {
     this.availabilityID = value;
 }
 @Id
-public int getAvailabilityID() {
+private int getAvailabilityID() {
     return this.availabilityID;
 }
-}
+   
+   }

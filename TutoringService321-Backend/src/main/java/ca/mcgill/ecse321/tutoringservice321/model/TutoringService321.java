@@ -1,48 +1,55 @@
 package ca.mcgill.ecse321.tutoringservice321.model;
 
+import Availability;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-
-import javax.persistence.Id;
-
 @EnableAutoConfiguration
 @Entity
 public class TutoringService321{
-   
-	private Set<Subject> subject1;
-   
-   public void setSubject1(Set<Subject> value) {
-      this.subject1 = value;
-   }
-   @OneToMany(mappedBy="tutoringService321" , cascade={CascadeType.ALL})
-   public Set<Subject> getSubject1() {
-      return this.subject1;
-   }
-   
-   private Set<Availability> specificAvailability1;
+private Set<Availability> availability1;
    
    @OneToMany(mappedBy="tutoringService321" , cascade={CascadeType.ALL})
-   public Set<Availability> getSpecificAvailability1() {
-      return this.specificAvailability1;
+   public Set<Availability> getAvailability1() {
+      return this.availability1;
    }
    
-   public void setSpecificAvailability1(Set<Availability> specificAvailability1s) {
-      this.specificAvailability1 = specificAvailability1s;
+   public void setAvailability1(Set<Availability> availability1s) {
+      this.availability1 = availability1s;
    }
    
-   private Set<ServiceUser> user1;
+   private int systemID;
+
+private void setSystemID(int value) {
+    this.systemID = value;
+}
+@Id
+private int getSystemID() {
+    return this.systemID;
+}
+   private Set<ServiceUser> serviceUser;
    
    @OneToMany(mappedBy="tutoringService321" , cascade={CascadeType.ALL})
-   public Set<ServiceUser> getUser1() {
-      return this.user1;
+   public Set<ServiceUser> getServiceUser() {
+      return this.serviceUser;
    }
    
-   public void setUser1(Set<ServiceUser> user1s) {
-      this.user1 = user1s;
+   public void setServiceUser(Set<ServiceUser> serviceUsers) {
+      this.serviceUser = serviceUsers;
+   }
+   
+   private Set<Availability> availability;
+   
+   @OneToMany(mappedBy="tutoringService321" , cascade={CascadeType.ALL})
+   public Set<Availability> getAvailability() {
+      return this.availability;
+   }
+   
+   public void setAvailability(Set<Availability> availabilitys) {
+      this.availability = availabilitys;
    }
    
    private Set<Session> session;
@@ -56,13 +63,26 @@ public class TutoringService321{
       this.session = sessions;
    }
    
-   private int systemId;
-
-public void setSystemId(int value) {
-    this.systemId = value;
-}
-@Id
-public int getSystemId() {
-    return this.systemId;
-}
-}
+   private Set<Course> course;
+   
+   @OneToMany(mappedBy="tutoringService321" , cascade={CascadeType.ALL})
+   public Set<Course> getCourse() {
+      return this.course;
+   }
+   
+   public void setCourse(Set<Course> courses) {
+      this.course = courses;
+   }
+   
+   private Set<Subject> subject;
+   
+   @OneToMany(mappedBy="tutoringService321" , cascade={CascadeType.ALL})
+   public Set<Subject> getSubject() {
+      return this.subject;
+   }
+   
+   public void setSubject(Set<Subject> subjects) {
+      this.subject = subjects;
+   }
+   
+   }

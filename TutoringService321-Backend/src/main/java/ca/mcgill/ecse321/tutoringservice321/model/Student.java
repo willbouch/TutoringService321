@@ -1,12 +1,21 @@
 package ca.mcgill.ecse321.tutoringservice321.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Set;
 import javax.persistence.ManyToMany;
-import javax.persistence.Id;
 
 @Entity
 public class Student{
+   private int studentID;
+
+private void setStudentID(int value) {
+    this.studentID = value;
+}
+@Id
+private int getStudentID() {
+    return this.studentID;
+}
    private Set<Session> session;
    
    @ManyToMany(mappedBy="student" )
@@ -18,13 +27,4 @@ public class Student{
       this.session = sessions;
    }
    
-   private int studentId;
-
-public void setStudentId(int value) {
-    this.studentId = value;
-}
-@Id
-public int getStudentId() {
-    return this.studentId;
-}
-}
+   }
