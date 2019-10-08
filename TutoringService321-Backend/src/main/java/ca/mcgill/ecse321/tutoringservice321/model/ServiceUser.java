@@ -12,12 +12,20 @@ import javax.persistence.ManyToOne;
 )
 
 public class ServiceUser{
+private int userID;
+
+private void setUserID(int value) {
+this.userID = value;
+}
+@Id
+private int getUserID() {
+return this.userID;
+}
    private String email;
 
 private void setEmail(String value) {
     this.email = value;
 }
-@Id
 private String getEmail() {
     return this.email;
 }

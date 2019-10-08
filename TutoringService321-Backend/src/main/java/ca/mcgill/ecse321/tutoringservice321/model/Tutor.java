@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.tutoringservice321.model;
 
-import Availability;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import java.util.Set;
@@ -58,21 +57,6 @@ private float getRating() {
    
    public void setSession(Set<Session> sessions) {
       this.session = sessions;
-   }
-   
-   public void updateAvailability(Availability availability) {
-      // TODO implement this operation
-      throw new UnsupportedOperationException("not implemented");
-   }
-   
-   public void rescheduleSession(int sessionID, Date newDate, Time newTime) {
-      // TODO implement this operation
-      throw new UnsupportedOperationException("not implemented");
-   }
-   
-   public void cancelSession(int sessionID) {
-      // TODO implement this operation
-      throw new UnsupportedOperationException("not implemented");
    }
    
    }

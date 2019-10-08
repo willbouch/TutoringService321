@@ -8,16 +8,6 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Availability{
-private TutoringService321 tutoringService321;
-   
-   @ManyToOne(optional=false)
-   public TutoringService321 getTutoringService321() {
-      return this.tutoringService321;
-   }
-   
-   public void setTutoringService321(TutoringService321 tutoringService321) {
-      this.tutoringService321 = tutoringService321;
-   }
    
    private Tutor tutor;
    

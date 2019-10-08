@@ -8,6 +8,15 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Subject{
+private int subjectID;
+
+private void setSubjectID(int value) {
+this.subjectID = value;
+}
+@Id
+private int getSubjectID() {
+return this.subjectID;
+}
 private Set<Tutor> tutor;
    
    @ManyToMany
@@ -24,7 +33,6 @@ private Set<Tutor> tutor;
 private void setSubjectName(String value) {
     this.subjectName = value;
 }
-@Id
 private String getSubjectName() {
     return this.subjectName;
 }
