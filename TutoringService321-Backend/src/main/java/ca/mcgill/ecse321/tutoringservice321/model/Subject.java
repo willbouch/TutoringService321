@@ -4,13 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Set;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Subject{
 private int subjectID;
 
-private void setSubjectID(int value) {
+public void setSubjectID(int value) {
 this.subjectID = value;
 }
 @Id
@@ -30,10 +29,10 @@ private Set<Tutor> tutor;
    
    private String subjectName;
 
-private void setSubjectName(String value) {
+   public void setSubjectName(String value) {
     this.subjectName = value;
 }
-private String getSubjectName() {
+   public String getSubjectName() {
     return this.subjectName;
 }
    private Set<Course> course;
@@ -46,16 +45,4 @@ private String getSubjectName() {
    public void setCourse(Set<Course> courses) {
       this.course = courses;
    }
-   
-   private TutoringService321 tutoringService321;
-   
-   @ManyToOne(optional=false)
-   public TutoringService321 getTutoringService321() {
-      return this.tutoringService321;
-   }
-   
-   public void setTutoringService321(TutoringService321 tutoringService321) {
-      this.tutoringService321 = tutoringService321;
-   }
-   
    }

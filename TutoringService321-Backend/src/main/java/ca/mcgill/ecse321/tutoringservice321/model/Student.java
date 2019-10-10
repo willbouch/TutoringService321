@@ -9,7 +9,7 @@ import javax.persistence.ManyToMany;
 public class Student{
    private int studentID;
 
-private void setStudentID(int value) {
+public void setStudentID(int value) {
     this.studentID = value;
 }
 @Id

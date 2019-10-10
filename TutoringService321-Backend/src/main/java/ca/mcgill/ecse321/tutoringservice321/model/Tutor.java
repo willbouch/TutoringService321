@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
-import java.sql.Date;
-import java.sql.Time;
 
 @Entity
 public class Tutor extends ServiceUser{
@@ -34,18 +32,18 @@ private Set<Availability> availability;
    
    private int hourlyRate;
 
-private void setHourlyRate(int value) {
+   public void setHourlyRate(int value) {
     this.hourlyRate = value;
 }
-private int getHourlyRate() {
+   public int getHourlyRate() {
     return this.hourlyRate;
 }
 private float rating;
 
-private void setRating(float value) {
+public void setRating(float value) {
     this.rating = value;
 }
-private float getRating() {
+public float getRating() {
     return this.rating;
 }
    private Set<Session> session;

@@ -22,31 +22,31 @@ public class Availability{
    
    private Date date;
 
-private void setDate(Date value) {
+public void setDate(Date value) {
     this.date = value;
 }
-private Date getDate() {
+public Date getDate() {
     return this.date;
 }
 private Time startTime;
 
-private void setStartTime(Time value) {
+public void setStartTime(Time value) {
     this.startTime = value;
 }
-private Time getStartTime() {
+public Time getStartTime() {
     return this.startTime;
 }
 private Time endTime;
 
-private void setEndTime(Time value) {
+public void setEndTime(Time value) {
     this.endTime = value;
 }
-private Time getEndTime() {
+public Time getEndTime() {
     return this.endTime;
 }
 private int availabilityID;
 
-private void setAvailabilityID(int value) {
+public void setAvailabilityID(int value) {
     this.availabilityID = value;
 }
 @Id

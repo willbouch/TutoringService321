@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 public class Session{
    private int sessionID;
 
-private void setSessionID(int value) {
+   public void setSessionID(int value) {
     this.sessionID = value;
 }
 @Id
@@ -21,26 +21,26 @@ private int getSessionID() {
 }
 private Date date;
 
-private void setDate(Date value) {
+public void setDate(Date value) {
     this.date = value;
 }
-private Date getDate() {
+public Date getDate() {
     return this.date;
 }
 private Time starTime;
 
-private void setStarTime(Time value) {
+public void setStarTime(Time value) {
     this.starTime = value;
 }
-private Time getStarTime() {
+public Time getStarTime() {
     return this.starTime;
 }
 private Time endTime;
 
-private void setEndTime(Time value) {
+public void setEndTime(Time value) {
     this.endTime = value;
 }
-private Time getEndTime() {
+public Time getEndTime() {
     return this.endTime;
 }
    private Set<Student> student;
@@ -64,16 +64,4 @@ private Time getEndTime() {
    public void setTutor(Tutor tutor) {
       this.tutor = tutor;
    }
-   
-   private TutoringService321 tutoringService321;
-   
-   @ManyToOne(optional=false)
-   public TutoringService321 getTutoringService321() {
-      return this.tutoringService321;
-   }
-   
-   public void setTutoringService321(TutoringService321 tutoringService321) {
-      this.tutoringService321 = tutoringService321;
-   }
-   
    }
