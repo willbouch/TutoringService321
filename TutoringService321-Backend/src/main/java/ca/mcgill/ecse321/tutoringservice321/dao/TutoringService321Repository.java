@@ -1,11 +1,9 @@
 package ca.mcgill.ecse321.tutoringservice321.dao;
 
-import java.util.Set;
-
 import org.springframework.data.repository.CrudRepository;
+
 import ca.mcgill.ecse321.tutoringservice321.model.*;
 
-public interface StudentRepository extends CrudRepository<Student, Integer>{
+public interface TutoringService321Repository extends CrudRepository<TutoringService321, Integer> {
 	
-	Set<Student> findStudentBySession(Session session);
 }
