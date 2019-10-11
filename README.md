@@ -52,7 +52,7 @@ The roles of the members can be found below:
 </table>
 
 <br>In this team, we value gender equity. This is the reason why we wanted this team to be formed by males and females.</br>
-<br>We also embrace differences and we strongly believe those different backgrounds that we all have will contribute to the awsomeness of our project.</br>
+<br>We also embrace differences and we strongly believe those different backgrounds that we all have will contribute to the awesomeness of our project.</br>
 
 <br>To see our meeting minutes, key design decisions and architecture
 framework, head over to our wiki page:<br>
