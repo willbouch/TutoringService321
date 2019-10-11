@@ -29,7 +29,7 @@ The roles of the members can be found below:
   
   <tr>
     <td>Kyjauna Marshall</td>
-    <td>Documentation Manager</td>
+    <td>Project Manager</td>
   </tr>
   
   <tr>
