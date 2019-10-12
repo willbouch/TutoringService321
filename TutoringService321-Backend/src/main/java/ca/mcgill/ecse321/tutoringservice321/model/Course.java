@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Set;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Course{
@@ -49,5 +50,16 @@ public Set<Subject> getSubject() {
    
    public void setSubject(Set<Subject> subjects) {
       this.subject = subjects;
-   }   
+   }  
+   
+   private TutoringService321 tutoringService321;	
+
+   @ManyToOne(optional=false)	
+   public TutoringService321 getTutoringService321() {	
+      return this.tutoringService321;	
+   }	
+
+   public void setTutoringService321(TutoringService321 tutoringService321) {	
+      this.tutoringService321 = tutoringService321;	
+   }
    }
