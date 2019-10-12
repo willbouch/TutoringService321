@@ -11,6 +11,5 @@ public interface TutorRepository extends CrudRepository<Tutor, Integer>{
 	
 	Set<Tutor> findTutorByName(String name);
 	Tutor findTutorByEmail(String email);
-	Tutor findByTutorAvailability(Availability a);
 	
 }
