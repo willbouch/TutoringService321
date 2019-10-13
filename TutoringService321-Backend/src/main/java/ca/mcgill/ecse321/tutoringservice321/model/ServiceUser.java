@@ -55,7 +55,7 @@ public String getPassword() {
 }
 private TutoringService321 tutoringService321;	
 
-@ManyToOne(optional=false)	
+@ManyToOne(optional=true)	
 public TutoringService321 getTutoringService321() {	
    return this.tutoringService321;	
 }	
