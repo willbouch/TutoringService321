@@ -41,8 +41,6 @@ public class TutoringService321ApplicationTests {
 	@Autowired
 	SubjectRepository subjectRepository;
 	@Autowired
-	StudentRepository studentRepository;
-	@Autowired
 	SessionRepository sessionRepository;
 	@Autowired
 	CourseRepository courseRepository;
@@ -51,17 +49,17 @@ public class TutoringService321ApplicationTests {
 
 	@After
 	public void clearDatabase() {
-		// First, we clear registrations to avoid exceptions due to inconsistencies
-		availabilityRepository.deleteAll();
-		// Then we can clear the other tables
 		tutorRepository.deleteAll();
+		availabilityRepository.deleteAll();
 		sessionRepository.deleteAll();
+		courseRepository.deleteAll();
+		subjectRepository.deleteAll();
 	}
 
 	@Test
 	// Failed
 	public void testWriteAvailability() {
-		assertEquals(0, service.getAllAvailabilities());
+		assertEquals(0, service.getAllAvailabilities().size());
 		
 		String tutorEmail = "hadi@gmail.com";
 		
@@ -73,6 +71,7 @@ public class TutoringService321ApplicationTests {
 		Time endTime = new Time(c.getTimeInMillis());
 		
 		try {
+			service.createTutor(tutorEmail, "Will", "1", "3", 3);
 			service.createAvailability(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
 			fail();
@@ -88,7 +87,7 @@ public class TutoringService321ApplicationTests {
 	@Test
 	// Failed
 	public void testViewAvailability() {
-		assertEquals(0, service.getAllAvailabilities());
+		assertEquals(0, service.getAllAvailabilities().size());
 		
 		String tutorEmail = "hadi@gmail.com";
 		
@@ -100,6 +99,8 @@ public class TutoringService321ApplicationTests {
 		Time endTime = new Time(c.getTimeInMillis());
 		
 		try {
+			//First create a tutor since an availability has to have a tutor that is not null
+			service.createTutor(tutorEmail, "Will", "1", "3", 3);
 			service.createAvailability(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
 			fail();
@@ -113,16 +114,16 @@ public class TutoringService321ApplicationTests {
 	}
 
 	@Test
-	// Failed
 	public void testWriteCourse(){
-		assertEquals(0, service.getAllCourses());
+		assertEquals(0, service.getAllCourses().size());
 		
 		String description = "This is a course";
 		String school = "McGill";
 		String courseCode = "ECSE321";
 		
+		Course course = null;
 		try {
-			service.createCourse(description, school, courseCode);
+			course = service.createCourse(description, school, courseCode);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -131,13 +132,12 @@ public class TutoringService321ApplicationTests {
 		
 		assertEquals(1, allCourses.size());
 		assertEquals(school, allCourses.get(0).getSchool());
-
+		assertEquals(course, service.getCourse(school, courseCode));
 	}
 
 	@Test
-	// Failed
 	public void testViewCourse(){
-		assertEquals(0, service.getAllCourses());
+		assertEquals(0, service.getAllCourses().size());
 		
 		String description = "This is a course";
 		String school = "McGill";
@@ -190,7 +190,7 @@ public class TutoringService321ApplicationTests {
 		c.set(2019, Calendar.NOVEMBER, 01, 14, 00);
 		Date date = new Date(c.getTimeInMillis());
 		Time startTime = new Time(c.getTimeInMillis());
-		c.set(20, 00);
+		c.set(2019, Calendar.NOVEMBER, 01, 15, 00);
 		Time endTime = new Time(c.getTimeInMillis());
 
 		String tutorEmail = "kathleen@gmail.com";
