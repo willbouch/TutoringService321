@@ -50,8 +50,7 @@ public class TestSession {
 	@Test
 	public void testWriteSession() {
 		assertEquals(0, service.getAllSessions().size());
-		
-		long millis=System.currentTimeMillis();  		
+				
 		Date date = Date.valueOf("2019-11-13");
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("16:00:00");
