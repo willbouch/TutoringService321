@@ -275,9 +275,6 @@ public class TutoringService321ApplicationTests {
 		}
 	}
 
-	/*Tests for course--Kyjauna
-	 * 
-	 */
 
 	/******
 	 * Tests for Availability--Sharon
@@ -296,7 +293,7 @@ public class TutoringService321ApplicationTests {
 			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
 			service.createAvailability(tutorEmail, date, startTime, endTime);
 			fail();
-			
+
 			List <Availability> allAvailabilities = service.getAllAvailabilities();
 
 			assertEquals(1, allAvailabilities.size());
@@ -307,8 +304,8 @@ public class TutoringService321ApplicationTests {
 		}
 
 	}
-	
-	
+
+
 	@Test
 	public void testViewAvailabilityNullDate() {
 		assertEquals(0, service.getAllAvailabilities().size());
@@ -318,7 +315,7 @@ public class TutoringService321ApplicationTests {
 		Time endTime = Time.valueOf("16:00:00");
 
 		String tutorEmail = "h@gmail.com";
-		
+
 		try {
 			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
 			service.createAvailability(tutorEmail, date, startTime, endTime);
@@ -326,8 +323,8 @@ public class TutoringService321ApplicationTests {
 			assertEquals(0, service.getAllAvailabilities().size());
 		}
 	}
-	
-	
+
+
 	@Test
 	public void testViewAvailabilityNullStartTime() {
 		assertEquals(0, service.getAllAvailabilities().size());
@@ -337,7 +334,7 @@ public class TutoringService321ApplicationTests {
 		Time endTime = Time.valueOf("16:00:00");
 
 		String tutorEmail = "h@gmail.com";
-		
+
 		try {
 			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
 			service.createAvailability(tutorEmail, date, startTime, endTime);
@@ -346,7 +343,7 @@ public class TutoringService321ApplicationTests {
 		}
 	}
 
-	
+
 	@Test
 	public void testViewAvailabilityNullEndTime() {
 		assertEquals(0, service.getAllAvailabilities().size());
@@ -356,7 +353,7 @@ public class TutoringService321ApplicationTests {
 		Time endTime = (Time) null;
 
 		String tutorEmail = "h@gmail.com";
-		
+
 		try {
 			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
 			service.createAvailability(tutorEmail, date, startTime, endTime);
@@ -365,14 +362,138 @@ public class TutoringService321ApplicationTests {
 		}
 	}
 
+	/****
+	 * Tests for subject--Kyjauna
+	 */
+
+	@Test
+	public void testCreateSubject() {
+
+		String subjectName = "aName";
 
 
+		try {
+			service.createSubject(subjectName);
+			List<Subject> allSubjects = service.getAllSubjects();
+
+			assertEquals(1, allSubjects.size());
+			assertEquals(subjectName, allSubjects.get(0).getSubjectName());
+
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+		}
+	}
+
+	@Test
+	public void testCreateSubjectNullName() {
+
+		String subjectName = null;
 
 
+		try {
+			List<Subject> allSubjects = service.getAllSubjects();
+
+			service.createSubject(subjectName);
+
+			assertEquals(1, allSubjects.size());
+			assertEquals(subjectName, allSubjects.get(0).getSubjectName());
+
+			fail();
+
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+		}
+
+	}
+	/****
+	 * Tests for course--Sharon
+	 */
+
+	@Test
+	public void testCreateCourse() {
+
+		String description = "new";
+		String courseCode = "ECSE 321";
+		String school = "McGill";
+
+		try {
+			service.createCourse(description, school, courseCode);
+			List<Course> allCourses = service.getAllCourses();
+
+			assertEquals(1, allCourses.size());
+			assertEquals(school, allCourses.get(0).getSchool());
+			assertEquals(description, allCourses.get(0).getDescription());
+			assertEquals(courseCode, allCourses.get(0).getCourseCode());
+
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+		}
+	}
 
 
+	@Test
+	public void testCreateCourseNullDescription() {
 
+		String description = null;
+		String courseCode = "ECSE 321";
+		String school = "McGill";
+
+
+		try {
+			List<Course> allCourses = service.getAllCourses();
+			service.createCourse(description, school, courseCode);
+			fail();
+			assertEquals(0, allCourses.size());
+
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+		}
+
+
+	}
+
+	@Test
+	public void testCreateCourseNullCourseCode() {
+
+		String description = "new";
+		String courseCode = null;
+		String school = "McGill";
+
+
+		try {
+			List<Course> allCourses = service.getAllCourses();
+			service.createCourse(description, school, courseCode);
+			fail();
+			assertEquals(0, allCourses.size());
+
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+		}
+
+	}
+
+	@Test
+	public void testCreateCourseNullSchool() {
+
+		String description = "new";
+		String courseCode = "COMPSCI 301";
+		String school = null;
+
+
+		try {
+			List<Course> allCourses = service.getAllCourses();
+			service.createCourse(description, school, courseCode);
+			fail();
+			assertEquals(0, allCourses.size());
+
+		} catch (IllegalArgumentException e){
+		}
+
+	}
 }
+
+
+
 //	@Test
 //	// Failed
 //	public void testWriteAvailability() {
