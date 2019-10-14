@@ -18,7 +18,7 @@ public void setUserID(int value) {
 this.userID = value;
 }
 @Id
-private int getUserID() {
+public int getUserID() {
 return this.userID;
 }
    private String email;
