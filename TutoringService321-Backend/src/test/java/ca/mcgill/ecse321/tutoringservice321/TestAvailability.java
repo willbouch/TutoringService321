@@ -105,5 +105,9 @@ public class TestAvailability {
 		assertEquals(startTime, allAvailabilities.get(0).getStartTime());
 
 	}
+	
+	public void testDeleteAvailability() {
+		
+	}
 }
 
