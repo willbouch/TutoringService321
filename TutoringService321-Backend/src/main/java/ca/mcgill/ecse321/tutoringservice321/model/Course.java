@@ -38,7 +38,7 @@ public void setCourseID(int value) {
     this.courseID = value;
 }
 @Id
-private int getCourseID() {
+public int getCourseID() {
     return this.courseID;
 }
    private Set<Subject> subject;

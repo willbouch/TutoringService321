@@ -31,7 +31,6 @@ public class TutoringService321Service {
 	@Transactional
 	public Tutor createTutor(String email, String name, String password, String phoneNumber,
 			int hourlyRate) {
-		Tutor tutor = new Tutor();
 
 		//Input validation
 		if(email == null || email.trim().length() == 0) {
@@ -46,9 +45,10 @@ public class TutoringService321Service {
 		if(phoneNumber == null || phoneNumber.trim().length() == 0) {
 			throw new IllegalArgumentException("Phone number cannot be empty.");
 		}
-		if(hourlyRate <= 0) {
+		if(hourlyRate > 0) {
 			throw new IllegalArgumentException("Hourly has to be a positive number.");
 		}
+		Tutor tutor = new Tutor();
 
 		//Setting the attributes
 		//Note that rating starts at -1 as a flag for "no rating yet"
@@ -211,6 +211,9 @@ public class TutoringService321Service {
 		if(startTime == null) {
 			throw new IllegalArgumentException("Start time cannot be empty.");
 		}
+		if(tutor == null) {
+			throw new IllegalArgumentException("Tutor cannot be empty.");
+		}
 
 		//Setting attributes
 		availability.setDate(date);
@@ -250,4 +253,5 @@ public class TutoringService321Service {
 		}
 		return resultList;
 	}
+
 }
