@@ -38,7 +38,7 @@ public void setCourseID(int value) {
     this.courseID = value;
 }
 @Id
-private int getCourseID() {
+public int getCourseID() {
     return this.courseID;
 }
    private Set<Subject> subject;
@@ -54,7 +54,7 @@ public Set<Subject> getSubject() {
    
    private TutoringService321 tutoringService321;	
 
-   @ManyToOne(optional=false)	
+   @ManyToOne(optional=true)	
    public TutoringService321 getTutoringService321() {	
       return this.tutoringService321;	
    }	

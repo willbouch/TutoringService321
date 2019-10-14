@@ -2,14 +2,18 @@ package ca.mcgill.ecse321.tutoringservice321.service;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.tutoringservice321.dao.*;
 import ca.mcgill.ecse321.tutoringservice321.model.*;
+
+@Service
 public class TutoringService321Service {
 	@Autowired
 	TutorRepository tutorRepository;
@@ -27,7 +31,6 @@ public class TutoringService321Service {
 	@Transactional
 	public Tutor createTutor(String email, String name, String password, String phoneNumber,
 			int hourlyRate) {
-		Tutor tutor = new Tutor();
 
 		//Input validation
 		if(email == null || email.trim().length() == 0) {
@@ -42,9 +45,10 @@ public class TutoringService321Service {
 		if(phoneNumber == null || phoneNumber.trim().length() == 0) {
 			throw new IllegalArgumentException("Phone number cannot be empty.");
 		}
-		if(hourlyRate <= 0) {
+		if(hourlyRate > 0) {
 			throw new IllegalArgumentException("Hourly has to be a positive number.");
 		}
+		Tutor tutor = new Tutor();
 
 		//Setting the attributes
 		//Note that rating starts at -1 as a flag for "no rating yet"
@@ -66,6 +70,11 @@ public class TutoringService321Service {
 		return tutor;
 	}
 
+	@Transactional
+	public List<Tutor> getAllTutors() {
+		return toList(tutorRepository.findAll());
+	}
+	
 	@Transactional
 	public Subject createSubject(String name) {
 		Subject subject = new Subject();
@@ -89,6 +98,11 @@ public class TutoringService321Service {
 		return subject;
 	}
 
+	@Transactional
+	public List<Subject> getAllSubjects() {
+		return toList(subjectRepository.findAll());
+	}
+	
 	@Transactional
 	public Session createSession(String tutorEmail, Date date, Time endTime, Time startTime) {
 		//Find the tutor first
@@ -134,6 +148,11 @@ public class TutoringService321Service {
 	}
 
 	@Transactional
+	public List<Session> getAllSessions() {
+		return toList(sessionRepository.findAll());
+	}
+	
+	@Transactional
 	public Course createCourse(String description, String school, String courseCode) {
 		Course course = new Course();
 
@@ -170,6 +189,11 @@ public class TutoringService321Service {
 	}
 
 	@Transactional
+	public List<Course> getAllCourses() {
+		return toList(courseRepository.findAll());
+	}
+	
+	@Transactional
 	public Availability createAvailability(String tutorEmail, Date date, Time startTime,
 			Time endTime) {
 		//Find the tutor first
@@ -186,6 +210,9 @@ public class TutoringService321Service {
 		}
 		if(startTime == null) {
 			throw new IllegalArgumentException("Start time cannot be empty.");
+		}
+		if(tutor == null) {
+			throw new IllegalArgumentException("Tutor cannot be empty.");
 		}
 
 		//Setting attributes
@@ -212,4 +239,19 @@ public class TutoringService321Service {
 		//Not suppose to happen
 		return null;
 	}
+	
+	@Transactional
+	public List<Availability> getAllAvailabilities() {
+		return toList(availabilityRepository.findAll());
+	}
+	
+	//Helper method provided in EventRegistration
+	private <T> List<T> toList(Iterable<T> iterable){
+		List<T> resultList = new ArrayList<T>();
+		for (T t : iterable) {
+			resultList.add(t);
+		}
+		return resultList;
+	}
+
 }

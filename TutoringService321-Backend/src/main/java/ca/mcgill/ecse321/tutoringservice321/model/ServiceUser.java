@@ -18,7 +18,7 @@ public void setUserID(int value) {
 this.userID = value;
 }
 @Id
-private int getUserID() {
+public int getUserID() {
 return this.userID;
 }
    private String email;
@@ -55,7 +55,7 @@ public String getPassword() {
 }
 private TutoringService321 tutoringService321;	
 
-@ManyToOne(optional=false)	
+@ManyToOne(optional=true)	
 public TutoringService321 getTutoringService321() {	
    return this.tutoringService321;	
 }	
