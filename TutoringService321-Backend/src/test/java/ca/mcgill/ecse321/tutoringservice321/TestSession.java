@@ -52,7 +52,7 @@ public class TestSession {
 		assertEquals(0, service.getAllSessions().size());
 		
 		long millis=System.currentTimeMillis();  		
-		Date date = new java.sql.Date(millis);
+		Date date = Date.valueOf("2019-11-13");
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("16:00:00");
 		
@@ -76,7 +76,7 @@ public class TestSession {
 	public void testWriteSessionNullDate() {
 		assertEquals(0, service.getAllSessions().size());
 		
-		Date date = Date.valueOf("");
+		Date date = (Date) null;
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("16:00:00");
 		
@@ -94,7 +94,7 @@ public class TestSession {
 		assertEquals(0, service.getAllSessions().size());
 		
 		Date date = Date.valueOf("2020-01-10");
-		Time startTime = Time.valueOf("");
+		Time startTime = (Time) null;
 		Time endTime = Time.valueOf("16:00:00");
 		
 		String tutorEmail = "k@gmail.com";
@@ -112,7 +112,7 @@ public class TestSession {
 		
 		Date date = Date.valueOf("2020-01-10");
 		Time startTime = Time.valueOf("10:00:00");
-		Time endTime = Time.valueOf("");
+		Time endTime = (Time) null;
 		
 		String tutorEmail = "k@gmail.com";
 		
