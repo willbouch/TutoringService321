@@ -35,10 +35,14 @@ public class TestAvailability {
 
 	@Autowired
 	AvailabilityRepository availabilityRepository;
+	
+	@Autowired
+	TutorRepository tutorRepository;
 
 	@After
 	public void clearDatabase() {
 		availabilityRepository.deleteAll();
+		tutorRepository.deleteAll();
 	}
 
 	@Test
