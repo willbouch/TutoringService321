@@ -24,7 +24,7 @@ public class TutoringService321 {
 
 	private Set<ServiceUser> serviceUser;
 
-	@OneToMany(mappedBy = "tutoringService321", cascade = { CascadeType.ALL })
+	@OneToMany(cascade = { CascadeType.ALL })
 	public Set<ServiceUser> getServiceUser() {
 		return this.serviceUser;
 	}
@@ -35,7 +35,7 @@ public class TutoringService321 {
 
 	private Set<Session> session;
 
-	@OneToMany(mappedBy = "tutoringService321", cascade = { CascadeType.ALL })
+	@OneToMany(cascade = { CascadeType.ALL })
 	public Set<Session> getSession() {
 		return this.session;
 	}
@@ -46,7 +46,7 @@ public class TutoringService321 {
 
 	private Set<Course> course;
 
-	@OneToMany(mappedBy = "tutoringService321", cascade = { CascadeType.ALL })
+	@OneToMany(cascade = { CascadeType.ALL })
 	public Set<Course> getCourse() {
 		return this.course;
 	}
@@ -57,7 +57,7 @@ public class TutoringService321 {
 
 	private Set<Subject> subject;
 
-	@OneToMany(mappedBy = "tutoringService321", cascade = { CascadeType.ALL })
+	@OneToMany(cascade = { CascadeType.ALL })
 	public Set<Subject> getSubject() {
 		return this.subject;
 	}

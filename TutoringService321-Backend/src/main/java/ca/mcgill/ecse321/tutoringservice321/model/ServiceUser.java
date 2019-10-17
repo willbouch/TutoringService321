@@ -53,14 +53,5 @@ public void setPassword(String value) {
 public String getPassword() {
     return this.password;
 }
-private TutoringService321 tutoringService321;	
 
-@ManyToOne(optional=true)	
-public TutoringService321 getTutoringService321() {	
-   return this.tutoringService321;	
-}	
-
-public void setTutoringService321(TutoringService321 tutoringService321) {	
-   this.tutoringService321 = tutoringService321;	
-}
    }
