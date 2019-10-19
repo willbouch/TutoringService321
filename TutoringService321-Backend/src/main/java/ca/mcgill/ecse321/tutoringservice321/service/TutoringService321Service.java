@@ -193,13 +193,13 @@ public class TutoringService321Service {
 		return toList(courseRepository.findAll());
 	}
 	
+	//====================================================================================
+	//AVAILABILITY METHODS
+	
 	@Transactional
-	public Availability createAvailability(String tutorEmail, Date date, Time startTime,
-			Time endTime) {
+	public Availability addAvailability(String tutorEmail, Date date, Time startTime, Time endTime) {
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
-
-		Availability availability =  new Availability();
 
 		//Input validation
 		if(date == null) {
@@ -214,7 +214,16 @@ public class TutoringService321Service {
 		if(tutor == null) {
 			throw new IllegalArgumentException("Tutor cannot be empty.");
 		}
-
+		
+		//Checking if this Availability already exists
+		List<Availability> availabilities = getAllTutorAvailabilities(tutorEmail);
+		for(Availability avail :  availabilities) {
+			if(avail.getDate().equals(date) && avail.getStartTime().equals(startTime) && avail.getEndTime().equals(endTime)) {
+				throw new IllegalArgumentException("Availability already exists.");
+			}
+		}
+		
+		Availability availability = new Availability();
 		//Setting attributes
 		availability.setDate(date);
 		availability.setEndTime(endTime);
@@ -227,23 +236,70 @@ public class TutoringService321Service {
 		return availability;
 	}
 
-	public Availability getAvailability(Date date, String tutorEmail) {
+	public Availability getAvailability(String tutorEmail, Date date, Time startTime, Time endTime) {
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
+		//We check the set of availabilities with that date
 		Set<Availability> availabilities = availabilityRepository.findAvailabilityByDate(date);
 		for(Availability availability : availabilities) {
-			if(tutor.equals(availability.getTutor())) return availability;
+			if(tutor.equals(availability.getTutor()) && startTime.equals(availability.getStartTime()) && endTime.equals(availability.getEndTime())) {
+				return availability;
+			}
 		}
 
-		//Not suppose to happen
 		return null;
+	}
+
+	public void deleteAvailability(String tutorEmail, Date date, Time startTime, Time endTime) {
+		Availability availability = getAvailability(tutorEmail, date, startTime, endTime);
+		
+		if(availability != null) {
+			availabilityRepository.delete(availability);
+		}
 	}
 	
 	@Transactional
-	public List<Availability> getAllAvailabilities() {
-		return toList(availabilityRepository.findAll());
+	public List<Availability> getAllTutorAvailabilities(String tutorEmail) {
+		//Find the tutor first
+		Tutor tutor = getTutor(tutorEmail);
+		
+		if(tutor == null) {
+			throw new IllegalArgumentException("There is no such Tutor.");
+		}
+		
+		List<Availability> list = toList(availabilityRepository.findAll());
+		List<Availability> tutorAvailabilities = new ArrayList<Availability>();
+		for(Availability availability : list) {
+			if(availability.getTutor().equals(tutor)) {
+				tutorAvailabilities.add(availability);
+			}
+		}
+		
+		return toList(tutor.getAvailability());
 	}
+
+	public Availability updateAvailability(String tutorEmail, Date oldDate, Time oldStartTime, Time oldEndTime,
+			Date newDate, Time newStartTime, Time newEndTime) {
+		//We first check that there is no session at that time
+		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
+		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, oldDate);
+		for(Session session : sessions) {
+			if(session.getStarTime().equals(oldStartTime) && session.getEndTime().equals(oldEndTime)) {
+				throw new IllegalArgumentException("Already an availability at that time and date.");
+			}
+		}
+		
+		//We first delete the old availability
+		deleteAvailability(tutorEmail, oldDate, oldStartTime, oldEndTime);
+		
+		//We then add the new one
+		Availability availability = addAvailability(tutorEmail, newDate, newStartTime, newEndTime);
+	
+		return availability;
+	}
+	
+	//====================================================================================
 	
 	//Helper method provided in EventRegistration
 	private <T> List<T> toList(Iterable<T> iterable){
