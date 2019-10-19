@@ -10,7 +10,7 @@ import javax.persistence.Id;
 		strategy = InheritanceType.JOINED
 )
 
-public  class ServiceUser{
+public abstract class ServiceUser{
 private int userID;
 
 public void setUserID(int value) {
