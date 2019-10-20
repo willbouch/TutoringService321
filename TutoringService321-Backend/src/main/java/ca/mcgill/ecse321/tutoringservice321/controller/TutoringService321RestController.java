@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,10 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import ca.mcgill.ecse321.tutoringservice321.dto.AvailabilityDto;
-import ca.mcgill.ecse321.tutoringservice321.dto.TutorDto;
-import ca.mcgill.ecse321.tutoringservice321.model.Availability;
-import ca.mcgill.ecse321.tutoringservice321.model.Tutor;
+import ca.mcgill.ecse321.tutoringservice321.dto.*;
+import ca.mcgill.ecse321.tutoringservice321.model.*;
 import ca.mcgill.ecse321.tutoringservice321.service.TutoringService321Service;
 
 @CrossOrigin(origins = "*")
@@ -107,5 +106,53 @@ public class TutoringService321RestController {
 	}
 	
 	//====================================================================================
+	// Course Methods
+	
+	@GetMapping(value = {"/courses/{courseCode+school}", "/courses/{courseCode+school}/"})
+	public CourseDto getCourse(@PathVariable("courseCode"+"school") String courseCode, String school) {
+		Course course = service.getCourse(school, courseCode);
+		
+		return converToDto(course);
+	}
+	
+	@GetMapping(value = {"/courses", "/courses/"})
+	public List<CourseDto> getAllCourses() {
+		List<CourseDto> dtos = new ArrayList<CourseDto>();
+		for (Course course : service.getAllCourses()) {
+			dtos.add(converToDto(course));
+		}
+		return dtos;
+	}
+	
+//	@PostMapping(value = {"/courses/{course+tutorEmail}", "/courses/{course+tutorEmail}/"})
+//	public CourseDto addCourseToTutor(@PathVariable("course+tutorEmail") Course course, String tutorEmail) {
+//		Tutor tutor = service.getTutor(tutorEmail);
+//		
+//		return converToDto(course, tutor);
+//	}
+	
+	private CourseDto converToDto(Course course) {
+		if (course == null) {
+			throw new IllegalArgumentException("There is no such course.");
+		}
+		
+		SubjectDto subjectDto = converToDto(course.getSubject());
+		CourseDto dto = new CourseDto(course.getDescription(), course.getCourseCode(), course.getSchool(), subjectDto);
+		return dto;
+	}
+	
+	
+	//====================================================================================
+	// Subject Methods
 
+	private SubjectDto converToDto(Set<Subject> subject) {
+		//TODO
+		if (subject == null) {
+			throw new IllegalArgumentException("There is no such subject.");
+		}
+		
+		SubjectDto dto = new SubjectDto();
+		return dto;
+	}
+	
 }
