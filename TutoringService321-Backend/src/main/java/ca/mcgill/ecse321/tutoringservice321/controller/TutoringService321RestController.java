@@ -101,6 +101,39 @@ public class TutoringService321RestController {
 	//====================================================================================
 	//TUTOR METHODS
 	
+	@PostMapping(value = {"/{tutorEmail}", "/{tutorEmail}/"})
+	public TutorDto registerTutor(@PathVariable("tutorEmail") String tutorEmail,
+	@RequestParam String name,
+	@RequestParam String password, 
+	@RequestParam String phoneNumber,
+	@RequestParam int hourlyRate){
+		
+		Tutor tutor = service.createTutor(tutorEmail, name, password, phoneNumber, hourlyRate);
+		
+		return converToDto(tutor);
+	}
+	
+	@PostMapping(value = {"/{tutorEmail}", "/{tutorEmail}/"})
+	public TutorDto updateProfile(@PathVariable("tutorEmail") String tutorEmail,
+	@RequestParam String name, 
+	@RequestParam String phoneNumber,
+	@RequestParam int hourlyRate){
+		
+		Tutor tutor = service.updateTutor(tutorEmail, name, phoneNumber, hourlyRate);
+		
+		return converToDto(tutor);
+	}
+	
+	@PostMapping(value = {"/{tutorEmail}", "/{tutorEmail}/"})
+	public TutorDto changePassword(@PathVariable("tutorEmail") String tutorEmail,
+	@RequestParam String oldPassword,
+	@RequestParam String newPassword){
+		
+		Tutor tutor = service.changePassword(tutorEmail,oldPassword, newPassword);
+		
+		return converToDto(tutor);
+	}
+	
 	private TutorDto converToDto(Tutor tutor) {
 		//TODO
 		if(tutor == null) {
@@ -126,12 +159,10 @@ public class TutoringService321RestController {
 		return dto;
 	}
 
-	private SubjectDto converToDto(Subject subject) {
-		return null;
-		// TODO Auto-generated method stub
-		
-	}
-
+	
+	//====================================================================================
+	//SESSION METHODS
+	
 	private SessionDto converToDto(Session session) {
 		return null;
 		// TODO Auto-generated method stub
@@ -139,5 +170,11 @@ public class TutoringService321RestController {
 	}
 	
 	//====================================================================================
-
+	//SUBJECT METHODS
+	
+	private SubjectDto converToDto(Subject subject) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
 }
