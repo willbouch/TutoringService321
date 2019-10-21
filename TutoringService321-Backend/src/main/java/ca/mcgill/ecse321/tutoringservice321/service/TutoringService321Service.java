@@ -103,9 +103,15 @@ public class TutoringService321Service {
 	public List<Subject> getAllSubjects() {
 		return toList(subjectRepository.findAll());
 	}
+	
+	//====================================================================================
+	//SESSION METHODS
 
 	@Transactional
-	public Session createSession(String tutorEmail, Date date, Time endTime, Time startTime) {
+	public Session createSession(String tutorEmail, Date date, Time startTime, Time endTime) {
+		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
+			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
+		}
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
@@ -115,11 +121,13 @@ public class TutoringService321Service {
 		if(date == null) {
 			throw new IllegalArgumentException("Date cannot be empty.");
 		}
-		if(endTime == null) {
-			throw new IllegalArgumentException("End time cannot be empty.");
-		}
+		
 		if(startTime == null) {
 			throw new IllegalArgumentException("Start time cannot be empty.");
+		}
+		
+		if(endTime == null) {
+			throw new IllegalArgumentException("End time cannot be empty.");
 		}
 
 		//Setting the attributes
@@ -133,26 +141,72 @@ public class TutoringService321Service {
 		sessionRepository.save(session);
 		return session;
 	}
-
+	
 	@Transactional
-	public Session getSession(Date date, String tutorEmail) {
+	public Session getSession(String tutorEmail, Date date, Time startTime, Time endTime) {
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
 		Set<Session> sessions = sessionRepository.findSessionByDate(date);
 		for(Session session : sessions) {
-			if(tutor.equals(session.getTutor())) return session;
+			if(tutor.equals(session.getTutor()) && startTime.equals(session.getStarTime()) && endTime.equals(session.getEndTime())) {
+				return session;
+			}
 		}
-
+		
 		//Not suppose to happen
 		return null;
 	}
-
+	
+	
 	@Transactional
-	public List<Session> getAllSessions() {
-		return toList(sessionRepository.findAll());
+	public Session approveSession(String tutorEmail, Date requestedDate, Time qStartTime, Time qEndTime,
+			Date confirmedDate, Time cStartTime, Time cEndTime) {
+		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
+			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
+		}
+		
+		//We first check that there is no session at that time
+		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
+		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, requestedDate);
+		for(Session session : sessions) {
+			if(session.getStarTime().equals(qStartTime) && session.getEndTime().equals(qEndTime)) {
+				throw new IllegalArgumentException("A session has aready been booked for that time and date.");
+			}
+		}
+		//We then add the new one
+		Session session = createSession(tutorEmail, confirmedDate, cStartTime, cEndTime);
+
+		return session;
+	}
+	
+	@Transactional
+	public void cancelSession(String tutorEmail, Date date, Time startTime, Time endTime) {
+		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
+			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
+		}
+		
+		Session session = getSession(tutorEmail, date, startTime, endTime);
+
+		if(session != null) {
+			sessionRepository.delete(session);
+		}
 	}
 
+	@Transactional
+	public List<Session> getAllSessions(String tutorEmail) {
+		//Find the tutor first
+				Tutor tutor = getTutor(tutorEmail);
+
+				if(tutor == null) {
+					throw new IllegalArgumentException("There is no such Tutor.");
+				}
+		return toList(sessionRepository.findAll());
+	}
+ 
+	// ===============================================================================================
+	
+	
 	@Transactional
 	public Course createCourse(String description, String school, String courseCode) {
 		Course course = new Course();

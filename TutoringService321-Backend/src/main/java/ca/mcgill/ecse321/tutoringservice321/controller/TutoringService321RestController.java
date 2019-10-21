@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import ca.mcgill.ecse321.tutoringservice321.dto.AvailabilityDto;
+import ca.mcgill.ecse321.tutoringservice321.dto.SessionDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.TutorDto;
 import ca.mcgill.ecse321.tutoringservice321.model.Availability;
+import ca.mcgill.ecse321.tutoringservice321.model.Session;
 import ca.mcgill.ecse321.tutoringservice321.model.Tutor;
 import ca.mcgill.ecse321.tutoringservice321.service.TutoringService321Service;
 
@@ -108,4 +110,67 @@ public class TutoringService321RestController {
 	
 	//====================================================================================
 
+		//SESSION METHODS
+	
+	@PostMapping(value = {"/sessions/{tutorEmail}", "/session/{tutorEmail}/"})
+	public SessionDto createSession(@PathVariable("tutorEmail") String tutorEmail,
+	@RequestParam Date date,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime startTime,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime endTime) {
+		
+		Session session= service.createSession(tutorEmail, date, Time.valueOf(startTime), Time.valueOf(endTime));
+		
+		return converToDto(session);
+	}
+	
+	@GetMapping(value = {"/availabilities/{tutorEmail}", "/availabilities/{tutorEmail}/"})
+	public List<SessionDto> getAllSessions(@PathVariable("tutorEmail") String tutorEmail) {
+		List<SessionDto> dtos = new ArrayList<SessionDto>();
+		for(Session session : service.getAllSessions(tutorEmail)) {
+			dtos.add(converToDto(session));
+		}
+		
+		return dtos;
+	}
+	
+	@PutMapping(value = {"/availabilities/{tutorEmail}", "/availabilities/{tutorEmail}/"})
+	public SessionDto approveSession(@PathVariable("tutorEmail") String tutorEmail,
+	@RequestParam Date requestedDate,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime qStartTime,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime qEndTime,
+	@RequestParam Date confirmedDate,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime cStartTime,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime cEndTime) {
+		
+		Session session= service.approveSession(tutorEmail, requestedDate, Time.valueOf(qStartTime), Time.valueOf(qEndTime), confirmedDate, Time.valueOf(cStartTime), Time.valueOf(cEndTime));
+		return converToDto(session);
+	}
+		
+
+		
+		@DeleteMapping(value = {"/session/{tutorEmail}", "/session/{tutorEmail}/"})
+		public List<SessionDto> cancelSession(@PathVariable("tutorEmail") String tutorEmail,
+		@RequestParam Date date,
+		@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime startTime,
+		@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime endTime) {
+			service.cancelSession(tutorEmail, date, Time.valueOf(startTime), Time.valueOf(endTime));
+			
+			List<SessionDto> dtos = new ArrayList<SessionDto>();
+			for(Session session : service.getAllSessions(tutorEmail)) {
+				dtos.add(converToDto(session));
+			}
+			
+			return dtos;
+		}
+		private SessionDto converToDto(Session session) {
+			if(session== null) {
+				throw new IllegalArgumentException("There is no such Session.");
+			}
+			
+			TutorDto tutorDto = converToDto(session.getTutor());
+			SessionDto dto = new SessionDto(session.getDate(), session.getStarTime(), session.getEndTime(), tutorDto, null);
+			return dto;
+		}
+		
+		//====================================================================================
 }
