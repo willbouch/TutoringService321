@@ -22,10 +22,13 @@ import ca.mcgill.ecse321.tutoringservice321.dto.AvailabilityDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.SessionDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.SubjectDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.TutorDto;
+import ca.mcgill.ecse321.tutoringservice321.dto.CourseDto;
 import ca.mcgill.ecse321.tutoringservice321.model.Availability;
 import ca.mcgill.ecse321.tutoringservice321.model.Session;
 import ca.mcgill.ecse321.tutoringservice321.model.Subject;
 import ca.mcgill.ecse321.tutoringservice321.model.Tutor;
+import ca.mcgill.ecse321.tutoringservice321.model.Course;
+
 import ca.mcgill.ecse321.tutoringservice321.service.TutoringService321Service;
 
 @CrossOrigin(origins = "*")
@@ -161,20 +164,52 @@ public class TutoringService321RestController {
 
 	
 	//====================================================================================
-	//SESSION METHODS
+	// Course Methods
 	
-	private SessionDto converToDto(Session session) {
-		return null;
-		// TODO Auto-generated method stub
+	@GetMapping(value = {"/courses/{courseCode+school}", "/courses/{courseCode+school}/"})
+	public CourseDto getCourse(@PathVariable("courseCode"+"school") String courseCode, String school) {
+		Course course = service.getCourse(school, courseCode);
 		
+		return converToDto(course);
 	}
 	
-	//====================================================================================
-	//SUBJECT METHODS
+	@GetMapping(value = {"/courses", "/courses/"})
+	public List<CourseDto> getAllCourses() {
+		List<CourseDto> dtos = new ArrayList<CourseDto>();
+		for (Course course : service.getAllCourses()) {
+			dtos.add(converToDto(course));
+		}
+		return dtos;
+	}
 	
-	private SubjectDto converToDto(Subject subject) {
-		return null;
-		// TODO Auto-generated method stub
+//	@PostMapping(value = {"/courses/{course+tutorEmail}", "/courses/{course+tutorEmail}/"})
+//	public CourseDto addCourseToTutor(@PathVariable("course+tutorEmail") Course course, String tutorEmail) {
+//		Tutor tutor = service.getTutor(tutorEmail);
+//		
+//		return converToDto(course, tutor);
+//	}
+	
+	private CourseDto converToDto(Course course) {
+		if (course == null) {
+			throw new IllegalArgumentException("There is no such course.");
+		}
 		
+		SubjectDto subjectDto = converToDto(course.getSubject());
+		CourseDto dto = new CourseDto(course.getDescription(), course.getCourseCode(), course.getSchool(), subjectDto);
+		return dto;
+	}
+	
+	
+	//====================================================================================
+	// Subject Methods
+
+	private SubjectDto converToDto(Set<Subject> subject) {
+		//TODO
+		if (subject == null) {
+			throw new IllegalArgumentException("There is no such subject.");
+		}
+		
+		SubjectDto dto = new SubjectDto();
+		return dto;
 	}
 }

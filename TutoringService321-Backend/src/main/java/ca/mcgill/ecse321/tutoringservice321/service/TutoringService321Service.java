@@ -384,6 +384,58 @@ public class TutoringService321Service {
 	}
 	
 	//====================================================================================
+	// Course Methods
+	
+	public void addCourseToTutor(Course course, String tutorEmail) {
+		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail); 		// Finds tutor using unique email
+		Course findCourse = findCourseOffering(course);						// Finds the course offering
+		if (findCourse != null) {
+			Set<Subject> subject = findCourse.getSubject();					// Finds the subject that the course is a part of
+			tutor.setSubject(subject);										// Sets the tutor to be associated with that subject
+		}
+	}
+	
+	public void removeCourseFromTutor(Course course, String tutorEmail) {
+		Course findCourse = findCourseOffering(course);
+		Set<Subject> subject = findCourse.getSubject();						// not quite sure what Set<Subject> looks like
+		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
+		if (findCourse != null) {
+			courseRepository.delete(findCourse);
+			tutor.getSubject().remove(subject);
+		}
+	}
+	
+
+	
+	public String requestCourse(String courseCode, String tutorEmail) {
+		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail); 
+		String tutorName = tutor.getName();
+		String email = "Dear Manager,\n"
+					 + "	I would like to offer a new course, "+courseCode+"\n"
+					 + " but it is not currently part of the offered courses. \n"
+					 + " Could you please make it available so I could teach it?\n"
+					 + " Thank you,\n"
+					 + " "+tutorName;
+		
+		return email;
+	}
+
+	
+	public Course findCourseOffering(Course course) {
+		String school = course.getSchool();
+		String courseCode = course.getCourseCode();
+		
+		List<Course> listOfCourses = toList(courseRepository.findAll());
+		for (Course findCourse : listOfCourses) {
+			if ((findCourse.getSchool().equals(school)) && (findCourse.getCourseCode().equals(courseCode))) {
+				return findCourse;
+			}
+		}
+		return null;
+	}
+	
+	
+	//====================================================================================
 
 	//Helper method provided in EventRegistration
 	private <T> List<T> toList(Iterable<T> iterable){
