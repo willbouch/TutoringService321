@@ -202,8 +202,7 @@ public class TutoringService321RestController {
 	
 	//====================================================================================
 	// Subject Methods
-
-	private SubjectDto converToDto(Set<Subject> subject) {
+  private SubjectDto converToDto(Set<Subject> subject) {
 		//TODO
 		if (subject == null) {
 			throw new IllegalArgumentException("There is no such subject.");
@@ -212,4 +211,68 @@ public class TutoringService321RestController {
 		SubjectDto dto = new SubjectDto();
 		return dto;
 	}
+
+	//SESSION METHODS
+	
+	@PostMapping(value = {"/sessions/{tutorEmail}", "/session/{tutorEmail}/"})
+	public SessionDto createSession(@PathVariable("tutorEmail") String tutorEmail,
+	@RequestParam Date date,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime startTime,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime endTime) {
+		
+		Session session= service.createSession(tutorEmail, date, Time.valueOf(startTime), Time.valueOf(endTime));
+		
+		return converToDto(session);
+	}
+	
+	@GetMapping(value = {"/availabilities/{tutorEmail}", "/availabilities/{tutorEmail}/"})
+	public List<SessionDto> getAllSessions(@PathVariable("tutorEmail") String tutorEmail) {
+		List<SessionDto> dtos = new ArrayList<SessionDto>();
+		for(Session session : service.getAllSessions(tutorEmail)) {
+			dtos.add(converToDto(session));
+		}
+		
+		return dtos;
+	}
+	
+	@PutMapping(value = {"/availabilities/{tutorEmail}", "/availabilities/{tutorEmail}/"})
+	public SessionDto approveSession(@PathVariable("tutorEmail") String tutorEmail,
+	@RequestParam Date requestedDate,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime qStartTime,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime qEndTime,
+	@RequestParam Date confirmedDate,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime cStartTime,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime cEndTime) {
+		
+		Session session= service.approveSession(tutorEmail, requestedDate, Time.valueOf(qStartTime), Time.valueOf(qEndTime), confirmedDate, Time.valueOf(cStartTime), Time.valueOf(cEndTime));
+		return converToDto(session);
+	}
+		
+
+		
+		@DeleteMapping(value = {"/session/{tutorEmail}", "/session/{tutorEmail}/"})
+		public List<SessionDto> cancelSession(@PathVariable("tutorEmail") String tutorEmail,
+		@RequestParam Date date,
+		@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime startTime,
+		@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime endTime) {
+			service.cancelSession(tutorEmail, date, Time.valueOf(startTime), Time.valueOf(endTime));
+			
+			List<SessionDto> dtos = new ArrayList<SessionDto>();
+			for(Session session : service.getAllSessions(tutorEmail)) {
+				dtos.add(converToDto(session));
+			}
+			
+			return dtos;
+		}
+		private SessionDto converToDto(Session session) {
+			if(session== null) {
+				throw new IllegalArgumentException("There is no such Session.");
+			}
+			
+			TutorDto tutorDto = converToDto(session.getTutor());
+			SessionDto dto = new SessionDto(session.getDate(), session.getStarTime(), session.getEndTime(), tutorDto, null);
+			return dto;
+		}
+		
+		//====================================================================================
 }

@@ -16,7 +16,7 @@ public class Session{
     this.sessionID = value;
 }
 @Id
-private int getSessionID() {
+public int getSessionID() {
     return this.sessionID;
 }
 private Date date;
