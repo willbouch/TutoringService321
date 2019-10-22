@@ -54,8 +54,4 @@ public TutorDto getTutor() {
 public AvailabilityDto getAvailability() {
 	return availability;
 }
-
-
-
-
 }

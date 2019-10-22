@@ -66,6 +66,47 @@ public class TutoringService321Service {
 	}
 
 	@Transactional
+	public Tutor updateTutor(String email, String name, String phoneNumber,
+			int hourlyRate) {
+		Tutor tutor = getTutor(email);
+		if (tutor==null) {
+			throw new IllegalArgumentException("The tutor with that email could not be found.");
+		}
+		if(email == null || email.trim().length() == 0) {
+			throw new IllegalArgumentException("Email cannot be empty.");
+		}
+		if(name == null || name.trim().length() == 0) {
+			throw new IllegalArgumentException("Name cannot be empty.");
+		}
+		if(phoneNumber == null || phoneNumber.trim().length() == 0) {
+			throw new IllegalArgumentException("Phone number cannot be empty.");
+		}
+		if(hourlyRate > 0) {
+			throw new IllegalArgumentException("Hourly has to be a positive number.");
+		}
+		tutor.setEmail(email);
+		tutor.setName(name);
+		tutor.setPhoneNumber(phoneNumber);
+		tutor.setHourlyRate(hourlyRate);
+		return tutor;
+	}
+	
+	public Tutor changePassword(String tutorEmail, String oldPassword, String newPassword) {
+		Tutor tutor = getTutor(tutorEmail);
+		if(tutor==null) {
+			throw new IllegalArgumentException("The tutor with that email could not be found.");
+		}
+		if (tutor.getPassword()!=oldPassword) {
+			throw new IllegalArgumentException("That is not the correct password.");
+		}
+		if (newPassword==null || newPassword.trim().length()==0) {
+			throw new IllegalArgumentException("Please enter a new password.");
+		}
+		tutor.setPassword(newPassword);
+		return tutor;
+	}
+	
+	@Transactional
 	public Tutor getTutor(String email) {
 		Tutor tutor = tutorRepository.findTutorByEmail(email);
 		return tutor;
@@ -395,6 +436,58 @@ public class TutoringService321Service {
 	public void logout() {
 		TutoringService321Application.setLoggedUser(null);
 	}
+	
+	//====================================================================================
+	// Course Methods
+	
+	public void addCourseToTutor(Course course, String tutorEmail) {
+		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail); 		// Finds tutor using unique email
+		Course findCourse = findCourseOffering(course);						// Finds the course offering
+		if (findCourse != null) {
+			Set<Subject> subject = findCourse.getSubject();					// Finds the subject that the course is a part of
+			tutor.setSubject(subject);										// Sets the tutor to be associated with that subject
+		}
+	}
+	
+	public void removeCourseFromTutor(Course course, String tutorEmail) {
+		Course findCourse = findCourseOffering(course);
+		Set<Subject> subject = findCourse.getSubject();						// not quite sure what Set<Subject> looks like
+		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
+		if (findCourse != null) {
+			courseRepository.delete(findCourse);
+			tutor.getSubject().remove(subject);
+		}
+	}
+	
+
+	
+	public String requestCourse(String courseCode, String tutorEmail) {
+		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail); 
+		String tutorName = tutor.getName();
+		String email = "Dear Manager,\n"
+					 + "	I would like to offer a new course, "+courseCode+"\n"
+					 + " but it is not currently part of the offered courses. \n"
+					 + " Could you please make it available so I could teach it?\n"
+					 + " Thank you,\n"
+					 + " "+tutorName;
+		
+		return email;
+	}
+
+	
+	public Course findCourseOffering(Course course) {
+		String school = course.getSchool();
+		String courseCode = course.getCourseCode();
+		
+		List<Course> listOfCourses = toList(courseRepository.findAll());
+		for (Course findCourse : listOfCourses) {
+			if ((findCourse.getSchool().equals(school)) && (findCourse.getCourseCode().equals(courseCode))) {
+				return findCourse;
+			}
+		}
+		return null;
+	}
+	
 	
 	//====================================================================================
 
