@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.tutoringservice321.model;
 
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -11,7 +10,7 @@ import javax.persistence.Id;
 		strategy = InheritanceType.JOINED
 )
 
-public  class ServiceUser{
+public abstract class ServiceUser{
 private int userID;
 
 public void setUserID(int value) {
