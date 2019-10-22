@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.mcgill.ecse321.tutoringservice321.TutoringService321Application;
 import ca.mcgill.ecse321.tutoringservice321.dao.*;
 import ca.mcgill.ecse321.tutoringservice321.model.*;
 
@@ -66,47 +65,6 @@ public class TutoringService321Service {
 	}
 
 	@Transactional
-	public Tutor updateTutor(String email, String name, String phoneNumber,
-			int hourlyRate) {
-		Tutor tutor = getTutor(email);
-		if (tutor==null) {
-			throw new IllegalArgumentException("The tutor with that email could not be found.");
-		}
-		if(email == null || email.trim().length() == 0) {
-			throw new IllegalArgumentException("Email cannot be empty.");
-		}
-		if(name == null || name.trim().length() == 0) {
-			throw new IllegalArgumentException("Name cannot be empty.");
-		}
-		if(phoneNumber == null || phoneNumber.trim().length() == 0) {
-			throw new IllegalArgumentException("Phone number cannot be empty.");
-		}
-		if(hourlyRate > 0) {
-			throw new IllegalArgumentException("Hourly has to be a positive number.");
-		}
-		tutor.setEmail(email);
-		tutor.setName(name);
-		tutor.setPhoneNumber(phoneNumber);
-		tutor.setHourlyRate(hourlyRate);
-		return tutor;
-	}
-	
-	public Tutor changePassword(String tutorEmail, String oldPassword, String newPassword) {
-		Tutor tutor = getTutor(tutorEmail);
-		if(tutor==null) {
-			throw new IllegalArgumentException("The tutor with that email could not be found.");
-		}
-		if (tutor.getPassword()!=oldPassword) {
-			throw new IllegalArgumentException("That is not the correct password.");
-		}
-		if (newPassword==null || newPassword.trim().length()==0) {
-			throw new IllegalArgumentException("Please enter a new password.");
-		}
-		tutor.setPassword(newPassword);
-		return tutor;
-	}
-	
-	@Transactional
 	public Tutor getTutor(String email) {
 		Tutor tutor = tutorRepository.findTutorByEmail(email);
 		return tutor;
@@ -116,7 +74,7 @@ public class TutoringService321Service {
 	public List<Tutor> getAllTutors() {
 		return toList(tutorRepository.findAll());
 	}
-
+	
 	@Transactional
 	public Subject createSubject(String name) {
 		Subject subject = new Subject();
@@ -144,7 +102,7 @@ public class TutoringService321Service {
 	public List<Subject> getAllSubjects() {
 		return toList(subjectRepository.findAll());
 	}
-
+	
 	@Transactional
 	public Session createSession(String tutorEmail, Date date, Time endTime, Time startTime) {
 		//Find the tutor first
@@ -193,7 +151,7 @@ public class TutoringService321Service {
 	public List<Session> getAllSessions() {
 		return toList(sessionRepository.findAll());
 	}
-
+	
 	@Transactional
 	public Course createCourse(String description, String school, String courseCode) {
 		Course course = new Course();
@@ -234,18 +192,14 @@ public class TutoringService321Service {
 	public List<Course> getAllCourses() {
 		return toList(courseRepository.findAll());
 	}
-
-	//====================================================================================
-	//AVAILABILITY METHODS
-
+	
 	@Transactional
-	public Availability addAvailability(String tutorEmail, Date date, Time startTime, Time endTime) {
-		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
-			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
-		}
-		
+	public Availability createAvailability(String tutorEmail, Date date, Time startTime,
+			Time endTime) {
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
+
+		Availability availability =  new Availability();
 
 		//Input validation
 		if(date == null) {
@@ -261,15 +215,6 @@ public class TutoringService321Service {
 			throw new IllegalArgumentException("Tutor cannot be empty.");
 		}
 
-		//Checking if this Availability already exists
-		List<Availability> availabilities = getAllTutorAvailabilities(tutorEmail);
-		for(Availability avail :  availabilities) {
-			if(avail.getDate().equals(date) && avail.getStartTime().equals(startTime) && avail.getEndTime().equals(endTime)) {
-				throw new IllegalArgumentException("Availability already exists.");
-			}
-		}
-
-		Availability availability = new Availability();
 		//Setting attributes
 		availability.setDate(date);
 		availability.setEndTime(endTime);
@@ -282,109 +227,24 @@ public class TutoringService321Service {
 		return availability;
 	}
 
-	@Transactional
-	public Availability getAvailability(String tutorEmail, Date date, Time startTime, Time endTime) {	
+	public Availability getAvailability(Date date, String tutorEmail) {
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
-		//We check the set of availabilities with that date
 		Set<Availability> availabilities = availabilityRepository.findAvailabilityByDate(date);
 		for(Availability availability : availabilities) {
-			if(tutor.equals(availability.getTutor()) && startTime.equals(availability.getStartTime()) && endTime.equals(availability.getEndTime())) {
-				return availability;
-			}
+			if(tutor.equals(availability.getTutor())) return availability;
 		}
 
+		//Not suppose to happen
 		return null;
 	}
-
+	
 	@Transactional
-	public void deleteAvailability(String tutorEmail, Date date, Time startTime, Time endTime) {
-		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
-			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
-		}
-		
-		Availability availability = getAvailability(tutorEmail, date, startTime, endTime);
-
-		if(availability != null) {
-			availabilityRepository.delete(availability);
-		}
-	}
-
-	@Transactional
-	public List<Availability> getAllTutorAvailabilities(String tutorEmail) {
-		//Find the tutor first
-		Tutor tutor = getTutor(tutorEmail);
-
-		if(tutor == null) {
-			throw new IllegalArgumentException("There is no such Tutor.");
-		}
-
-		List<Availability> list = toList(availabilityRepository.findAll());
-		List<Availability> tutorAvailabilities = new ArrayList<Availability>();
-		for(Availability availability : list) {
-			if(availability.getTutor().equals(tutor)) {
-				tutorAvailabilities.add(availability);
-			}
-		}
-
-		return toList(tutor.getAvailability());
-	}
-
-	@Transactional
-	public Availability updateAvailability(String tutorEmail, Date oldDate, Time oldStartTime, Time oldEndTime,
-			Date newDate, Time newStartTime, Time newEndTime) {
-		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
-			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
-		}
-		
-		//We first check that there is no session at that time
-		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
-		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, oldDate);
-		for(Session session : sessions) {
-			if(session.getStarTime().equals(oldStartTime) && session.getEndTime().equals(oldEndTime)) {
-				throw new IllegalArgumentException("Already an availability at that time and date.");
-			}
-		}
-
-		//We first delete the old availability
-		deleteAvailability(tutorEmail, oldDate, oldStartTime, oldEndTime);
-
-		//We then add the new one
-		Availability availability = addAvailability(tutorEmail, newDate, newStartTime, newEndTime);
-
-		return availability;
-	}
-
-	//====================================================================================
-	//LOGIN-LOGOUT METHODS
-
-	@Transactional
-	public void loginAsTutor(String email, String password) {
-		//Input validation
-		if(email == null || email.trim().length() == 0) {
-			throw new IllegalArgumentException("Email cannot be empty.");
-		}
-		if(password == null || password.trim().length() == 0) {
-			throw new IllegalArgumentException("Password cannot be empty.");
-		}
-
-		List<Tutor> tutors = getAllTutors();
-
-		for(Tutor tutor : tutors) {
-			if(tutor.getEmail().equals(email) && tutor.getEmail().equals(password)) {
-				TutoringService321Application.setLoggedUser(tutor);
-			}
-		}
-	}
-
-	@Transactional
-	public void logout() {
-		TutoringService321Application.setLoggedUser(null);
+	public List<Availability> getAllAvailabilities() {
+		return toList(availabilityRepository.findAll());
 	}
 	
-	//====================================================================================
-
 	//Helper method provided in EventRegistration
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
