@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,8 +19,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import ca.mcgill.ecse321.tutoringservice321.dto.AvailabilityDto;
+import ca.mcgill.ecse321.tutoringservice321.dto.SessionDto;
+import ca.mcgill.ecse321.tutoringservice321.dto.SubjectDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.TutorDto;
 import ca.mcgill.ecse321.tutoringservice321.model.Availability;
+import ca.mcgill.ecse321.tutoringservice321.model.Session;
+import ca.mcgill.ecse321.tutoringservice321.model.Subject;
 import ca.mcgill.ecse321.tutoringservice321.model.Tutor;
 import ca.mcgill.ecse321.tutoringservice321.service.TutoringService321Service;
 
@@ -96,16 +101,80 @@ public class TutoringService321RestController {
 	//====================================================================================
 	//TUTOR METHODS
 	
+	@PostMapping(value = {"/{tutorEmail}", "/{tutorEmail}/"})
+	public TutorDto registerTutor(@PathVariable("tutorEmail") String tutorEmail,
+	@RequestParam String name,
+	@RequestParam String password, 
+	@RequestParam String phoneNumber,
+	@RequestParam int hourlyRate){
+		
+		Tutor tutor = service.createTutor(tutorEmail, name, password, phoneNumber, hourlyRate);
+		
+		return converToDto(tutor);
+	}
+	
+	@PostMapping(value = {"/{tutorEmail}", "/{tutorEmail}/"})
+	public TutorDto updateProfile(@PathVariable("tutorEmail") String tutorEmail,
+	@RequestParam String name, 
+	@RequestParam String phoneNumber,
+	@RequestParam int hourlyRate){
+		
+		Tutor tutor = service.updateTutor(tutorEmail, name, phoneNumber, hourlyRate);
+		
+		return converToDto(tutor);
+	}
+	
+	@PostMapping(value = {"/{tutorEmail}", "/{tutorEmail}/"})
+	public TutorDto changePassword(@PathVariable("tutorEmail") String tutorEmail,
+	@RequestParam String oldPassword,
+	@RequestParam String newPassword){
+		
+		Tutor tutor = service.changePassword(tutorEmail,oldPassword, newPassword);
+		
+		return converToDto(tutor);
+	}
+	
 	private TutorDto converToDto(Tutor tutor) {
 		//TODO
 		if(tutor == null) {
 			throw new IllegalArgumentException("There is no such Tutor.");
 		}
+
+		Set<SubjectDto> subjectsDto = null;
+		for(Subject subject: tutor.getSubject()) {
+			subjectsDto.add(converToDto(subject));
+		}
 		
-		TutorDto dto = new TutorDto();
+		Set<SessionDto> sessionsDto = null;
+		for(Session session: tutor.getSession()) {
+			sessionsDto.add(converToDto(session));
+		}
+		
+		Set<AvailabilityDto> availabilitiesDto = null;
+		for(Availability availability: tutor.getAvailability()) {
+			availabilitiesDto.add(converToDto(availability));
+		}
+		
+		TutorDto dto = new TutorDto(availabilitiesDto, subjectsDto, sessionsDto, tutor.getHourlyRate(), tutor.getRating());
 		return dto;
+	}
+
+	
+	//====================================================================================
+	//SESSION METHODS
+	
+	private SessionDto converToDto(Session session) {
+		return null;
+		// TODO Auto-generated method stub
+		
 	}
 	
 	//====================================================================================
-
+	//SUBJECT METHODS
+	
+	private SubjectDto converToDto(Subject subject) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
 }
