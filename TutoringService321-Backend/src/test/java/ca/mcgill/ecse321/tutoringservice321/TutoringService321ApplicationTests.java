@@ -288,9 +288,8 @@ public class TutoringService321ApplicationTests {
 	 */
 	@Test
 	public void testWriteAvailability() {
-		assertEquals(0, service.getAllAvailabilities().size());
-
 		String tutorEmail = "h@gmail.com";
+		assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
 
 		Date date = Date.valueOf("2019-12-01");
 		Time startTime = Time.valueOf("10:00:00");
@@ -298,10 +297,10 @@ public class TutoringService321ApplicationTests {
 
 		try {
 			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
-			service.createAvailability(tutorEmail, date, startTime, endTime);
+			service.addAvailability(tutorEmail, date, startTime, endTime);
 			fail();
 
-			List <Availability> allAvailabilities = service.getAllAvailabilities();
+			List <Availability> allAvailabilities = service.getAllTutorAvailabilities(tutorEmail);
 
 			assertEquals(1, allAvailabilities.size());
 			assertEquals(date, allAvailabilities.get(0).getDate());
@@ -315,57 +314,54 @@ public class TutoringService321ApplicationTests {
 
 	@Test
 	public void testViewAvailabilityNullDate() {
-		assertEquals(0, service.getAllAvailabilities().size());
+		String tutorEmail = "h@gmail.com";
+		assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
 
 		Date date = (Date) null;
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("16:00:00");
 
-		String tutorEmail = "h@gmail.com";
-
 		try {
 			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
-			service.createAvailability(tutorEmail, date, startTime, endTime);
+			service.addAvailability(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
-			assertEquals(0, service.getAllAvailabilities().size());
+			assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
 		}
 	}
 
 
 	@Test
 	public void testViewAvailabilityNullStartTime() {
-		assertEquals(0, service.getAllAvailabilities().size());
+		String tutorEmail = "h@gmail.com";
+		assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
 
 		Date date = Date.valueOf("2019-12-01");
 		Time startTime = (Time) null;
 		Time endTime = Time.valueOf("16:00:00");
 
-		String tutorEmail = "h@gmail.com";
-
 		try {
 			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
-			service.createAvailability(tutorEmail, date, startTime, endTime);
+			service.addAvailability(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
-			assertEquals(0, service.getAllAvailabilities().size());
+			assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
 		}
 	}
 
 
 	@Test
 	public void testViewAvailabilityNullEndTime() {
-		assertEquals(0, service.getAllAvailabilities().size());
+		String tutorEmail = "h@gmail.com";
+		assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
 
 		Date date = Date.valueOf("2019-12-01");
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = (Time) null;
 
-		String tutorEmail = "h@gmail.com";
-
 		try {
 			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
-			service.createAvailability(tutorEmail, date, startTime, endTime);
+			service.addAvailability(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
-			assertEquals(0, service.getAllAvailabilities().size());
+			assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
 		}
 	}
 
