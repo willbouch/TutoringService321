@@ -66,6 +66,47 @@ public class TutoringService321Service {
 	}
 
 	@Transactional
+	public Tutor updateTutor(String email, String name, String phoneNumber,
+			int hourlyRate) {
+		Tutor tutor = getTutor(email);
+		if (tutor==null) {
+			throw new IllegalArgumentException("The tutor with that email could not be found.");
+		}
+		if(email == null || email.trim().length() == 0) {
+			throw new IllegalArgumentException("Email cannot be empty.");
+		}
+		if(name == null || name.trim().length() == 0) {
+			throw new IllegalArgumentException("Name cannot be empty.");
+		}
+		if(phoneNumber == null || phoneNumber.trim().length() == 0) {
+			throw new IllegalArgumentException("Phone number cannot be empty.");
+		}
+		if(hourlyRate > 0) {
+			throw new IllegalArgumentException("Hourly has to be a positive number.");
+		}
+		tutor.setEmail(email);
+		tutor.setName(name);
+		tutor.setPhoneNumber(phoneNumber);
+		tutor.setHourlyRate(hourlyRate);
+		return tutor;
+	}
+	
+	public Tutor changePassword(String tutorEmail, String oldPassword, String newPassword) {
+		Tutor tutor = getTutor(tutorEmail);
+		if(tutor==null) {
+			throw new IllegalArgumentException("The tutor with that email could not be found.");
+		}
+		if (tutor.getPassword()!=oldPassword) {
+			throw new IllegalArgumentException("That is not the correct password.");
+		}
+		if (newPassword==null || newPassword.trim().length()==0) {
+			throw new IllegalArgumentException("Please enter a new password.");
+		}
+		tutor.setPassword(newPassword);
+		return tutor;
+	}
+	
+	@Transactional
 	public Tutor getTutor(String email) {
 		Tutor tutor = tutorRepository.findTutorByEmail(email);
 		return tutor;
