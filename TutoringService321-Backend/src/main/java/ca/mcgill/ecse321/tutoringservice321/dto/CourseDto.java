@@ -1,20 +1,22 @@
 package ca.mcgill.ecse321.tutoringservice321.dto;
 
+import java.util.Set;
+
 public class CourseDto {
 	private String description;
 	private String school;
 	private String courseCode;
-	private SubjectDto subject;
+	private Set<SubjectDto> subjects;
 	
 	public CourseDto() {
 		
 	}
 	
-	public CourseDto(String description, String school, String courseCode, SubjectDto subject) {
+	public CourseDto(String description, String school, String courseCode, Set<SubjectDto> subjects) {
 		this.description = description;
 		this.school = school;
 		this.courseCode = courseCode;
-		this.subject = subject;
+		this.subjects = subjects;
 	}
 	
 	public String getDescription() {
@@ -41,11 +43,11 @@ public class CourseDto {
 		this.courseCode = courseCode;
 	}
 	
-	public SubjectDto getSubject() {
-		return subject;
+	public Set<SubjectDto> getSubject() {
+		return subjects;
 	}
 	
-	public void setSubject(SubjectDto subject) {
-		this.subject = subject;
+	public void setSubject(Set<SubjectDto> subjects) {
+		this.subjects = subjects;
 	}
 }

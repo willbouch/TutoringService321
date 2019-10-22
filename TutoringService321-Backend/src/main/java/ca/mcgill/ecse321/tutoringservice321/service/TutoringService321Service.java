@@ -29,6 +29,9 @@ public class TutoringService321Service {
 	@Autowired
 	AvailabilityRepository availabilityRepository;
 
+	//====================================================================================
+	//TUTOR METHODS
+
 	@Transactional
 	public Tutor createTutor(String email, String name, String password, String phoneNumber,
 			int hourlyRate) {
@@ -90,7 +93,8 @@ public class TutoringService321Service {
 		tutor.setHourlyRate(hourlyRate);
 		return tutor;
 	}
-	
+
+	@Transactional
 	public Tutor changePassword(String tutorEmail, String oldPassword, String newPassword) {
 		Tutor tutor = getTutor(tutorEmail);
 		if(tutor==null) {
@@ -105,7 +109,16 @@ public class TutoringService321Service {
 		tutor.setPassword(newPassword);
 		return tutor;
 	}
-	
+
+	@Transactional
+	public void deleteTutor(String email) {
+		Tutor tutor = tutorRepository.findTutorByEmail(email);
+
+		if(tutor != null) {
+			tutorRepository.delete(tutor);
+		}
+	}
+
 	@Transactional
 	public Tutor getTutor(String email) {
 		Tutor tutor = tutorRepository.findTutorByEmail(email);
@@ -116,6 +129,9 @@ public class TutoringService321Service {
 	public List<Tutor> getAllTutors() {
 		return toList(tutorRepository.findAll());
 	}
+
+	//====================================================================================
+	//SUBJECT METHODS
 
 	@Transactional
 	public Subject createSubject(String name) {
@@ -135,16 +151,45 @@ public class TutoringService321Service {
 	}
 
 	@Transactional
+	public Subject addSubjectToTutor(String subjectName, String tutorEmail) {
+		//Find the tutor
+		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
+
+		if(tutor == null) {
+			throw new IllegalArgumentException("Tutor could not be found.");
+		}
+
+		//find the subject
+		Subject subject = subjectRepository.findSubjectBySubjectName(subjectName);
+
+		if(subject == null) {
+			throw new IllegalArgumentException("Subject could not be found.");
+		}
+
+		tutor.getSubject().add(subject);
+		return subject;
+	}
+
+	@Transactional
 	public Subject getSubject(String name) {
 		Subject subject = subjectRepository.findSubjectBySubjectName(name);
 		return subject;
 	}
 
 	@Transactional
+	public void deleteSubject(String name) {
+		Subject subject = subjectRepository.findSubjectBySubjectName(name);
+
+		if(subject != null) {
+			subjectRepository.delete(subject);
+		}
+	}
+
+	@Transactional
 	public List<Subject> getAllSubjects() {
 		return toList(subjectRepository.findAll());
 	}
-	
+
 	//====================================================================================
 	//SESSION METHODS
 
@@ -162,11 +207,11 @@ public class TutoringService321Service {
 		if(date == null) {
 			throw new IllegalArgumentException("Date cannot be empty.");
 		}
-		
+
 		if(startTime == null) {
 			throw new IllegalArgumentException("Start time cannot be empty.");
 		}
-		
+
 		if(endTime == null) {
 			throw new IllegalArgumentException("End time cannot be empty.");
 		}
@@ -182,7 +227,7 @@ public class TutoringService321Service {
 		sessionRepository.save(session);
 		return session;
 	}
-	
+
 	@Transactional
 	public Session getSession(String tutorEmail, Date date, Time startTime, Time endTime) {
 		//Find the tutor first
@@ -194,19 +239,18 @@ public class TutoringService321Service {
 				return session;
 			}
 		}
-		
+
 		//Not suppose to happen
 		return null;
 	}
-	
-	
+
 	@Transactional
 	public Session approveSession(String tutorEmail, Date requestedDate, Time qStartTime, Time qEndTime,
 			Date confirmedDate, Time cStartTime, Time cEndTime) {
 		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
 			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
 		}
-		
+
 		//We first check that there is no session at that time
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
 		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, requestedDate);
@@ -220,13 +264,13 @@ public class TutoringService321Service {
 
 		return session;
 	}
-	
+
 	@Transactional
 	public void cancelSession(String tutorEmail, Date date, Time startTime, Time endTime) {
 		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
 			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
 		}
-		
+
 		Session session = getSession(tutorEmail, date, startTime, endTime);
 
 		if(session != null) {
@@ -237,57 +281,13 @@ public class TutoringService321Service {
 	@Transactional
 	public List<Session> getAllSessions(String tutorEmail) {
 		//Find the tutor first
-				Tutor tutor = getTutor(tutorEmail);
+		Tutor tutor = getTutor(tutorEmail);
 
-				if(tutor == null) {
-					throw new IllegalArgumentException("There is no such Tutor.");
-				}
+		if(tutor == null) {
+			throw new IllegalArgumentException("There is no such Tutor.");
+		}
 		return toList(sessionRepository.findAll());
-	}
- 
-	// ===============================================================================================
-	
-	
-	@Transactional
-	public Course createCourse(String description, String school, String courseCode) {
-		Course course = new Course();
-
-		//Input validation
-		if(description == null || description.trim().length() == 0) {
-			throw new IllegalArgumentException("Description cannot be empty.");
-		}
-		if(school == null || school.trim().length() == 0) {
-			throw new IllegalArgumentException("School name cannot be empty.");
-		}
-		if(courseCode == null || courseCode.trim().length() == 0) {
-			throw new IllegalArgumentException("Course code cannot be empty.");
-		}
-
-		//Setting the attributes
-		course.setCourseCode(courseCode);
-		course.setDescription(description);
-		course.setSchool(school);
-		course.setCourseID(courseCode.hashCode()*school.hashCode());
-
-		courseRepository.save(course);
-		return course;
-	}
-
-	@Transactional
-	public Course getCourse(String school, String courseCode) {
-		Set<Course> courses = courseRepository.findCourseBySchool(school);
-		for(Course course : courses) {
-			if(courseCode.equals(course.getCourseCode())) return course;
-		}
-
-		//Not suppose to happen
-		return null;
-	}
-
-	@Transactional
-	public List<Course> getAllCourses() {
-		return toList(courseRepository.findAll());
-	}
+	}	
 
 	//====================================================================================
 	//AVAILABILITY METHODS
@@ -297,7 +297,7 @@ public class TutoringService321Service {
 		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
 			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
 		}
-		
+
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
@@ -357,7 +357,7 @@ public class TutoringService321Service {
 		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
 			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
 		}
-		
+
 		Availability availability = getAvailability(tutorEmail, date, startTime, endTime);
 
 		if(availability != null) {
@@ -391,7 +391,7 @@ public class TutoringService321Service {
 		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
 			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
 		}
-		
+
 		//We first check that there is no session at that time
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
 		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, oldDate);
@@ -436,59 +436,139 @@ public class TutoringService321Service {
 	public void logout() {
 		TutoringService321Application.setLoggedUser(null);
 	}
-	
-	//====================================================================================
-	// Course Methods
-	
-	public void addCourseToTutor(Course course, String tutorEmail) {
-		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail); 		// Finds tutor using unique email
-		Course findCourse = findCourseOffering(course);						// Finds the course offering
-		if (findCourse != null) {
-			Set<Subject> subject = findCourse.getSubject();					// Finds the subject that the course is a part of
-			tutor.setSubject(subject);										// Sets the tutor to be associated with that subject
-		}
-	}
-	
-	public void removeCourseFromTutor(Course course, String tutorEmail) {
-		Course findCourse = findCourseOffering(course);
-		Set<Subject> subject = findCourse.getSubject();						// not quite sure what Set<Subject> looks like
-		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
-		if (findCourse != null) {
-			courseRepository.delete(findCourse);
-			tutor.getSubject().remove(subject);
-		}
-	}
-	
 
-	
+	//====================================================================================
+	//COURSE METHODS
+
+	@Transactional
+	public Course createCourse(String description, String school, String courseCode) {
+		Course course = new Course();
+
+		//Input validation
+		if(description == null || description.trim().length() == 0) {
+			throw new IllegalArgumentException("Description cannot be empty.");
+		}
+		if(school == null || school.trim().length() == 0) {
+			throw new IllegalArgumentException("School name cannot be empty.");
+		}
+		if(courseCode == null || courseCode.trim().length() == 0) {
+			throw new IllegalArgumentException("Course code cannot be empty.");
+		}
+
+		//Setting the attributes
+		course.setCourseCode(courseCode);
+		course.setDescription(description);
+		course.setSchool(school);
+		course.setCourseID(courseCode.hashCode()*school.hashCode());
+
+		courseRepository.save(course);
+		return course;
+	}
+
+	@Transactional
+	public Course getCourse(String school, String courseCode) {
+		Set<Course> courses = courseRepository.findCourseBySchool(school);
+		for(Course course : courses) {
+			if(courseCode.equals(course.getCourseCode())) return course;
+		}
+
+		//Not suppose to happen
+		return null;
+	}
+
+	@Transactional
+	public List<Course> getAllCourses() {
+		return toList(courseRepository.findAll());
+	}
+
+	@Transactional
+	public List<Course> getAllTutorCourses(String tutorEmail) {
+		//Find the tutor first
+		Tutor tutor = getTutor(tutorEmail);
+
+		if(tutor == null) {
+			throw new IllegalArgumentException("There is no such Tutor.");
+		}
+
+		List<Subject> subjects = toList(subjectRepository.findAll());
+		List<Course> tutorCourses = new ArrayList<Course>();
+		for(Subject subject : subjects) {
+			if(subject.getTutor().contains(tutor)) {
+				for(Course course : subject.getCourse()) {
+					tutorCourses.add(course);
+				}
+			}
+		}
+
+		return tutorCourses;
+	}
+
+	@Transactional
+	public Course addCourseToSubject(String school, String courseNumber, String subjectName) {			
+		// Finds the course offering
+		Course foundCourse = null;
+		Set<Course> courses = courseRepository.findCourseBySchool(school);
+		for(Course course : courses) {
+			if(course.getCourseCode().equals(courseNumber)) {
+				foundCourse = course;
+			}
+		}
+
+		if(foundCourse == null) {
+			throw new IllegalArgumentException("The course could not be found.");
+		}
+
+		//Find the subject
+		Subject subject = subjectRepository.findSubjectBySubjectName(subjectName);
+
+		if(subject == null) {
+			throw new IllegalArgumentException("Subject could not be found");
+		}
+
+		//Add the course to this subject
+		subject.getCourse().add(foundCourse);
+		return foundCourse;
+	}
+
+	@Transactional
+	public void removeCourseFromSubject(String school, String courseNumber, String subjectName) {
+		// Finds the course offering
+		Course foundCourse = null;
+		Set<Course> courses = courseRepository.findCourseBySchool(school);
+		for(Course course : courses) {
+			if(course.getCourseCode().equals(courseNumber)) {
+				foundCourse = course;
+			}
+		}
+
+		if(foundCourse == null) {
+			throw new IllegalArgumentException("The course could not be found.");
+		}
+
+		//Find the subject
+		Subject subject = subjectRepository.findSubjectBySubjectName(subjectName);
+
+		if(subject == null) {
+			throw new IllegalArgumentException("Subject could not be found");
+		}
+
+		subject.getCourse().remove(foundCourse);
+	}
+
+	@Transactional
 	public String requestCourse(String courseCode, String tutorEmail) {
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail); 
 		String tutorName = tutor.getName();
 		String email = "Dear Manager,\n"
-					 + "	I would like to offer a new course, "+courseCode+"\n"
-					 + " but it is not currently part of the offered courses. \n"
-					 + " Could you please make it available so I could teach it?\n"
-					 + " Thank you,\n"
-					 + " "+tutorName;
-		
+				+ "	I would like to offer a new course, "+courseCode+"\n"
+				+ " but it is not currently part of the offered courses. \n"
+				+ " Could you please make it available so I could teach it?\n"
+				+ " Thank you,\n"
+				+ " "+tutorName;
+
 		return email;
 	}
 
-	
-	public Course findCourseOffering(Course course) {
-		String school = course.getSchool();
-		String courseCode = course.getCourseCode();
-		
-		List<Course> listOfCourses = toList(courseRepository.findAll());
-		for (Course findCourse : listOfCourses) {
-			if ((findCourse.getSchool().equals(school)) && (findCourse.getCourseCode().equals(courseCode))) {
-				return findCourse;
-			}
-		}
-		return null;
-	}
-	
-	
 	//====================================================================================
 
 	//Helper method provided in EventRegistration

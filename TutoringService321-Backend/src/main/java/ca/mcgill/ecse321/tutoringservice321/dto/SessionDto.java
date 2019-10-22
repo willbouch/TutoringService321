@@ -11,47 +11,47 @@ public class SessionDto {
 	private TutorDto tutor;
 	private AvailabilityDto availability;
 
-public SessionDto() {
-	
-}
+	public SessionDto() {
 
-public SessionDto(Date date, Time startTime, Time endTime, TutorDto tutor, AvailabilityDto availability) {
-	this.date = date;
-	this.startTime = startTime;
-	this.endTime = endTime;
-	this.tutor = tutor;
-	this.availability = availability;
-}
+	}
 
-public Date getDate() {
-	return date;
-}
+	public SessionDto(Date date, Time startTime, Time endTime, TutorDto tutor, AvailabilityDto availability) {
+		this.date = date;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.tutor = tutor;
+		this.availability = availability;
+	}
 
-public void setDate(Date date) {
-	this.date = date;
-}
+	public Date getDate() {
+		return date;
+	}
 
-public Time getStartTime() {
-	return startTime;
-}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-public void setStartTime(Time startTime) {
-	this.startTime = startTime;
-}
+	public Time getStartTime() {
+		return startTime;
+	}
 
-public Time getEndTime() {
-	return endTime;
-}
+	public void setStartTime(Time startTime) {
+		this.startTime = startTime;
+	}
 
-public void setEndTime(Time endTime) {
-	this.endTime = endTime;
-}
+	public Time getEndTime() {
+		return endTime;
+	}
 
-public TutorDto getTutor() {
-	return tutor;
-}
+	public void setEndTime(Time endTime) {
+		this.endTime = endTime;
+	}
 
-public AvailabilityDto getAvailability() {
-	return availability;
-}
+	public TutorDto getTutor() {
+		return tutor;
+	}
+
+	public AvailabilityDto getAvailability() {
+		return availability;
+	}
 }
