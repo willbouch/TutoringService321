@@ -24,12 +24,13 @@ import ca.mcgill.ecse321.tutoringservice321.dto.SessionDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.SubjectDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.TutorDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.CourseDto;
+import ca.mcgill.ecse321.tutoringservice321.dto.ReviewDto;
 import ca.mcgill.ecse321.tutoringservice321.model.Availability;
 import ca.mcgill.ecse321.tutoringservice321.model.Session;
 import ca.mcgill.ecse321.tutoringservice321.model.Subject;
 import ca.mcgill.ecse321.tutoringservice321.model.Tutor;
 import ca.mcgill.ecse321.tutoringservice321.model.Course;
-
+import ca.mcgill.ecse321.tutoringservice321.model.Review;
 import ca.mcgill.ecse321.tutoringservice321.service.TutoringService321Service;
 
 @CrossOrigin(origins = "*")
@@ -313,7 +314,25 @@ public class TutoringService321RestController {
 		}
 
 		TutorDto tutorDto = converToDto(session.getTutor());
-		SessionDto dto = new SessionDto(session.getDate(), session.getStarTime(), session.getEndTime(), tutorDto, null);
+		
+		Set<ReviewDto> reviews = new HashSet<ReviewDto>();
+		for(Review review : session.getReview()) {
+			reviews.add(converToDto(review));
+		}
+		
+		SessionDto dto = new SessionDto(session.getDate(), session.getStarTime(), session.getEndTime(), tutorDto, reviews);
+		return dto;
+	}
+
+	//====================================================================================
+	//REVIEW METHOD
+	
+	private ReviewDto converToDto(Review review) {
+		if (review == null) {
+			throw new IllegalArgumentException("There is no such course.");
+		}
+
+		ReviewDto dto = new ReviewDto(review.getTextualReview(), review.getAuthorEmail(), converToDto(review.getSession()), review.getReviewID());
 		return dto;
 	}
 

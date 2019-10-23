@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.tutoringservice321.dto;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Set;
 
 public class SessionDto {
 
@@ -9,18 +10,18 @@ public class SessionDto {
 	private Time startTime;
 	private Time endTime;
 	private TutorDto tutor;
-	private AvailabilityDto availability;
+	private Set<ReviewDto> reviews;
 
 	public SessionDto() {
 
 	}
 
-	public SessionDto(Date date, Time startTime, Time endTime, TutorDto tutor, AvailabilityDto availability) {
+	public SessionDto(Date date, Time startTime, Time endTime, TutorDto tutor, Set<ReviewDto> reviews) {
 		this.date = date;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.tutor = tutor;
-		this.availability = availability;
+		this.reviews = reviews;
 	}
 
 	public Date getDate() {
@@ -51,7 +52,11 @@ public class SessionDto {
 		return tutor;
 	}
 
-	public AvailabilityDto getAvailability() {
-		return availability;
+	public Set<ReviewDto> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(Set<ReviewDto> reviews) {
+		this.reviews = reviews;
 	}
 }
