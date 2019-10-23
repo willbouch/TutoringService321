@@ -208,7 +208,7 @@ public class TutoringService321ApplicationTests {
 
 	@Test
 	public void testWriteSession() {
-		assertEquals(0, service.getAllSessions().size());
+		
 
 		long millis=System.currentTimeMillis();  		
 		Date date = Date.valueOf("2019-11-13");
@@ -216,13 +216,14 @@ public class TutoringService321ApplicationTests {
 		Time endTime = Time.valueOf("16:00:00");
 
 		String tutorEmail = "k@gmail.com";
-
+		assertEquals(0, service.getAllSessions(tutorEmail).size());
+		
 		try {
 			service.createTutor(tutorEmail, "Katie", "123", "432", 34);
 			service.createSession(tutorEmail, date, endTime, startTime);
 			fail();
 
-			List<Session> allSessions = service.getAllSessions();
+			List<Session> allSessions = service.getAllSessions(tutorEmail);
 
 			assertEquals(1, allSessions.size());
 			assertEquals(date, allSessions.get(0).getDate());
@@ -236,53 +237,56 @@ public class TutoringService321ApplicationTests {
 
 	@Test
 	public void testWriteSessionNullDate() {
-		assertEquals(0, service.getAllSessions().size());
+		
 
 		Date date = (Date) null;
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("16:00:00");
 
 		String tutorEmail = "k@gmail.com";
-
+		
+		assertEquals(0, service.getAllSessions(tutorEmail).size());
+		
 		try {
 			service.createSession(tutorEmail, date, endTime, startTime);
 		} catch (IllegalArgumentException e) {
-			assertEquals(0, service.getAllSessions().size());
+			assertEquals(0, service.getAllSessions(tutorEmail).size());
 		}
 	}
 
 	@Test
 	public void testWriteSessionNullStartTime() {
-		assertEquals(0, service.getAllSessions().size());
 
 		Date date = Date.valueOf("2020-01-10");
 		Time startTime = (Time) null;
 		Time endTime = Time.valueOf("16:00:00");
 
 		String tutorEmail = "k@gmail.com";
-
+		
+		assertEquals(0, service.getAllSessions(tutorEmail).size());
+		
 		try {
 			service.createSession(tutorEmail, date, endTime, startTime);
 		} catch (IllegalArgumentException e) {
-			assertEquals(0, service.getAllSessions().size());
+			assertEquals(0, service.getAllSessions(tutorEmail).size());
 		}
 	}
 
 	@Test
 	public void testWriteSessionNullEndTime() {
-		assertEquals(0, service.getAllSessions().size());
 
 		Date date = Date.valueOf("2020-01-10");
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = (Time) null;
 
 		String tutorEmail = "k@gmail.com";
+		assertEquals(0, service.getAllSessions(tutorEmail).size());
 
 		try {
 			service.createTutor("k@gmail.com", "Katie", "123", "432", 34);
 			service.createSession(tutorEmail, date, endTime, startTime);
 		} catch (IllegalArgumentException e) {
-			assertEquals(0, service.getAllSessions().size());
+			assertEquals(0, service.getAllSessions(tutorEmail).size());
 		}
 	}
 
