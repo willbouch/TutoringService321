@@ -24,6 +24,7 @@ import ca.mcgill.ecse321.tutoringservice321.dao.AvailabilityRepository;
 import ca.mcgill.ecse321.tutoringservice321.dao.SessionRepository;
 import ca.mcgill.ecse321.tutoringservice321.dao.TutorRepository;
 import ca.mcgill.ecse321.tutoringservice321.dao.CourseRepository;
+import ca.mcgill.ecse321.tutoringservice321.dao.ReviewRepository;
 import ca.mcgill.ecse321.tutoringservice321.dao.StudentRepository;
 import ca.mcgill.ecse321.tutoringservice321.dao.SubjectRepository;
 import ca.mcgill.ecse321.tutoringservice321.dao.TutoringService321Repository;
@@ -53,6 +54,8 @@ public class TutoringService321ApplicationTests {
 	CourseRepository courseRepository;
 	@Autowired
 	AvailabilityRepository availabilityRepository;
+	@Autowired
+	ReviewRepository reviewRepository;
 
 	@After
 	public void clearDatabase() {
@@ -61,6 +64,7 @@ public class TutoringService321ApplicationTests {
 		sessionRepository.deleteAll();
 		courseRepository.deleteAll();
 		subjectRepository.deleteAll();
+		reviewRepository.deleteAll();
 	}
 
 	/*
