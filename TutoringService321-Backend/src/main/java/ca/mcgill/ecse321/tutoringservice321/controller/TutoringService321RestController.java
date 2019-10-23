@@ -124,7 +124,7 @@ public class TutoringService321RestController {
 
 		return converToDto(tutor);
 	}
-	
+
 	@PutMapping(value = {"/{tutorEmail}", "/{tutorEmail}/"})
 	public TutorDto updateProfile(@PathVariable("tutorEmail") String tutorEmail,
 			@RequestParam String name, 
@@ -195,7 +195,7 @@ public class TutoringService321RestController {
 
 		return converToDto(course);
 	}
-	
+
 	@DeleteMapping(value = {"/courses/{courseCode+school+subjectName}", "/courses/{courseCode+school+subjectName}/"})
 	public List<CourseDto> removeCourseFromSubject(@PathVariable("courseCode+school+subjectName") String courseCode, String school, String subjectName) {
 		service.removeCourseFromSubject(school, courseCode, subjectName);
@@ -219,7 +219,7 @@ public class TutoringService321RestController {
 
 		return dtos;
 	}
-	
+
 	private CourseDto converToDto(Course course) {
 		if (course == null) {
 			throw new IllegalArgumentException("There is no such course.");
@@ -255,7 +255,7 @@ public class TutoringService321RestController {
 		SubjectDto dto = new SubjectDto(subject.getSubjectName(), tutors, courses);
 		return dto;
 	}
-	
+
 	//====================================================================================
 	//SESSION METHODS
 
@@ -314,19 +314,43 @@ public class TutoringService321RestController {
 		}
 
 		TutorDto tutorDto = converToDto(session.getTutor());
-		
+
 		Set<ReviewDto> reviews = new HashSet<ReviewDto>();
 		for(Review review : session.getReview()) {
 			reviews.add(converToDto(review));
 		}
-		
+
 		SessionDto dto = new SessionDto(session.getDate(), session.getStarTime(), session.getEndTime(), tutorDto, reviews);
 		return dto;
 	}
 
 	//====================================================================================
 	//REVIEW METHOD
+
+	@PostMapping(value = {"/reviews/{tutorEmail}", "/reviews/{tutorEmail}/"})
+	public ReviewDto submitTutorReview(@PathVariable("tutorEmail") String tutorEmail,
+			@RequestParam String textualReview,
+			@RequestParam Date date,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime startTime,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime endTime) {
+
+		Review review = service.submitTutorReview(textualReview, tutorEmail, date, Time.valueOf(startTime), Time.valueOf(endTime));
+
+		return converToDto(review);
+	}
 	
+	@GetMapping(value = {"/reviews/{tutorEmail}", "/reviews/{tutorEmail}/"})
+	public List<ReviewDto> getTutorReviews(@PathVariable("tutorEmail") String tutorEmail) {
+		List<Review> tutorReviews = service.getAllTutorReviews(tutorEmail);
+
+		List<ReviewDto> dtos = new ArrayList<ReviewDto>();
+		for(Review review : tutorReviews) {
+			dtos.add(converToDto(review));
+		}
+
+		return dtos;
+	}
+
 	private ReviewDto converToDto(Review review) {
 		if (review == null) {
 			throw new IllegalArgumentException("There is no such course.");

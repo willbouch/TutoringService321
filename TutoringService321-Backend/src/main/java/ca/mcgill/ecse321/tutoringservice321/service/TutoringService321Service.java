@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -192,7 +193,7 @@ public class TutoringService321Service {
 
 	//====================================================================================
 	//SESSION METHODS
-	
+
 	//TODO add review
 
 	@Transactional
@@ -235,9 +236,9 @@ public class TutoringService321Service {
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
-		Set<Session> sessions = sessionRepository.findSessionByDate(date);
+		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
 		for(Session session : sessions) {
-			if(tutor.equals(session.getTutor()) && startTime.equals(session.getStarTime()) && endTime.equals(session.getEndTime())) {
+			if(startTime.equals(session.getStarTime()) && endTime.equals(session.getEndTime())) {
 				return session;
 			}
 		}
@@ -571,6 +572,70 @@ public class TutoringService321Service {
 		return email;
 	}
 
+	//====================================================================================
+	//REVIEW METHODS
+
+	@Transactional
+	public Review submitTutorReview(String textualReview, String tutorEmail, Date date, Time startTime, Time endTime) {
+		Review review = new Review();
+
+		//Input validation
+		if(textualReview == null || textualReview.trim().length() == 0) {
+			throw new IllegalArgumentException("Review cannot be empty.");
+		}
+		if(tutorEmail == null || tutorEmail.trim().length() == 0) {
+			throw new IllegalArgumentException("Review cannot be empty.");
+		}
+		
+		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
+		
+		if(tutor == null) {
+			throw new IllegalArgumentException("Tutor could not be found");
+		}
+		
+		Session foundSession = null;
+		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
+		for(Session session : sessions) {
+			if(startTime.equals(session.getStarTime()) && endTime.equals(session.getEndTime())) {
+				foundSession = session;
+			}
+		}
+		
+		if(foundSession == null) {
+			throw new IllegalArgumentException("Session could not be found.");
+		}
+
+		//Setting the attributes
+		review.setAuthorEmail(tutorEmail);
+		review.setTextualReview(textualReview);
+		review.setSession(foundSession);
+		review.setReviewID(tutorEmail.hashCode()*textualReview.hashCode());
+
+		return null;
+	}
+
+	@Transactional
+	public List<Review> getAllTutorReviews(String tutorEmail) {
+		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
+		
+		if(tutor == null) {
+			throw new IllegalArgumentException("Tutor could not be found.");
+		}
+		
+		List<Review> tutorReviews = new ArrayList<Review>();
+		Set<Session> sessions = tutor.getSession();
+		for(Session session : sessions) {
+			Set<Review> reviews = session.getReview();
+			for(Review review : reviews) {
+				if(!(review.getAuthorEmail().equals(tutorEmail))) {
+					tutorReviews.add(review);
+				}
+			}
+		}
+		
+		return tutorReviews;
+	}
+	
 	//====================================================================================
 
 	//Helper method provided in EventRegistration
