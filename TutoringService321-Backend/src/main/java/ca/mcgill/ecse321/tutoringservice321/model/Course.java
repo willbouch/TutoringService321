@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Set;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Course{
