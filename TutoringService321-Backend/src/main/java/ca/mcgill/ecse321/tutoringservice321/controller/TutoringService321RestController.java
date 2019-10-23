@@ -106,7 +106,7 @@ public class TutoringService321RestController {
 	//====================================================================================
 	//TUTOR METHODS
 
-	@PostMapping(value = {"/{tutorEmail}", "/{tutorEmail}/"})
+	@PostMapping(value = {"/register/{tutorEmail}", "/register/{tutorEmail}/"})
 	public TutorDto registerTutor(@PathVariable("tutorEmail") String tutorEmail,
 			@RequestParam String name,
 			@RequestParam String password, 
@@ -118,14 +118,14 @@ public class TutoringService321RestController {
 		return converToDto(tutor);
 	}
 
-	@GetMapping(value = {"/{tutorEmail}", "/{tutorEmail}/"})
+	@GetMapping(value = {"/tutors/{tutorEmail}", "/tutors/{tutorEmail}/"})
 	public TutorDto getTutor(@PathVariable("tutorEmail") String tutorEmail) {
 		Tutor tutor = service.getTutor(tutorEmail);
 
 		return converToDto(tutor);
 	}
 
-	@PutMapping(value = {"/{tutorEmail}", "/{tutorEmail}/"})
+	@PutMapping(value = {"/tutors/profile/{tutorEmail}", "/tutors/profile/{tutorEmail}/"})
 	public TutorDto updateProfile(@PathVariable("tutorEmail") String tutorEmail,
 			@RequestParam String name, 
 			@RequestParam String phoneNumber,
@@ -136,7 +136,7 @@ public class TutoringService321RestController {
 		return converToDto(tutor);
 	}
 
-	@PutMapping(value = {"/{tutorEmail}", "/{tutorEmail}/"})
+	@PutMapping(value = {"/tutors/password/{tutorEmail}", "/tutors/password{tutorEmail}/"})
 	public TutorDto changePassword(@PathVariable("tutorEmail") String tutorEmail,
 			@RequestParam String oldPassword,
 			@RequestParam String newPassword){
@@ -259,7 +259,7 @@ public class TutoringService321RestController {
 	//====================================================================================
 	//SESSION METHODS
 
-	@PostMapping(value = {"/sessions/{tutorEmail}", "/session/{tutorEmail}/"})
+	@PostMapping(value = {"/sessions/{tutorEmail}", "/sessions/{tutorEmail}/"})
 	public SessionDto createSession(@PathVariable("tutorEmail") String tutorEmail,
 			@RequestParam Date date,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime startTime,
@@ -270,7 +270,7 @@ public class TutoringService321RestController {
 		return converToDto(session);
 	}
 
-	@GetMapping(value = {"/availabilities/{tutorEmail}", "/availabilities/{tutorEmail}/"})
+	@GetMapping(value = {"/sessions/{tutorEmail}", "/sessions/{tutorEmail}/"})
 	public List<SessionDto> getAllSessions(@PathVariable("tutorEmail") String tutorEmail) {
 		List<SessionDto> dtos = new ArrayList<SessionDto>();
 		for(Session session : service.getAllSessions(tutorEmail)) {
@@ -280,7 +280,7 @@ public class TutoringService321RestController {
 		return dtos;
 	}
 
-	@PutMapping(value = {"/availabilities/{tutorEmail}", "/availabilities/{tutorEmail}/"})
+	@PutMapping(value = {"/sessions/{tutorEmail}", "/sessions/{tutorEmail}/"})
 	public SessionDto approveSession(@PathVariable("tutorEmail") String tutorEmail,
 			@RequestParam Date requestedDate,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime qStartTime,
@@ -293,7 +293,7 @@ public class TutoringService321RestController {
 		return converToDto(session);
 	}
 
-	@DeleteMapping(value = {"/session/{tutorEmail}", "/session/{tutorEmail}/"})
+	@DeleteMapping(value = {"/sessions/{tutorEmail}", "/sessions/{tutorEmail}/"})
 	public List<SessionDto> cancelSession(@PathVariable("tutorEmail") String tutorEmail,
 			@RequestParam Date date,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime startTime,
