@@ -15,5 +15,6 @@ public interface AvailabilityRepository extends CrudRepository<Availability, Int
 	Set<Availability> findAvailabilityByDate(Date date);
 	Set<Availability> findAvailabilityByDateAndTutor(Date date, Tutor tutor);
 	Set<Availability> findAvailabilityByTutor(Tutor tutor);
+	Set<Availability> findAvailabilityByTutorAndDateAndStartTime(Tutor tutor,Date date, Time stime);
 	
 }

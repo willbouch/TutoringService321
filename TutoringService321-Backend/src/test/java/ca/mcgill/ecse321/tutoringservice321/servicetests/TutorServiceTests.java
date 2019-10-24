@@ -19,10 +19,12 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TutorServiceTests {
+	@Before
+	
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testRegisterTutor() {
+
 	}
 
 }

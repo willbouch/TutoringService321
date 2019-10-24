@@ -303,19 +303,22 @@ public class TutoringService321ApplicationTests {
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("16:00:00");
 
+		List <Availability> allAvailabilities = service.getAllTutorAvailabilities(tutorEmail);
+
 		try {
 			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
 			service.addAvailability(tutorEmail, date, startTime, endTime);
-			fail();
+			
 
-			List <Availability> allAvailabilities = service.getAllTutorAvailabilities(tutorEmail);
-
-			assertEquals(1, allAvailabilities.size());
-			assertEquals(date, allAvailabilities.get(0).getDate());
-			assertEquals(startTime, allAvailabilities.get(0).getStartTime());
-			assertEquals(endTime, allAvailabilities.get(0).getEndTime());
+	
 		} catch (IllegalArgumentException e) {
+			fail();
 		}
+		
+		assertEquals(1, allAvailabilities.size());
+		assertEquals(date, allAvailabilities.get(0).getDate());
+		assertEquals(startTime, allAvailabilities.get(0).getStartTime());
+		assertEquals(endTime, allAvailabilities.get(0).getEndTime());
 
 	}
 
