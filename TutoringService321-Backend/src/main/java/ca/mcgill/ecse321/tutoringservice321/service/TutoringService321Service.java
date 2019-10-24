@@ -50,11 +50,11 @@ public class TutoringService321Service {
 		if(phoneNumber == null || phoneNumber.trim().length() == 0) {
 			throw new IllegalArgumentException("Phone number cannot be empty.");
 		}
-		if(hourlyRate > 0) {
+		if(hourlyRate < 0) {
 			throw new IllegalArgumentException("Hourly has to be a positive number.");
 		}
 		Tutor tutor = new Tutor();
-
+		
 		//Setting the attributes
 		//Note that rating starts at -1 as a flag for "no rating yet"
 		tutor.setEmail(email);
@@ -85,7 +85,7 @@ public class TutoringService321Service {
 		if(phoneNumber == null || phoneNumber.trim().length() == 0) {
 			throw new IllegalArgumentException("Phone number cannot be empty.");
 		}
-		if(hourlyRate > 0) {
+		if(hourlyRate < 0) {
 			throw new IllegalArgumentException("Hourly has to be a positive number.");
 		}
 		tutor.setEmail(email);
@@ -105,7 +105,7 @@ public class TutoringService321Service {
 			throw new IllegalArgumentException("That is not the correct password.");
 		}
 		if (newPassword==null || newPassword.trim().length()==0) {
-			throw new IllegalArgumentException("Please enter a new password.");
+			throw new IllegalArgumentException("Password cannot be empty.");
 		}
 		tutor.setPassword(newPassword);
 		return tutor;
