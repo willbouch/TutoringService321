@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.tutoringservice321.dao;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Set;
 import ca.mcgill.ecse321.tutoringservice321.model.*;
 
@@ -14,5 +15,6 @@ public interface SessionRepository extends CrudRepository<Session, Integer>{
 	Set<Session> findSessionByTutorAndStudent(Tutor tutor, Student student);
 	Set<Session> findSessionByDate(Date date);
 	Set<Session> findSessionBySessionID(int id);
+	Set<Session> findSessionByTutorAndDateAndStartTime(Tutor tutor, Date date, Time startTime);
 	
 }
