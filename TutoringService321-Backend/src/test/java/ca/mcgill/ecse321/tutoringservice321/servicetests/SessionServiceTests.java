@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.tutoringservice321.servicetests;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +53,7 @@ public class SessionServiceTests {
 		});
 	}
 
-
+	@After
 
 	@Test
 	public void testCreateSession() {
@@ -129,6 +130,8 @@ public class SessionServiceTests {
 		//assertEquals(tutorEmail, session.getSessionID());
 	}
 	
+	@Test
+	
 	public void testApproveSessionEmptyEmail() {
 
 		String tutorEmail = " ";
@@ -155,6 +158,7 @@ public class SessionServiceTests {
 		assertEquals("A tutor must have a valid email to approve a session!", error);
 		//assertEquals(tutorEmail, session.getSessionID());
 	}
+	@Test
 	
 	public void testApproveSessionNullqDate() {
 
@@ -183,6 +187,8 @@ public class SessionServiceTests {
 		//assertEquals(tutorEmail, session.getSessionID());
 	}
 	
+	@Test
+	
 	public void testApproveSessionNullcDate() {
 
 		String tutorEmail = "test@gmail.com";
@@ -209,6 +215,8 @@ public class SessionServiceTests {
 		
 		//assertEquals(tutorEmail, session.getSessionID());
 	}
+	
+	@Test
 	
 	public void testApproveSessionNullqstartTime() {
 
@@ -238,6 +246,8 @@ public class SessionServiceTests {
 		//assertEquals(tutorEmail, session.getSessionID());
 	}
 	
+	@Test
+	
 	public void testApproveSessionNullcStartTime() {
 
 		String tutorEmail = "test@gmail.com";
@@ -264,6 +274,8 @@ public class SessionServiceTests {
 		assertEquals("Confirmed start time cannot be empty!", error);
 		//assertEquals(tutorEmail, session.getSessionID());
 	}
+	
+	@Test
 	
 	public void testApproveSessionqEndTime() {
 
@@ -292,6 +304,8 @@ public class SessionServiceTests {
 		//assertEquals(tutorEmail, session.getSessionID());
 	}
 	
+	@Test
+	
 	public void testApproveSessionNullcEndTime() {
 
 		String tutorEmail = "test@gmail.com";
@@ -319,6 +333,8 @@ public class SessionServiceTests {
 		
 		//assertEquals(tutorEmail, session.getSessionID());
 	}
+	
+	@Test
 	
 	public void testApproveNullSession() {
 
