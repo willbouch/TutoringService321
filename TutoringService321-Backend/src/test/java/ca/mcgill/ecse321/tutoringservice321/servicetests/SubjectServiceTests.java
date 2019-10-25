@@ -17,6 +17,7 @@ import ca.mcgill.ecse321.tutoringservice321.dao.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -31,9 +32,8 @@ public class SubjectServiceTests {
 	@InjectMocks
 	private TutoringService321Service service;
 	
-	private static final String SUBJECT_KEY = "TestPerson";
-	//private static final String NONEXISTING_KEY = "NotAPerson";
-
+	private static final String SUBJECT_KEY = "Maths";
+	private static final String NONEXISTING_KEY = "NotAPerson";
 	
 	@Before
 	public void setMockOutput() {
@@ -48,36 +48,35 @@ public class SubjectServiceTests {
 		});
 	}
    
-	private Subject subject;
+	@Test
+	public void testGetExistingSubject() {
+		assertEquals(SUBJECT_KEY, service.getSubject(SUBJECT_KEY).getSubjectName());
+	}
 
 	@Test
-	public void testCreateSubject() {
-		assertEquals(0, service.getAllSubjects().size());
-		
-		String name = "Mathematics";
-		
+	public void testGetNonExistingSubject() {
+		assertNull(service.getSubject(NONEXISTING_KEY));
+	}
+	
+	@Test
+	public void testDeleteSubject() {
 		try {
-			 subject = service.createSubject(name);
-		}catch (IllegalArgumentException e) {
+			service.deleteSubject(SUBJECT_KEY);
+		} catch(IllegalArgumentException e) {
 			fail();
 		}
-		
-		assertEquals(name,subject.getSubjectName());
-		
 	}
-	
 	
 	@Test
-	public void testCreateSubjectNull() {
-		String name= null;
-		String error= null;
+	public void testDeleteSubjectNotFound() {
+		String error = null;
 		
 		try {
-			 subject = service.createSubject(name);
-		}catch(IllegalArgumentException e) {
+			service.deleteSubject("Java Programming");
+		} catch(IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		assertEquals("The name cannot be empty.", error );
+		
+		assertEquals("Subject could not be found.", error);
 	}
-
 }
