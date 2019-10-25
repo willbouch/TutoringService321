@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.*;
 
 import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class TutoringService321Service {
 	CourseRepository courseRepository;
 	@Autowired
 	AvailabilityRepository availabilityRepository;
+	@Autowired
+	ReviewRepository reviewRepository;
 
 	//====================================================================================
 	//TUTOR METHODS
@@ -38,10 +41,9 @@ public class TutoringService321Service {
 	public Tutor createTutor(String email, String name, String password, String phoneNumber,
 			int hourlyRate) {
 
-		//Input validation
 		if(email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Email cannot be empty.");
-		}
+		}		
 		if(name == null || name.trim().length() == 0) {
 			throw new IllegalArgumentException("Name cannot be empty.");
 		}
@@ -54,8 +56,26 @@ public class TutoringService321Service {
 		if(hourlyRate < 0) {
 			throw new IllegalArgumentException("Hourly has to be a positive number.");
 		}
+		if(!email.matches(".{1,}@.{1,}\\..{2,3}")) {
+			throw new IllegalArgumentException("The email should be in the format of <example@something.ca/com/etc.>.");
+		}
+		if(phoneNumber.length() != 10) {
+			throw new IllegalArgumentException("Phone number has to be 10 character long.");
+		}
+		if(password.length() < 8) {
+			throw new IllegalArgumentException("Password has to be at least 8 characters long.");
+		}
+		
+		//Check if email already used
+		List<Tutor> allTutors = getAllTutors();
+		for(Tutor tutor : allTutors) {
+			if(tutor.getEmail().equals(email)) {
+				throw new IllegalArgumentException("A tutor with the same email already exists.");
+			}
+		}
+		
 		Tutor tutor = new Tutor();
-
+		
 		//Setting the attributes
 		//Note that rating starts at -1 as a flag for "no rating yet"
 		tutor.setEmail(email);
@@ -89,6 +109,10 @@ public class TutoringService321Service {
 		if(hourlyRate < 0) {
 			throw new IllegalArgumentException("Hourly has to be a positive number.");
 		}
+		if(phoneNumber.length() != 10) {
+			throw new IllegalArgumentException("Phone number has to be 10 character long.");
+		}
+		
 		tutor.setEmail(email);
 		tutor.setName(name);
 		tutor.setPhoneNumber(phoneNumber);
@@ -106,8 +130,12 @@ public class TutoringService321Service {
 			throw new IllegalArgumentException("That is not the correct password.");
 		}
 		if (newPassword==null || newPassword.trim().length()==0) {
-			throw new IllegalArgumentException("Please enter a new password.");
+			throw new IllegalArgumentException("Password cannot be empty.");
 		}
+		if(newPassword.length() < 8) {
+			throw new IllegalArgumentException("Password has to be at least 8 characters long.");
+		}
+		
 		tutor.setPassword(newPassword);
 		return tutor;
 	}
@@ -118,6 +146,9 @@ public class TutoringService321Service {
 
 		if(tutor != null) {
 			tutorRepository.delete(tutor);
+		}
+		else {
+			throw new IllegalArgumentException("Tutor could not be found.");
 		}
 	}
 
@@ -199,9 +230,7 @@ public class TutoringService321Service {
 
 	@Transactional
 	public Session createSession(String tutorEmail, Date date, Time startTime, Time endTime) {
-		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
-			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
-		}
+
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
@@ -251,9 +280,6 @@ public class TutoringService321Service {
 	@Transactional
 	public Session approveSession(String tutorEmail, Date requestedDate, Time qStartTime, Time qEndTime,
 			Date confirmedDate, Time cStartTime, Time cEndTime) {
-		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
-			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
-		}
 
 		//We first check that there is no session at that time
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
@@ -271,9 +297,6 @@ public class TutoringService321Service {
 
 	@Transactional
 	public void cancelSession(String tutorEmail, Date date, Time startTime, Time endTime) {
-		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
-			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
-		}
 
 		Session session = getSession(tutorEmail, date, startTime, endTime);
 
@@ -298,6 +321,7 @@ public class TutoringService321Service {
 
 	@Transactional
 	public Availability addAvailability(String tutorEmail, Date date, Time startTime, Time endTime) {
+
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
@@ -439,7 +463,7 @@ public class TutoringService321Service {
 	//LOGIN-LOGOUT METHODS
 
 	@Transactional
-	public void loginAsTutor(String email, String password) {
+	public Tutor loginAsTutor(String email, String password) {
 		//Input validation
 		if(email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Email cannot be empty.");
@@ -450,11 +474,20 @@ public class TutoringService321Service {
 
 		List<Tutor> tutors = getAllTutors();
 
+		Tutor foundTutor = null;
 		for(Tutor tutor : tutors) {
-			if(tutor.getEmail().equals(email) && tutor.getEmail().equals(password)) {
+			if(tutor.getEmail().equals(email) && tutor.getPassword().equals(password)) {
 				TutoringService321Application.setLoggedUser(tutor);
+				foundTutor = tutor;
+				break;
 			}
 		}
+		
+		if(foundTutor == null) {
+			throw new IllegalArgumentException("Could not find any corresponding tutor account.");
+		}
+		
+		return foundTutor;
 	}
 
 	@Transactional
@@ -632,8 +665,9 @@ public class TutoringService321Service {
 		review.setTextualReview(textualReview);
 		review.setSession(foundSession);
 		review.setReviewID(tutorEmail.hashCode()*textualReview.hashCode());
+		reviewRepository.save(review);
 
-		return null;
+		return review;
 	}
 
 	@Transactional
@@ -658,6 +692,11 @@ public class TutoringService321Service {
 		return tutorReviews;
 	}
 
+	@Transactional
+	public List<Review> getAllReviews() {
+		return toList(reviewRepository.findAll());
+	}
+	
 	//====================================================================================
 
 	//Helper method provided in EventRegistration

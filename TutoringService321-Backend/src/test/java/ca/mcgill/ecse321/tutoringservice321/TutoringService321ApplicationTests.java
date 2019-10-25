@@ -35,12 +35,7 @@ import ca.mcgill.ecse321.tutoringservice321.model.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TutoringService321ApplicationTests {
-   
-	@Test
-    public void contextLoads() {
 
-    }
-	
 	@Autowired
 	TutoringService321Service service;
 
@@ -57,43 +52,45 @@ public class TutoringService321ApplicationTests {
 	@Autowired
 	ReviewRepository reviewRepository;
 
+	private Tutor tutor;
+	private Session session;
+	private Availability availability;
+	private Review review;
+	private Course course;
+	private Subject subject;
+
 	@After
 	public void clearDatabase() {
+		sessionRepository.deleteAll();
 		tutorRepository.deleteAll();
 		availabilityRepository.deleteAll();
-		sessionRepository.deleteAll();
 		courseRepository.deleteAll();
 		subjectRepository.deleteAll();
 		reviewRepository.deleteAll();
 	}
 
-	/*
-	 * ***** Tests for Tutor--Kyjauna
-	 */
-
 	@Test
-	public void testCreateTutor() {
+	public void testWriteTutor() {
+		assertEquals(0, service.getAllTutors().size());
 
-		String username = "aName";
+		String name = "aName";
 		String email = "test.tester@mcgill.ca";
 		String password = "Ilovedogs";
 		String phoneNumber = "5145555555";
 		int hourlyRate = 25;
 
 		try {
-			service.createTutor(username, email, password, phoneNumber, hourlyRate);
-			List<Tutor> allTutors = service.getAllTutors();
-
-			assertEquals(1, allTutors.size());
-			assertEquals(username, allTutors.get(0).getUserID());
-			assertEquals(password, allTutors.get(0).getPassword());
-			assertEquals(hourlyRate, allTutors.get(0).getHourlyRate(), 0.05);
-			assertEquals(email, allTutors.get(0).getEmail());
-
+			tutor = service.createTutor(email, name, password, phoneNumber, hourlyRate);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
+			fail();
 		}
 
+		assertEquals(1, service.getAllTutors().size());
+		assertEquals(name, tutor.getName());
+		assertEquals(password, tutor.getPassword());
+		assertEquals(hourlyRate, tutor.getHourlyRate());
+		assertEquals(email, tutor.getEmail());
+		assertEquals(phoneNumber, tutor.getPhoneNumber());
 	}
 
 	@Test
@@ -106,198 +103,89 @@ public class TutoringService321ApplicationTests {
 		int hourlyRate = 25;
 
 		try {
-			service.createTutor(username, email, password, phoneNumber, hourlyRate);
-			List<Tutor> allTutors = service.getAllTutors();
-			assertEquals(1, allTutors.size());
-
+			tutor = service.createTutor(email, username, password, phoneNumber, hourlyRate);
+			tutor = service.updateTutor(email, "Math", "4185730193", 18);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-		}
-
-
-		String newUsername = "anUpdatedName";
-		String newEmail = "test.newtester@mcgill.ca";
-		String newPassword = "Ichangedmymind,ilovecats";
-		String newPhoneNumber = "5147777777";
-		int newHourlyRate = 30;
-
-		try {
-			service.createTutor(newUsername, newEmail, newPassword, newPhoneNumber, newHourlyRate);
-			List<Tutor> allTutors = service.getAllTutors();
-			assertEquals(username, allTutors.get(0).getUserID());
-			assertEquals(password, allTutors.get(0).getPassword());
-			assertEquals(newHourlyRate, allTutors.get(0).getHourlyRate(), 30);
-
-		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-		}
-	}
-
-	@Test
-	public void testCreateTutorNullUsername() {
-
-		String username = null;
-		String email = "test.tester@mcgill.ca";
-		String password = "Ilovedogs";
-		String phoneNumber = "5145555555";
-		int hourlyRate = 25;
-
-
-		try {
-			service.createTutor(username, email, password, phoneNumber, hourlyRate);
-			List<Tutor> allTutors = service.getAllTutors();
-			assertEquals(0, allTutors.size());
 			fail();
-		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-
 		}
 
+		assertEquals(1, service.getAllTutors().size());
+		assertEquals("Math", tutor.getName());
+		assertEquals(18, tutor.getHourlyRate());
+		assertEquals("4185730193", tutor.getPhoneNumber());
 	}
 
 	@Test
-	public void testCreateTutorNullPassword() {
+	public void testViewTutor() {
 
 		String username = "aName";
 		String email = "test.tester@mcgill.ca";
-		String password = null;
-		String phoneNumber = "5145555555";
-		int hourlyRate = 25;
-
-		try {
-			service.createTutor(username, email, password, phoneNumber, hourlyRate);
-			List<Tutor> allTutors = service.getAllTutors();
-			assertEquals(0, allTutors.size());
-			fail();
-		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-		}
-
-	}
-
-	@Test
-	public void testCreateTutorWrongEmail() {
-
-		/*
-		 * String username = "email"; String password = "test"; double hr = 12; int exp
-		 * = 3;
-		 */
-
-		String username = null;
 		String password = "Ilovedogs";
 		String phoneNumber = "5145555555";
 		int hourlyRate = 25;
 
-
-
 		try {
-			service.createTutor(username, "wrong email", password, phoneNumber, hourlyRate);
-			fail();
-			List<Tutor> allTutors = service.getAllTutors();
-			assertEquals(0, allTutors.size());
+			service.createTutor(email, username, password, phoneNumber, hourlyRate);
+			tutor = service.getTutor(email);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-
+			fail();
 		}
+
+		assertEquals(username, tutor.getName());
+		assertEquals(password, tutor.getPassword());
+		assertEquals(hourlyRate, tutor.getHourlyRate());
+		assertEquals(email, tutor.getEmail());
+		assertEquals(phoneNumber, tutor.getPhoneNumber());
 	}
-
-
-	/*****
-	 * Tests for session --Sharon
-	 */
 
 	@Test
 	public void testWriteSession() {
-		
 
-		long millis=System.currentTimeMillis();  		
 		Date date = Date.valueOf("2019-11-13");
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("16:00:00");
-
 		String tutorEmail = "k@gmail.com";
-		assertEquals(0, service.getAllSessions(tutorEmail).size());
-		
+
 		try {
-			service.createTutor(tutorEmail, "Katie", "123", "432", 34);
-			service.createSession(tutorEmail, date, endTime, startTime);
+			tutor = service.createTutor(tutorEmail, "Katie", "123", "432", 34);
+			assertEquals(0, service.getAllSessions(tutorEmail).size());
+			session = service.createSession(tutorEmail, date, startTime, endTime);
+		} catch (IllegalArgumentException e) {
 			fail();
-
-			List<Session> allSessions = service.getAllSessions(tutorEmail);
-
-			assertEquals(1, allSessions.size());
-			assertEquals(date, allSessions.get(0).getDate());
-			assertEquals(startTime, allSessions.get(0).getStarTime());
-			assertEquals(endTime, allSessions.get(0).getEndTime());
-
-		} catch (IllegalArgumentException e) {
-
 		}
+
+		assertEquals(1, service.getAllSessions(tutorEmail).size());
+		assertEquals(date, session.getDate());
+		assertEquals(startTime, session.getStarTime());
+		assertEquals(endTime, session.getEndTime());
 	}
 
 	@Test
-	public void testWriteSessionNullDate() {
-		
+	public void testViewSession() {
 
-		Date date = (Date) null;
+		Date date = Date.valueOf("2019-11-13");
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("16:00:00");
-
 		String tutorEmail = "k@gmail.com";
-		
-		assertEquals(0, service.getAllSessions(tutorEmail).size());
-		
-		try {
-			service.createSession(tutorEmail, date, endTime, startTime);
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, service.getAllSessions(tutorEmail).size());
-		}
-	}
-
-	@Test
-	public void testWriteSessionNullStartTime() {
-
-		Date date = Date.valueOf("2020-01-10");
-		Time startTime = (Time) null;
-		Time endTime = Time.valueOf("16:00:00");
-
-		String tutorEmail = "k@gmail.com";
-		
-		assertEquals(0, service.getAllSessions(tutorEmail).size());
-		
-		try {
-			service.createSession(tutorEmail, date, endTime, startTime);
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, service.getAllSessions(tutorEmail).size());
-		}
-	}
-
-	@Test
-	public void testWriteSessionNullEndTime() {
-
-		Date date = Date.valueOf("2020-01-10");
-		Time startTime = Time.valueOf("10:00:00");
-		Time endTime = (Time) null;
-
-		String tutorEmail = "k@gmail.com";
-		assertEquals(0, service.getAllSessions(tutorEmail).size());
 
 		try {
-			service.createTutor("k@gmail.com", "Katie", "123", "432", 34);
-			service.createSession(tutorEmail, date, endTime, startTime);
-		} catch (IllegalArgumentException e) {
+			tutor = service.createTutor(tutorEmail, "Katie", "123", "432", 34);
 			assertEquals(0, service.getAllSessions(tutorEmail).size());
+			service.createSession(tutorEmail, date, endTime, startTime);
+			session = service.getSession(tutorEmail, date, startTime, endTime);
+		} catch (IllegalArgumentException e) {
+			fail();
 		}
+
+		assertEquals(date, session.getDate());
+		assertEquals(startTime, session.getStarTime());
+		assertEquals(endTime, session.getEndTime());
+		assertEquals(tutor, session.getTutor());
 	}
 
-
-	/******
-	 * Tests for Availability--Sharon
-	 */
 	@Test
 	public void testWriteAvailability() {
 		String tutorEmail = "h@gmail.com";
-		assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
 
 		Date date = Date.valueOf("2019-12-01");
 		Time startTime = Time.valueOf("10:00:00");
@@ -306,11 +194,9 @@ public class TutoringService321ApplicationTests {
 		List <Availability> allAvailabilities = service.getAllTutorAvailabilities(tutorEmail);
 
 		try {
-			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
-			service.addAvailability(tutorEmail, date, startTime, endTime);
-			
-
-	
+			tutor = service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
+			assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
+			availability = service.addAvailability(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -320,111 +206,89 @@ public class TutoringService321ApplicationTests {
 		assertEquals(startTime, allAvailabilities.get(0).getStartTime());
 		assertEquals(endTime, allAvailabilities.get(0).getEndTime());
 
+		assertEquals(1, service.getAllTutorAvailabilities(tutorEmail).size());
+		assertEquals(date, availability.getDate());
+		assertEquals(startTime, availability.getStartTime());
+		assertEquals(endTime, availability.getEndTime());
+		assertEquals(tutor, availability.getTutor());
 	}
 
-
 	@Test
-	public void testViewAvailabilityNullDate() {
-		String tutorEmail = "h@gmail.com";
-		assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
+	public void testViewAvailability() {
 
-		Date date = (Date) null;
+		Date date = Date.valueOf("2019-11-13");
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("16:00:00");
+		String tutorEmail = "k@gmail.com";
 
 		try {
-			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
+			tutor = service.createTutor(tutorEmail, "Katie", "123", "432", 34);
 			service.addAvailability(tutorEmail, date, startTime, endTime);
+			availability = service.getAvailability(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
-			assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
+			System.out.println(e.getMessage());
+			fail();
 		}
+
+		assertEquals(date, availability.getDate());
+		assertEquals(startTime, availability.getStartTime());
+		assertEquals(endTime, availability.getEndTime());
+		assertEquals(tutor, availability.getTutor());
 	}
 
-
 	@Test
-	public void testViewAvailabilityNullStartTime() {
-		String tutorEmail = "h@gmail.com";
-		assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
-
-		Date date = Date.valueOf("2019-12-01");
-		Time startTime = (Time) null;
-		Time endTime = Time.valueOf("16:00:00");
-
-		try {
-			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
-			service.addAvailability(tutorEmail, date, startTime, endTime);
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
-		}
-	}
-
-
-	@Test
-	public void testViewAvailabilityNullEndTime() {
-		String tutorEmail = "h@gmail.com";
-		assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
-
-		Date date = Date.valueOf("2019-12-01");
-		Time startTime = Time.valueOf("10:00:00");
-		Time endTime = (Time) null;
-
-		try {
-			service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
-			service.addAvailability(tutorEmail, date, startTime, endTime);
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
-		}
-	}
-
-	/****
-	 * Tests for subject--Kyjauna
-	 */
-
-	@Test
-	public void testCreateSubject() {
+	public void testWriteSubject() {
+		assertEquals(0, service.getAllSubjects().size());
 
 		String subjectName = "aName";
 
-
 		try {
-			service.createSubject(subjectName);
-			List<Subject> allSubjects = service.getAllSubjects();
-
-			assertEquals(1, allSubjects.size());
-			assertEquals(subjectName, allSubjects.get(0).getSubjectName());
-
+			subject = service.createSubject(subjectName);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-		}
-	}
-
-	@Test
-	public void testCreateSubjectNullName() {
-
-		String subjectName = null;
-
-
-		try {
-			List<Subject> allSubjects = service.getAllSubjects();
-
-			service.createSubject(subjectName);
-
-			assertEquals(1, allSubjects.size());
-			assertEquals(subjectName, allSubjects.get(0).getSubjectName());
-
 			fail();
-
-		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
 		}
 
+		assertEquals(1, service.getAllSubjects().size());
+		assertEquals(subjectName, subject.getSubjectName());
 	}
-	/****
-	 * Tests for course--Sharon
-	 */
 
 	@Test
-	public void testCreateCourse() {
+	public void testViewSubject() {
+
+		String subjectName = "aName";
+
+		try {
+			service.createSubject(subjectName);
+			subject = service.getSubject(subjectName);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
+
+		assertEquals(subjectName, subject.getSubjectName());
+	}
+
+	@Test
+	public void testWriteCourse() {
+		assertEquals(0, service.getAllCourses().size());
+
+		String description = "new";
+		String courseCode = "ECSE 321";
+		String school = "McGill";
+
+		try {
+			course = service.createCourse(description, school, courseCode);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
+
+		assertEquals(1, service.getAllCourses().size());
+		assertEquals(school, course.getSchool());
+		assertEquals(description, course.getDescription());
+		assertEquals(courseCode, course.getCourseCode());
+	}
+	
+	@Test
+	public void testViewCourse() {
 
 		String description = "new";
 		String courseCode = "ECSE 321";
@@ -432,76 +296,59 @@ public class TutoringService321ApplicationTests {
 
 		try {
 			service.createCourse(description, school, courseCode);
-			List<Course> allCourses = service.getAllCourses();
-
-			assertEquals(1, allCourses.size());
-			assertEquals(school, allCourses.get(0).getSchool());
-			assertEquals(description, allCourses.get(0).getDescription());
-			assertEquals(courseCode, allCourses.get(0).getCourseCode());
-
+			course = service.getCourse(school, courseCode);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-		}
-	}
-
-
-	@Test
-	public void testCreateCourseNullDescription() {
-
-		String description = null;
-		String courseCode = "ECSE 321";
-		String school = "McGill";
-
-
-		try {
-			List<Course> allCourses = service.getAllCourses();
-			service.createCourse(description, school, courseCode);
 			fail();
-			assertEquals(0, allCourses.size());
+		}
 
+		assertEquals(school, course.getSchool());
+		assertEquals(description, course.getDescription());
+		assertEquals(courseCode, course.getCourseCode());
+	}
+	
+	@Test
+	public void testWriteReview() {
+		assertEquals(0, service.getAllReviews().size());
+
+		String reviewText = "Good Session, thanks!";
+		String tutorEmail = "william@gmail.com";
+		Date date = Date.valueOf("2019-01-04");
+		Time startTime = Time.valueOf("10:00:00");
+		Time endTime = Time.valueOf("12:00:00");
+				
+		try {
+			tutor = service.createTutor(tutorEmail, "William", "123456789", "4185730193", 20);
+			session = service.createSession(tutorEmail, date, startTime, endTime);
+			review = service.submitTutorReview(reviewText, tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
+			fail();
 		}
 
-
+		assertEquals(1, service.getAllReviews().size());
+		assertEquals(tutorEmail, review.getAuthorEmail());
+		assertEquals(reviewText, review.getTextualReview());
 	}
-
+	
 	@Test
-	public void testCreateCourseNullCourseCode() {
+	public void testViewReview() {
 
-		String description = "new";
-		String courseCode = null;
-		String school = "McGill";
-
-
+		String reviewText = "Good Session, thanks!";
+		String tutorEmail = "william@gmail.com";
+		Date date = Date.valueOf("2019-01-04");
+		Time startTime = Time.valueOf("10:00:00");
+		Time endTime = Time.valueOf("12:00:00");
+				
 		try {
-			List<Course> allCourses = service.getAllCourses();
-			service.createCourse(description, school, courseCode);
-			fail();
-			assertEquals(0, allCourses.size());
-
+			tutor = service.createTutor(tutorEmail, "William", "123456789", "4185730193", 20);
+			session = service.createSession(tutorEmail, date, startTime, endTime);
+			service.submitTutorReview(reviewText, tutorEmail, date, startTime, endTime);
+			review = service.getAllTutorReviews(tutorEmail).get(0);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-		}
-
-	}
-
-	@Test
-	public void testCreateCourseNullSchool() {
-
-		String description = "new";
-		String courseCode = "COMPSCI 301";
-		String school = null;
-
-
-		try {
-			List<Course> allCourses = service.getAllCourses();
-			service.createCourse(description, school, courseCode);
 			fail();
-			assertEquals(0, allCourses.size());
-
-		} catch (IllegalArgumentException e){
 		}
 
+		assertEquals(tutorEmail, review.getAuthorEmail());
+		assertEquals(reviewText, review.getTextualReview());
+		assertEquals(session, review.getSession());
 	}
 }
