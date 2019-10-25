@@ -351,6 +351,7 @@ public class TutorServiceTests {
 
 		String name = "William";
 		String email = "w@gmail.com";
+
 		String phoneNumber = "418573";
 		String password = "youguysarekillingme";
 		int hourlyRate = 15;

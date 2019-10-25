@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.*;
 
 import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,9 @@ public class TutoringService321Service {
 	public Tutor createTutor(String email, String name, String password, String phoneNumber,
 			int hourlyRate) {
 
-		//Input validation
 		if(email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Email cannot be empty.");
-		}
+		}		
 		if(name == null || name.trim().length() == 0) {
 			throw new IllegalArgumentException("Name cannot be empty.");
 		}
