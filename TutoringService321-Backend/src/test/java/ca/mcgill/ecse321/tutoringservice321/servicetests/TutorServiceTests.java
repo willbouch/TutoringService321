@@ -346,7 +346,7 @@ public class TutorServiceTests {
 		assertEquals(0, service.getAllTutors().size());
 				
 		String name = "William";
-		String email = "invalidEmail@gmail";
+		String email = "w@email.com";
 		String phoneNumber = "418573";
 		String password = "youguysarekillingme";
 		int hourlyRate = 15;
