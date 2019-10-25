@@ -144,6 +144,9 @@ public class TutoringService321Service {
 		if(tutor != null) {
 			tutorRepository.delete(tutor);
 		}
+		else {
+			throw new IllegalArgumentException("Tutor could not be found.");
+		}
 	}
 
 	@Transactional

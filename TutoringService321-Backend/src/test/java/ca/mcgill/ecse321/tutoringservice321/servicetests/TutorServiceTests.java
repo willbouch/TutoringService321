@@ -63,7 +63,7 @@ public class TutorServiceTests {
 					tutor.setPassword(TUTOR_PASSWORD);
 					tutor.setHourlyRate(TUTOR_HOURLYRATE);
 					tutor.setPhoneNumber(TUTOR_PHONE);
-					
+
 					List<Tutor> tutors = new ArrayList<Tutor>();
 					tutors.add(tutor);
 					return tutors;
@@ -622,5 +622,31 @@ public class TutorServiceTests {
 		}
 
 		assertEquals("That is not the correct password.", error);
+	}
+
+	@Test
+	public void testDeleteTutor() {
+
+		String email = "william@gmail.com";
+
+		try {
+			service.deleteTutor(email);
+		} catch(IllegalArgumentException e) {
+			fail();
+		}
+	}
+
+	@Test
+	public void testDeleteTutorNotFound() {
+		String email = "w@gmail.com";
+		String error = null;
+		
+		try {
+			service.deleteTutor(email);
+		} catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Tutor could not be found.", error);
 	}
 }
