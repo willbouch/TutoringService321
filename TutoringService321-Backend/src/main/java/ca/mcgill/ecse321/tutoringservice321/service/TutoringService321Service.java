@@ -446,7 +446,7 @@ public class TutoringService321Service {
 	//LOGIN-LOGOUT METHODS
 
 	@Transactional
-	public void loginAsTutor(String email, String password) {
+	public Tutor loginAsTutor(String email, String password) {
 		//Input validation
 		if(email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Email cannot be empty.");
@@ -457,11 +457,20 @@ public class TutoringService321Service {
 
 		List<Tutor> tutors = getAllTutors();
 
+		Tutor foundTutor = null;
 		for(Tutor tutor : tutors) {
-			if(tutor.getEmail().equals(email) && tutor.getEmail().equals(password)) {
+			if(tutor.getEmail().equals(email) && tutor.getPassword().equals(password)) {
 				TutoringService321Application.setLoggedUser(tutor);
+				foundTutor = tutor;
+				break;
 			}
 		}
+		
+		if(foundTutor == null) {
+			throw new IllegalArgumentException("Could not find any corresponding tutor account.");
+		}
+		
+		return foundTutor;
 	}
 
 	@Transactional

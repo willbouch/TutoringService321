@@ -19,6 +19,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
+import ca.mcgill.ecse321.tutoringservice321.TutoringService321Application;
 import ca.mcgill.ecse321.tutoringservice321.dao.TutorRepository;
 import ca.mcgill.ecse321.tutoringservice321.model.Tutor;
 import ca.mcgill.ecse321.tutoringservice321.service.TutoringService321Service;
@@ -658,5 +659,107 @@ public class TutorServiceTests {
 	@Test
 	public void testGetNonExistingTutor() {
 		assertNull(service.getTutor("Marwan"));
+	}
+	
+	@Test 
+	public void testLogin() {
+		
+		try {
+			tutor = service.loginAsTutor(TUTOR_EMAIL, TUTOR_PASSWORD);
+		} catch(IllegalArgumentException e) {
+			fail();
+		}
+		
+		assertEquals(TutoringService321Application.getLoggedUser(), tutor);
+	}
+	
+	@Test 
+	public void testLoginNullEmail() {
+		String error = null;
+		
+		try {
+			tutor = service.loginAsTutor(null, TUTOR_PASSWORD);
+		} catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Email cannot be empty.", error);
+	}
+	
+	@Test 
+	public void testLoginEmptyEmail() {
+		String error = null;
+		
+		try {
+			tutor = service.loginAsTutor("", TUTOR_PASSWORD);
+		} catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Email cannot be empty.", error);
+	}
+	
+	@Test 
+	public void testLoginNullPassword() {
+		String error = null;
+		
+		try {
+			tutor = service.loginAsTutor(TUTOR_EMAIL, null);
+		} catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Password cannot be empty.", error);
+	}
+	
+	@Test 
+	public void testLoginTutorNotFoundByPassword() {
+		String error = null;
+		
+		try {
+			tutor = service.loginAsTutor(TUTOR_EMAIL, "aaaaaaaa");
+		} catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Could not find any corresponding tutor account.", error);
+	}
+	
+	@Test 
+	public void testLoginTutorNotFoundByEmail() {
+		String error = null;
+		
+		try {
+			tutor = service.loginAsTutor("aaa@gmail.com", TUTOR_PASSWORD);
+		} catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Could not find any corresponding tutor account.", error);
+	}
+	
+	@Test 
+	public void testLoginEmptyPassword() {
+		String error = null;
+		
+		try {
+			tutor = service.loginAsTutor(TUTOR_EMAIL, "");
+		} catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Password cannot be empty.", error);
+	}
+	
+	@Test
+	public void testLogout() {
+
+		try {
+			service.logout();
+		} catch(IllegalArgumentException e) {
+			fail();
+		}
+		
+		assertEquals(null, TutoringService321Application.getLoggedUser());
 	}
 }
