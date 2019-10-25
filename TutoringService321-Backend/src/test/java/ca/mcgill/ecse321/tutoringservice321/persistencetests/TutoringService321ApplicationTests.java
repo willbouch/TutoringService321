@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.tutoringservice321;
+package ca.mcgill.ecse321.tutoringservice321.persistencetests;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
