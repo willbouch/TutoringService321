@@ -649,4 +649,14 @@ public class TutorServiceTests {
 		
 		assertEquals("Tutor could not be found.", error);
 	}
+	
+	@Test
+	public void testGetExistingTutor() {
+		assertEquals(TUTOR_EMAIL, service.getTutor(TUTOR_EMAIL).getEmail());
+	}
+
+	@Test
+	public void testGetNonExistingTutor() {
+		assertNull(service.getTutor("Marwan"));
+	}
 }
