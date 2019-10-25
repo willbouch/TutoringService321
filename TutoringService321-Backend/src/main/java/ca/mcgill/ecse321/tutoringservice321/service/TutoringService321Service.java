@@ -29,7 +29,9 @@ public class TutoringService321Service {
 	CourseRepository courseRepository;
 	@Autowired
 	AvailabilityRepository availabilityRepository;
-
+	@Autowired
+	ReviewRepository reviewRepository;
+	
 	//====================================================================================
 	//TUTOR METHODS
 
@@ -584,17 +586,31 @@ public class TutoringService321Service {
 			throw new IllegalArgumentException("Review cannot be empty.");
 		}
 		if(tutorEmail == null || tutorEmail.trim().length() == 0) {
-			throw new IllegalArgumentException("Review cannot be empty.");
+			throw new IllegalArgumentException("Tutor Email cannot be empty.");
+		}
+		if(date == null) {
+			throw new IllegalArgumentException("Date cannot be empty.");
+		}
+		if(startTime == null) {
+			throw new IllegalArgumentException("Start Time cannot be empty.");
+		}
+		if(endTime == null) {
+			throw new IllegalArgumentException("End Time cannot be empty.");
 		}
 		
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
 		
 		if(tutor == null) {
-			throw new IllegalArgumentException("Tutor could not be found");
+			throw new IllegalArgumentException("Tutor could not be found.");
 		}
 		
 		Session foundSession = null;
 		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
+		
+		if(sessions == null) {
+			throw new IllegalArgumentException("Sessions with that date and tutor could not be found.");
+		}
+		
 		for(Session session : sessions) {
 			if(startTime.equals(session.getStarTime()) && endTime.equals(session.getEndTime())) {
 				foundSession = session;
@@ -610,8 +626,9 @@ public class TutoringService321Service {
 		review.setTextualReview(textualReview);
 		review.setSession(foundSession);
 		review.setReviewID(tutorEmail.hashCode()*textualReview.hashCode());
+		reviewRepository.save(review);
 
-		return null;
+		return review;
 	}
 
 	@Transactional

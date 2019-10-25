@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ AvailabilityServiceTests.class, CourseServiceTests.class, SessionServiceTests.class,
-		SubjectServiceTests.class, TutorServiceTests.class })
+		SubjectServiceTests.class, TutorServiceTests.class, ReviewServiceTests.class })
 public class TutoringService321ServiceTests {
 
 }
