@@ -25,9 +25,7 @@ import ca.mcgill.ecse321.tutoringservice321.model.Tutor;
 import ca.mcgill.ecse321.tutoringservice321.service.TutoringService321Service;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TutorServiceTests {
-	@Before
-	
+public class TutorServiceTests {	
 
 	@Mock
 	private TutorRepository tutorDao;

@@ -59,11 +59,11 @@ public class TutoringService321ApplicationTests {
 	private Course course;
 	private Subject subject;
 
-	@After
+	@Before
 	public void clearDatabase() {
+		availabilityRepository.deleteAll();
 		sessionRepository.deleteAll();
 		tutorRepository.deleteAll();
-		availabilityRepository.deleteAll();
 		courseRepository.deleteAll();
 		subjectRepository.deleteAll();
 		reviewRepository.deleteAll();
@@ -147,7 +147,7 @@ public class TutoringService321ApplicationTests {
 		String tutorEmail = "k@gmail.com";
 
 		try {
-			tutor = service.createTutor(tutorEmail, "Katie", "123", "432", 34);
+			tutor = service.createTutor(tutorEmail, "Katie", "123456789", "4185730193", 34);
 			assertEquals(0, service.getAllSessions(tutorEmail).size());
 			session = service.createSession(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
@@ -169,9 +169,9 @@ public class TutoringService321ApplicationTests {
 		String tutorEmail = "k@gmail.com";
 
 		try {
-			tutor = service.createTutor(tutorEmail, "Katie", "123", "432", 34);
+			tutor = service.createTutor(tutorEmail, "Katie", "123456789", "4185730193", 34);
 			assertEquals(0, service.getAllSessions(tutorEmail).size());
-			service.createSession(tutorEmail, date, endTime, startTime);
+			service.createSession(tutorEmail, date, startTime, endTime);
 			session = service.getSession(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
 			fail();
@@ -180,37 +180,28 @@ public class TutoringService321ApplicationTests {
 		assertEquals(date, session.getDate());
 		assertEquals(startTime, session.getStarTime());
 		assertEquals(endTime, session.getEndTime());
-		assertEquals(tutor, session.getTutor());
 	}
 
 	@Test
 	public void testWriteAvailability() {
-		String tutorEmail = "h@gmail.com";
+		String tutorEmail = "k@gmail.com";
 
 		Date date = Date.valueOf("2019-12-01");
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("16:00:00");
 
-		List <Availability> allAvailabilities = service.getAllTutorAvailabilities(tutorEmail);
-
 		try {
-			tutor = service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
+			tutor = service.createTutor(tutorEmail, "Katie", "123456789", "4185730193", 20);
 			assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
 			availability = service.addAvailability(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
 		
-		assertEquals(1, allAvailabilities.size());
-		assertEquals(date, allAvailabilities.get(0).getDate());
-		assertEquals(startTime, allAvailabilities.get(0).getStartTime());
-		assertEquals(endTime, allAvailabilities.get(0).getEndTime());
-
 		assertEquals(1, service.getAllTutorAvailabilities(tutorEmail).size());
 		assertEquals(date, availability.getDate());
 		assertEquals(startTime, availability.getStartTime());
 		assertEquals(endTime, availability.getEndTime());
-		assertEquals(tutor, availability.getTutor());
 	}
 
 	@Test
@@ -222,18 +213,16 @@ public class TutoringService321ApplicationTests {
 		String tutorEmail = "k@gmail.com";
 
 		try {
-			tutor = service.createTutor(tutorEmail, "Katie", "123", "432", 34);
+			tutor = service.createTutor(tutorEmail, "Katie", "123456789", "4185730193", 34);
 			service.addAvailability(tutorEmail, date, startTime, endTime);
 			availability = service.getAvailability(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
 			fail();
 		}
 
 		assertEquals(date, availability.getDate());
 		assertEquals(startTime, availability.getStartTime());
 		assertEquals(endTime, availability.getEndTime());
-		assertEquals(tutor, availability.getTutor());
 	}
 
 	@Test
@@ -342,13 +331,12 @@ public class TutoringService321ApplicationTests {
 			tutor = service.createTutor(tutorEmail, "William", "123456789", "4185730193", 20);
 			session = service.createSession(tutorEmail, date, startTime, endTime);
 			service.submitTutorReview(reviewText, tutorEmail, date, startTime, endTime);
-			review = service.getAllTutorReviews(tutorEmail).get(0);
+			review = service.getAllReviews().get(0);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
 
 		assertEquals(tutorEmail, review.getAuthorEmail());
 		assertEquals(reviewText, review.getTextualReview());
-		assertEquals(session, review.getSession());
 	}
 }
