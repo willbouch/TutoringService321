@@ -245,6 +245,20 @@ public class AvailabilityServiceTests {
 
 		assertEquals(error,"Availability conflicts with already existing availability.");
 	}
+	
+	@Test
+	public void testAddAvailabilityStartTimeAfterEndTime() {
+		String error = null;
+
+		try {
+			service.addAvailability(TUTOR_EMAIL, DATE, Time.valueOf("20:00:00"), Time.valueOf("18:00:00"));
+		}
+		catch(IllegalArgumentException e){
+			error=e.getMessage();
+		}
+
+		assertEquals(error,"Start time must be before End time.");
+	}
 
 	@Test
 	public void testUpdateAvailabilityAllFields() {

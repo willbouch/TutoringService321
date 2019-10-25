@@ -320,6 +320,9 @@ public class TutoringService321Service {
 		if(endTime.after(Time.valueOf("21:00:00"))) {
 			throw new IllegalArgumentException("End time must be between 9 am and 9 pm.");
 		}
+		if(startTime.after(endTime)) {
+			throw new IllegalArgumentException("Start time must be before End time.");
+		}
 		
 		//Checking if this Availability already exists
 		List<Availability> availabilities = toList(availabilityRepository.findAvailabilityByDateAndTutor(date, tutor));
