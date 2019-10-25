@@ -53,6 +53,24 @@ public class TutoringService321Service {
 		if(hourlyRate < 0) {
 			throw new IllegalArgumentException("Hourly has to be a positive number.");
 		}
+		if(!email.matches(".{1,}@.{1,}\\..{2,3}")) {
+			throw new IllegalArgumentException("The email should be in the format of <example@something.ca/com/etc.>.");
+		}
+		if(phoneNumber.length() != 10) {
+			throw new IllegalArgumentException("Phone number has to be 10 character long.");
+		}
+		if(password.length() < 8) {
+			throw new IllegalArgumentException("Password has to be at least 8 characters long.");
+		}
+		
+		//Check if email already used
+		List<Tutor> allTutors = getAllTutors();
+		for(Tutor tutor : allTutors) {
+			if(tutor.getEmail().equals(email)) {
+				throw new IllegalArgumentException("A tutor with the same email already exists.");
+			}
+		}
+		
 		Tutor tutor = new Tutor();
 		
 		//Setting the attributes
@@ -88,6 +106,10 @@ public class TutoringService321Service {
 		if(hourlyRate < 0) {
 			throw new IllegalArgumentException("Hourly has to be a positive number.");
 		}
+		if(phoneNumber.length() != 10) {
+			throw new IllegalArgumentException("Phone number has to be 10 character long.");
+		}
+		
 		tutor.setEmail(email);
 		tutor.setName(name);
 		tutor.setPhoneNumber(phoneNumber);
@@ -107,6 +129,10 @@ public class TutoringService321Service {
 		if (newPassword==null || newPassword.trim().length()==0) {
 			throw new IllegalArgumentException("Password cannot be empty.");
 		}
+		if(newPassword.length() < 8) {
+			throw new IllegalArgumentException("Password has to be at least 8 characters long.");
+		}
+		
 		tutor.setPassword(newPassword);
 		return tutor;
 	}
