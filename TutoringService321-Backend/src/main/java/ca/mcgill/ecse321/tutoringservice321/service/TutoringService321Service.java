@@ -324,9 +324,9 @@ public class TutoringService321Service {
 		//Checking if this Availability already exists
 		List<Availability> availabilities = toList(availabilityRepository.findAvailabilityByDateAndTutor(date, tutor));
 		for(Availability avail :  availabilities) {
-			if(endTime.after(avail.getStartTime()) && startTime.before(avail.getStartTime()) ||
-					startTime.before(avail.getEndTime()) && endTime.after(avail.getEndTime()) ||
-					startTime.after(avail.getStartTime()) && endTime.before(avail.getEndTime())) {
+			if(endTime.compareTo(avail.getStartTime()) >= 0 && startTime.compareTo(avail.getStartTime()) <= 0 ||
+					startTime.compareTo(avail.getEndTime()) <= 0 && endTime.compareTo(avail.getEndTime()) >= 0 ||
+					startTime.compareTo(avail.getStartTime()) >= 0 && endTime.compareTo(avail.getEndTime()) <= 0) {
 				throw new IllegalArgumentException("Availability conflicts with already existing availability.");
 			}
 		}
@@ -362,9 +362,14 @@ public class TutoringService321Service {
 		}
 		
 		//We check the set of availabilities with that date
-		Set<Availability> availabilities = availabilityRepository.findAvailabilityByDate(date);
+		Set<Availability> availabilities = availabilityRepository.findAvailabilityByDateAndTutor(date, tutor);
+		
+		if(availabilities == null) {
+			return null;
+		}
+		
 		for(Availability availability : availabilities) {
-			if(tutor.equals(availability.getTutor()) && startTime.equals(availability.getStartTime()) && endTime.equals(availability.getEndTime())) {
+			if(startTime.equals(availability.getStartTime()) && endTime.equals(availability.getEndTime())) {
 				return availability;
 			}
 		}
@@ -379,6 +384,9 @@ public class TutoringService321Service {
 
 		if(availability != null) {
 			availabilityRepository.delete(availability);
+		}
+		else {
+			throw new IllegalArgumentException("Availability could not be found.");
 		}
 	}
 

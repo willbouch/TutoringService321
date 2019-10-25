@@ -27,6 +27,7 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -41,41 +42,22 @@ public class AvailabilityServiceTests {
 
 	@Mock
 	private TutorRepository tutorDao;
-	
+
 	@Mock
 	private SessionRepository sessionDao;
 
 	@InjectMocks
 	private TutoringService321Service service;
 
-	private static final String AVAILABILITY_KEY = "TestAvailability";
-	private static final String NONEXISTING_KEY = "NotAnAvailability";
 	private static final Tutor TUTOR = new Tutor();
 	private static final Date DATE = Date.valueOf("2019-12-01");
-	private static final Time START_TIME = Time.valueOf("16:00:00");
-	private static final Time END_TIME = Time.valueOf("19:00:00");
+	private static final Time START_TIME = Time.valueOf("12:00:00");
+	private static final Time END_TIME = Time.valueOf("13:00:00");
 	private static final String TUTOR_EMAIL="katie@gmail.com";
 	private static final String TUTOR_NAME="Katie Younge";
 	private static final String TUTOR_PASSWORD="password";
 	private static final String TUTOR_PHONE="8193296836";
 	private static final int TUTOR_HOURLY_RATE=15;
-
-	private String tutorEmail="katie@gmail.com";
-
-	private Date date=Date.valueOf("2019-12-01");
-	private Time startTime = Time.valueOf("10:00:00");
-	private Time endTime = Time.valueOf("15:00:00");
-
-	private Date newDate=Date.valueOf("2019-12-01");
-	private Time newStartTime = Time.valueOf("9:00:00");
-	private Time newEndTime = Time.valueOf("10:00:00");
-
-	private Date nullDate=null;
-	private Time nullStartTime = null;
-	private Time nullEndTime = null;
-
-	private Time invalidEndTime = Time.valueOf("22:00:00");
-	private Time invalidStartTime = Time.valueOf("7:00:00");
 
 	Availability availability;
 
@@ -102,29 +84,29 @@ public class AvailabilityServiceTests {
 				Availability availability = new Availability();
 				availability.setTutor(TUTOR);
 				availability.setDate(DATE);
-				availability.setStartTime(START_TIME);
-				availability.setEndTime(END_TIME);
-				
+				availability.setStartTime(Time.valueOf("16:00:00"));
+				availability.setEndTime(Time.valueOf("19:00:00"));
+
 				Set<Availability> availabilities = new HashSet<Availability>();
 				availabilities.add(availability);
-				
+
 				return availabilities;
 			} else {
 				return null;
 			}
 		});
-		
+
 		when(sessionDao.findSessionByDate(any(Date.class))).thenAnswer( (InvocationOnMock invocation) -> {
 			if(invocation.getArgument(0).equals(DATE)) {
 				Session session = new Session();
 				session.setTutor(TUTOR);
 				session.setDate(DATE);
-				session.setStarTime(START_TIME);
-				session.setEndTime(END_TIME);
-				
+				session.setStarTime(Time.valueOf("9:00:00"));
+				session.setEndTime(Time.valueOf("10:00:00"));
+
 				Set<Session> sessions = new HashSet<Session>();
 				sessions.add(session);
-				
+
 				return sessions;
 			} else {
 				return null;
@@ -142,23 +124,23 @@ public class AvailabilityServiceTests {
 	public void testAddAvailability() {
 
 		try {
-			availability=service.addAvailability(tutorEmail, date, startTime, endTime);
+			availability=service.addAvailability(TUTOR_EMAIL, DATE, START_TIME, END_TIME);
 		}
 		catch(IllegalArgumentException e){
 			fail();
 		}
 
-		assertEquals(date, availability.getDate());
-		assertEquals(startTime, availability.getStartTime());
-		assertEquals(endTime, availability.getEndTime());
+		assertEquals(DATE, availability.getDate());
+		assertEquals(START_TIME, availability.getStartTime());
+		assertEquals(END_TIME, availability.getEndTime());
 	}
 
 	@Test
 	public void testAddAvailabilityNullDate() {
 		String error = null;
-		
+
 		try {
-			service.addAvailability(tutorEmail, nullDate, startTime, endTime);
+			availability=service.addAvailability(TUTOR_EMAIL, null, START_TIME, END_TIME);
 		}
 		catch(IllegalArgumentException e){
 			error=e.getMessage();
@@ -172,7 +154,7 @@ public class AvailabilityServiceTests {
 		String error = null;
 
 		try {
-			service.addAvailability(tutorEmail, date, nullStartTime, endTime);
+			availability=service.addAvailability(TUTOR_EMAIL, DATE, null, END_TIME);
 		}
 		catch(IllegalArgumentException e){
 			error=e.getMessage();
@@ -186,7 +168,7 @@ public class AvailabilityServiceTests {
 		String error = null;
 
 		try {
-			service.addAvailability(tutorEmail, date, startTime, nullEndTime);
+			availability=service.addAvailability(TUTOR_EMAIL, DATE, START_TIME, null);
 		}
 		catch(IllegalArgumentException e){
 			error=e.getMessage();
@@ -200,7 +182,7 @@ public class AvailabilityServiceTests {
 		String error = null;
 
 		try {
-			service.addAvailability(tutorEmail, date, invalidStartTime, endTime);
+			availability=service.addAvailability(TUTOR_EMAIL, DATE, Time.valueOf("8:00:00"), END_TIME);
 		}
 		catch(IllegalArgumentException e){
 			error=e.getMessage();
@@ -214,8 +196,7 @@ public class AvailabilityServiceTests {
 		String error = null;
 
 		try {
-			service.addAvailability(tutorEmail, date, startTime, invalidEndTime);
-		}
+			availability=service.addAvailability(TUTOR_EMAIL, DATE, START_TIME, Time.valueOf("22:00:00"));		}
 		catch(IllegalArgumentException e){
 			error=e.getMessage();
 		}
@@ -228,7 +209,7 @@ public class AvailabilityServiceTests {
 		String error = null;
 
 		try {
-			service.addAvailability(tutorEmail, date, Time.valueOf("14:00:00"), Time.valueOf("17:00:00"));
+			service.addAvailability(TUTOR_EMAIL, DATE, Time.valueOf("14:00:00"), Time.valueOf("17:00:00"));
 		}
 		catch(IllegalArgumentException e){
 			error=e.getMessage();
@@ -242,22 +223,22 @@ public class AvailabilityServiceTests {
 		String error = null;
 
 		try {
-			service.addAvailability(tutorEmail, date, Time.valueOf("17:00:00"), Time.valueOf("18:00:00"));
-			}
+			service.addAvailability(TUTOR_EMAIL, DATE, Time.valueOf("17:00:00"), Time.valueOf("18:00:00"));
+		}
 		catch(IllegalArgumentException e){
 			error=e.getMessage();
 		}
 
 		assertEquals(error,"Availability conflicts with already existing availability.");
 	}
-	
+
 	@Test
 	public void testAddConflictingAvailabilityInfringeEnd() {
 		String error = null;
 
 		try {
-			service.addAvailability(tutorEmail, date, Time.valueOf("18:00:00"), Time.valueOf("20:00:00"));
-			}
+			service.addAvailability(TUTOR_EMAIL, DATE, Time.valueOf("18:00:00"), Time.valueOf("20:00:00"));
+		}
 		catch(IllegalArgumentException e){
 			error=e.getMessage();
 		}
@@ -269,73 +250,53 @@ public class AvailabilityServiceTests {
 	public void testUpdateAvailabilityAllFields() {
 
 		try {
-			availability = service.updateAvailability(tutorEmail, date, startTime, endTime, newDate, newStartTime, newEndTime);
+			availability = service.updateAvailability(TUTOR_EMAIL, DATE, Time.valueOf("16:00:00"), Time.valueOf("19:00:00"), Date.valueOf("2019-12-02"), Time.valueOf("18:00:00"), Time.valueOf("20:00:00"));
 		}
 		catch(IllegalArgumentException e) {
 			fail();
 		}
 
-		assertEquals(newDate, availability.getDate());
-		assertEquals(newStartTime, availability.getStartTime());
-		assertEquals(newEndTime, availability.getEndTime());
+		assertEquals(Date.valueOf("2019-12-02"), availability.getDate());
+		assertEquals(Time.valueOf("18:00:00"), availability.getStartTime());
+		assertEquals(Time.valueOf("20:00:00"), availability.getEndTime());
 	}
 
 	@Test
 	public void testUpdateAvailabilityNewDate() {
 
 		try {
-			availability = service.updateAvailability(tutorEmail, date, startTime, endTime, newDate, startTime, endTime);
-
+			availability = service.updateAvailability(TUTOR_EMAIL, DATE, Time.valueOf("16:00:00"), Time.valueOf("19:00:00"), Date.valueOf("2019-12-02"), START_TIME, END_TIME);
 		}
-		catch(IllegalArgumentException e){
+		catch(IllegalArgumentException e) {
 			fail();
 		}
 
-		assertEquals(newDate, availability.getDate());
-		assertEquals(startTime, availability.getStartTime());
-		assertEquals(endTime, availability.getEndTime());
+		assertEquals(Date.valueOf("2019-12-02"), availability.getDate());
+		assertEquals(START_TIME, availability.getStartTime());
+		assertEquals(END_TIME, availability.getEndTime());
 	}
 
 	@Test
-	public void testUpdateAvailabilityNewStartTime() {
+	public void testUpdateAvailabilityNewStartTimeAndEndTime() {
 
 		try {
-			availability = service.updateAvailability(tutorEmail, date, startTime, endTime, date, newStartTime, endTime);
-
+			availability = service.updateAvailability(TUTOR_EMAIL, DATE, Time.valueOf("16:00:00"), Time.valueOf("19:00:00"), DATE, START_TIME, END_TIME);
 		}
-		catch(IllegalArgumentException e){
+		catch(IllegalArgumentException e) {
 			fail();
 		}
 
-		assertEquals(date, availability.getDate());
-		assertEquals(newStartTime, availability.getStartTime());
-		assertEquals(endTime, availability.getEndTime());
-	}
-
-	@Test
-	public void testUpdateAvailabilityNewEndTime() {
-
-		try {
-			availability = service.updateAvailability(tutorEmail, date, startTime, endTime, date, startTime, newEndTime);
-
-		}
-		catch(IllegalArgumentException e){
-			fail();
-		}
-
-		assertEquals(date, availability.getDate());
-		assertEquals(startTime, availability.getStartTime());
-		assertEquals(newEndTime, availability.getEndTime());
+		assertEquals(DATE, availability.getDate());
+		assertEquals(START_TIME, availability.getStartTime());
+		assertEquals(END_TIME, availability.getEndTime());
 	}
 
 	@Test
 	public void testUpdateAvailabilityNullDate() {
 		String error = null;
 
-
-
 		try {
-			service.updateAvailability(tutorEmail, date, startTime, endTime, nullDate, startTime, endTime);
+			availability = service.updateAvailability(TUTOR_EMAIL, DATE, Time.valueOf("16:00:00"), Time.valueOf("19:00:00"), null, START_TIME, END_TIME);
 		}
 		catch(IllegalArgumentException e){
 			error=e.getMessage();
@@ -349,7 +310,7 @@ public class AvailabilityServiceTests {
 		String error = null;
 
 		try {
-			service.updateAvailability(tutorEmail, date, startTime, endTime, date, nullStartTime, endTime);
+			availability = service.updateAvailability(TUTOR_EMAIL, DATE, Time.valueOf("16:00:00"), Time.valueOf("19:00:00"), DATE, null, END_TIME);
 		}
 		catch(IllegalArgumentException e){
 			error=e.getMessage();
@@ -362,10 +323,8 @@ public class AvailabilityServiceTests {
 	public void testUpdateAvailabilityNullEndTime() {
 		String error = null;
 
-
-
 		try {
-			service.updateAvailability(tutorEmail, date, startTime, endTime, date, startTime, nullEndTime);
+			availability = service.updateAvailability(TUTOR_EMAIL, DATE, Time.valueOf("16:00:00"), Time.valueOf("19:00:00"), DATE, START_TIME, null);
 		}
 		catch(IllegalArgumentException e){
 			error=e.getMessage();
@@ -379,7 +338,7 @@ public class AvailabilityServiceTests {
 		String error = null;
 
 		try {
-			service.updateAvailability(tutorEmail, date, START_TIME, END_TIME, newDate, newStartTime, newEndTime);
+			availability = service.updateAvailability(TUTOR_EMAIL, DATE, Time.valueOf("9:00:00"), Time.valueOf("10:00:00"), DATE, START_TIME, END_TIME);
 		}
 		catch(IllegalArgumentException e){
 			error=e.getMessage();
@@ -392,10 +351,37 @@ public class AvailabilityServiceTests {
 	public void testDeleteAvailability() {
 
 		try {
-			service.deleteAvailability(tutorEmail, date, startTime, endTime);
+			service.deleteAvailability(TUTOR_EMAIL, DATE, Time.valueOf("16:00:00"), Time.valueOf("19:00:00"));
 		}
 		catch(IllegalArgumentException e){
 			fail();
 		}
+	}
+
+	@Test
+	public void testDeleteAvailabilityNotFound() {
+		String error = null;
+
+		try {
+			service.deleteAvailability(TUTOR_EMAIL, DATE, START_TIME, END_TIME);
+		}
+		catch(IllegalArgumentException e){
+			error = e.getMessage();
+		}
+
+		assertEquals("Availability could not be found.", error);
+	}
+	
+	@Test
+	public void testGetExistingAvailability() {
+		assertEquals(DATE, service.getAvailability(TUTOR_EMAIL, DATE, Time.valueOf("16:00:00"), Time.valueOf("19:00:00")).getDate());
+		assertEquals(Time.valueOf("16:00:00"), service.getAvailability(TUTOR_EMAIL, DATE, Time.valueOf("16:00:00"), Time.valueOf("19:00:00")).getStartTime());
+		assertEquals(Time.valueOf("19:00:00"), service.getAvailability(TUTOR_EMAIL, DATE, Time.valueOf("16:00:00"), Time.valueOf("19:00:00")).getEndTime());
+
+	}
+
+	@Test
+	public void testGetNonExistingAvailability() {
+		assertNull(service.getAvailability(TUTOR_EMAIL, Date.valueOf("2019-12-02"), START_TIME, END_TIME));
 	}
 }
