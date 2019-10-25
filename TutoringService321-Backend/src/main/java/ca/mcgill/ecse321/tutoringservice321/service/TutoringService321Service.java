@@ -29,6 +29,8 @@ public class TutoringService321Service {
 	CourseRepository courseRepository;
 	@Autowired
 	AvailabilityRepository availabilityRepository;
+	@Autowired
+	ReviewRepository reviewRepository;
 
 	//====================================================================================
 	//TUTOR METHODS
@@ -50,7 +52,7 @@ public class TutoringService321Service {
 		if(phoneNumber == null || phoneNumber.trim().length() == 0) {
 			throw new IllegalArgumentException("Phone number cannot be empty.");
 		}
-		if(hourlyRate > 0) {
+		if(hourlyRate < 0) {
 			throw new IllegalArgumentException("Hourly has to be a positive number.");
 		}
 		Tutor tutor = new Tutor();
@@ -85,7 +87,7 @@ public class TutoringService321Service {
 		if(phoneNumber == null || phoneNumber.trim().length() == 0) {
 			throw new IllegalArgumentException("Phone number cannot be empty.");
 		}
-		if(hourlyRate > 0) {
+		if(hourlyRate < 0) {
 			throw new IllegalArgumentException("Hourly has to be a positive number.");
 		}
 		tutor.setEmail(email);
@@ -198,9 +200,7 @@ public class TutoringService321Service {
 
 	@Transactional
 	public Session createSession(String tutorEmail, Date date, Time startTime, Time endTime) {
-		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
-			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
-		}
+
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
@@ -250,9 +250,6 @@ public class TutoringService321Service {
 	@Transactional
 	public Session approveSession(String tutorEmail, Date requestedDate, Time qStartTime, Time qEndTime,
 			Date confirmedDate, Time cStartTime, Time cEndTime) {
-		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
-			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
-		}
 
 		//We first check that there is no session at that time
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
@@ -270,9 +267,6 @@ public class TutoringService321Service {
 
 	@Transactional
 	public void cancelSession(String tutorEmail, Date date, Time startTime, Time endTime) {
-		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
-			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
-		}
 
 		Session session = getSession(tutorEmail, date, startTime, endTime);
 
@@ -297,9 +291,6 @@ public class TutoringService321Service {
 
 	@Transactional
 	public Availability addAvailability(String tutorEmail, Date date, Time startTime, Time endTime) {
-		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
-			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
-		}
 
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
@@ -357,9 +348,6 @@ public class TutoringService321Service {
 
 	@Transactional
 	public void deleteAvailability(String tutorEmail, Date date, Time startTime, Time endTime) {
-		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
-			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
-		}
 
 		Availability availability = getAvailability(tutorEmail, date, startTime, endTime);
 
@@ -391,9 +379,6 @@ public class TutoringService321Service {
 	@Transactional
 	public Availability updateAvailability(String tutorEmail, Date oldDate, Time oldStartTime, Time oldEndTime,
 			Date newDate, Time newStartTime, Time newEndTime) {
-		if(TutoringService321Application.getLoggedUser() == null || !(TutoringService321Application.getLoggedUser() instanceof Tutor)) {
-			throw new IllegalArgumentException("A tutor must be logged in to perform this operation");
-		}
 
 		//We first check that there is no session at that time
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
@@ -610,8 +595,9 @@ public class TutoringService321Service {
 		review.setTextualReview(textualReview);
 		review.setSession(foundSession);
 		review.setReviewID(tutorEmail.hashCode()*textualReview.hashCode());
+		reviewRepository.save(review);
 
-		return null;
+		return review;
 	}
 
 	@Transactional
@@ -634,6 +620,11 @@ public class TutoringService321Service {
 		}
 		
 		return tutorReviews;
+	}
+	
+	@Transactional
+	public List<Review> getAllReviews() {
+		return toList(reviewRepository.findAll());
 	}
 	
 	//====================================================================================
