@@ -191,6 +191,8 @@ public class TutoringService321ApplicationTests {
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("16:00:00");
 
+		List <Availability> allAvailabilities = service.getAllTutorAvailabilities(tutorEmail);
+
 		try {
 			tutor = service.createTutor(tutorEmail, "Hadi", "123", "514356241", 20);
 			assertEquals(0, service.getAllTutorAvailabilities(tutorEmail).size());
@@ -198,6 +200,11 @@ public class TutoringService321ApplicationTests {
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
+		
+		assertEquals(1, allAvailabilities.size());
+		assertEquals(date, allAvailabilities.get(0).getDate());
+		assertEquals(startTime, allAvailabilities.get(0).getStartTime());
+		assertEquals(endTime, allAvailabilities.get(0).getEndTime());
 
 		assertEquals(1, service.getAllTutorAvailabilities(tutorEmail).size());
 		assertEquals(date, availability.getDate());

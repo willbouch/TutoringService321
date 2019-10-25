@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.tutoringservice321.service;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.*;
@@ -337,12 +338,23 @@ public class TutoringService321Service {
 		if(tutor == null) {
 			throw new IllegalArgumentException("Tutor cannot be empty.");
 		}
-
+		if(startTime.before(Time.valueOf("9:00:00"))) {
+			throw new IllegalArgumentException("Start time must be between 9 am and 9 pm.");
+		}
+		if(endTime.after(Time.valueOf("21:00:00"))) {
+			throw new IllegalArgumentException("End time must be between 9 am and 9 pm.");
+		}
+		if(startTime.after(endTime)) {
+			throw new IllegalArgumentException("Start time must be before End time.");
+		}
+		
 		//Checking if this Availability already exists
-		List<Availability> availabilities = getAllTutorAvailabilities(tutorEmail);
+		List<Availability> availabilities = toList(availabilityRepository.findAvailabilityByDateAndTutor(date, tutor));
 		for(Availability avail :  availabilities) {
-			if(avail.getDate().equals(date) && avail.getStartTime().equals(startTime) && avail.getEndTime().equals(endTime)) {
-				throw new IllegalArgumentException("Availability already exists.");
+			if(endTime.compareTo(avail.getStartTime()) >= 0 && startTime.compareTo(avail.getStartTime()) <= 0 ||
+					startTime.compareTo(avail.getEndTime()) <= 0 && endTime.compareTo(avail.getEndTime()) >= 0 ||
+					startTime.compareTo(avail.getStartTime()) >= 0 && endTime.compareTo(avail.getEndTime()) <= 0) {
+				throw new IllegalArgumentException("Availability conflicts with already existing availability.");
 			}
 		}
 
@@ -353,7 +365,15 @@ public class TutoringService321Service {
 		availability.setStartTime(startTime);
 		availability.setAvailabilityID(date.hashCode()*startTime.hashCode()*endTime.hashCode());
 		availability.setTutor(tutor);
-		tutor.getAvailability().add(availability);
+		Set<Availability> avail = tutor.getAvailability();
+		if(avail == null) {
+			Set<Availability> set = new HashSet<Availability>();
+			set.add(availability);
+			tutor.setAvailability(set);
+		}
+		else {
+			avail.add(availability);
+		}
 
 		availabilityRepository.save(availability);
 		return availability;
@@ -364,10 +384,19 @@ public class TutoringService321Service {
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
+		if(tutor == null) {
+			throw new IllegalArgumentException("Tutor could not be found.");
+		}
+		
 		//We check the set of availabilities with that date
-		Set<Availability> availabilities = availabilityRepository.findAvailabilityByDate(date);
+		Set<Availability> availabilities = availabilityRepository.findAvailabilityByDateAndTutor(date, tutor);
+		
+		if(availabilities == null) {
+			return null;
+		}
+		
 		for(Availability availability : availabilities) {
-			if(tutor.equals(availability.getTutor()) && startTime.equals(availability.getStartTime()) && endTime.equals(availability.getEndTime())) {
+			if(startTime.equals(availability.getStartTime()) && endTime.equals(availability.getEndTime())) {
 				return availability;
 			}
 		}
@@ -382,6 +411,9 @@ public class TutoringService321Service {
 
 		if(availability != null) {
 			availabilityRepository.delete(availability);
+		}
+		else {
+			throw new IllegalArgumentException("Availability could not be found.");
 		}
 	}
 
@@ -402,7 +434,7 @@ public class TutoringService321Service {
 			}
 		}
 
-		return toList(tutor.getAvailability());
+		return tutorAvailabilities;
 	}
 
 	@Transactional
@@ -411,10 +443,10 @@ public class TutoringService321Service {
 
 		//We first check that there is no session at that time
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
-		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, oldDate);
+		Set<Session> sessions = sessionRepository.findSessionByDate(oldDate);
 		for(Session session : sessions) {
-			if(session.getStarTime().equals(oldStartTime) && session.getEndTime().equals(oldEndTime)) {
-				throw new IllegalArgumentException("Already an availability at that time and date.");
+			if(session.getTutor().equals(tutor) && session.getStarTime().equals(oldStartTime) && session.getEndTime().equals(oldEndTime)) {
+				throw new IllegalArgumentException("Already a session at that time and date.");
 			}
 		}
 
@@ -609,13 +641,13 @@ public class TutoringService321Service {
 		if(tutorEmail == null || tutorEmail.trim().length() == 0) {
 			throw new IllegalArgumentException("Review cannot be empty.");
 		}
-		
+
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
-		
+
 		if(tutor == null) {
-			throw new IllegalArgumentException("Tutor could not be found");
+			throw new IllegalArgumentException("Tutor could not be found.");
 		}
-		
+
 		Session foundSession = null;
 		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
 		for(Session session : sessions) {
@@ -623,7 +655,7 @@ public class TutoringService321Service {
 				foundSession = session;
 			}
 		}
-		
+
 		if(foundSession == null) {
 			throw new IllegalArgumentException("Session could not be found.");
 		}
@@ -641,11 +673,11 @@ public class TutoringService321Service {
 	@Transactional
 	public List<Review> getAllTutorReviews(String tutorEmail) {
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
-		
+
 		if(tutor == null) {
 			throw new IllegalArgumentException("Tutor could not be found.");
 		}
-		
+
 		List<Review> tutorReviews = new ArrayList<Review>();
 		Set<Session> sessions = tutor.getSession();
 		for(Session session : sessions) {
@@ -656,10 +688,10 @@ public class TutoringService321Service {
 				}
 			}
 		}
-		
+
 		return tutorReviews;
 	}
-	
+
 	@Transactional
 	public List<Review> getAllReviews() {
 		return toList(reviewRepository.findAll());
@@ -670,8 +702,10 @@ public class TutoringService321Service {
 	//Helper method provided in EventRegistration
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
+		if(iterable != null) {
+			for (T t : iterable) {
+				resultList.add(t);
+			}
 		}
 		return resultList;
 	}
