@@ -154,6 +154,9 @@ public class TutoringService321Service {
 
 	@Transactional
 	public Tutor getTutor(String email) {
+		if(!email.matches(".{1,}@.{1,}\\..{2,3}")) {
+			throw new IllegalArgumentException("The email should be in the format of <example@something.ca/com/etc.>.");
+		}
 		Tutor tutor = tutorRepository.findTutorByEmail(email);
 		return tutor;
 	}
