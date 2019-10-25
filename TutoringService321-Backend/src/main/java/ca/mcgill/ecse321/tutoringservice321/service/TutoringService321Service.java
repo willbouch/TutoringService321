@@ -324,7 +324,6 @@ public class TutoringService321Service {
 
 	@Transactional
 	public Availability addAvailability(String tutorEmail, Date date, Time startTime, Time endTime) {
-
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
@@ -366,18 +365,9 @@ public class TutoringService321Service {
 		availability.setDate(date);
 		availability.setEndTime(endTime);
 		availability.setStartTime(startTime);
-		availability.setAvailabilityID(date.hashCode()*startTime.hashCode()*endTime.hashCode());
+		availability.setAvailabilityID(tutorEmail.hashCode()*date.hashCode()*startTime.hashCode()*endTime.hashCode());
 		availability.setTutor(tutor);
-		Set<Availability> avail = tutor.getAvailability();
-		if(avail == null) {
-			Set<Availability> set = new HashSet<Availability>();
-			set.add(availability);
-			tutor.setAvailability(set);
-		}
-		else {
-			avail.add(availability);
-		}
-
+		
 		availabilityRepository.save(availability);
 		return availability;
 	}
