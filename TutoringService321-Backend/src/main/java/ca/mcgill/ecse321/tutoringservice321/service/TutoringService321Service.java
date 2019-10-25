@@ -471,6 +471,11 @@ public class TutoringService321Service {
 	@Transactional
 	public Course getCourse(String school, String courseCode) {
 		Set<Course> courses = courseRepository.findCourseBySchool(school);
+		
+		if(courses == null) {
+			return null;
+		}
+		
 		for(Course course : courses) {
 			if(courseCode.equals(course.getCourseCode())) return course;
 		}
@@ -560,7 +565,19 @@ public class TutoringService321Service {
 
 	@Transactional
 	public String requestCourse(String courseCode, String tutorEmail) {
+		if(courseCode == null || courseCode.trim().length() == 0) {
+			throw new IllegalArgumentException("Course Code cannot be empty.");
+		}
+		if(tutorEmail == null || tutorEmail.trim().length() == 0) {
+			throw new IllegalArgumentException("Tutor Email cannot be empty.");
+		}
+		
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail); 
+		
+		if(tutor == null) {
+			throw new IllegalArgumentException("Tutor could not be found.");
+		}
+		
 		String tutorName = tutor.getName();
 		String email = "Dear Manager,\n"
 				+ "	I would like to offer a new course, "+courseCode+"\n"
