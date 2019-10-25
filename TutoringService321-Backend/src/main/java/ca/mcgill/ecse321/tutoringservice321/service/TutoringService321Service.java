@@ -256,7 +256,7 @@ public class TutoringService321Service {
 		}
 		
 		for(Session aSession : sessions) {
-			if(aSession.getStarTime().equals(startTime) && aSession.getEndTime().equals(endTime)) {
+			if(aSession.getStarTime().equals(startTime) || aSession.getEndTime().equals(endTime)) {
 				throw new IllegalArgumentException("There is already a session booked at that time.");
 			}
 			if(aSession.getStarTime().before(startTime)&&aSession.getEndTime().before(startTime)) {
