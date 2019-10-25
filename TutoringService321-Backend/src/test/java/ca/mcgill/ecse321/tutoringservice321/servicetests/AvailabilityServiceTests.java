@@ -384,4 +384,4 @@ public class AvailabilityServiceTests {
 	public void testGetNonExistingAvailability() {
 		assertNull(service.getAvailability(TUTOR_EMAIL, Date.valueOf("2019-12-02"), START_TIME, END_TIME));
 	}
-}
+} 
