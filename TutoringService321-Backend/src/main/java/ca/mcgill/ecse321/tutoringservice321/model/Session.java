@@ -66,6 +66,16 @@ public class Session{
 	public void setTutor(Tutor tutor) {
 		this.tutor = tutor;
 	}
+	
+	private boolean isApproved;
+
+	public boolean getIsApproved() {
+		return this.isApproved;
+	}
+
+	public void setIsApproved(boolean isApproved) {
+		this.isApproved = isApproved;
+	}
 
 	private Set<Review> review;
 

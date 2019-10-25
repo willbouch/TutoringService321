@@ -240,8 +240,8 @@ public class TutoringService321Service {
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
-		Session session = new Session();
-
+		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
+		
 		//Input validation
 		if(date == null) {
 			throw new IllegalArgumentException("Date cannot be empty.");
@@ -254,7 +254,14 @@ public class TutoringService321Service {
 		if(endTime == null) {
 			throw new IllegalArgumentException("End time cannot be empty.");
 		}
+		
+		for(Session aSession : sessions) {
+			if(aSession.getStarTime().equals(startTime) && aSession.getEndTime().equals(endTime)) {
+				throw new IllegalArgumentException("There is already a session booked at that time.");
+			}
+		}
 
+		Session session = new Session();
 		//Setting the attributes
 		session.setDate(date);
 		session.setStarTime(startTime);
@@ -284,21 +291,25 @@ public class TutoringService321Service {
 	}
 
 	@Transactional
-	public Session approveSession(String tutorEmail, Date requestedDate, Time qStartTime, Time qEndTime,
-			Date confirmedDate, Time cStartTime, Time cEndTime) {
+	public Session approveSession(String tutorEmail, Date date, Time startTime, Time endTime) {
 
 		//We first check that there is no session at that time
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
-		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, requestedDate);
+		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
+		Session approvedSession=null;
+		
 		for(Session session : sessions) {
-			if(session.getStarTime().equals(qStartTime) && session.getEndTime().equals(qEndTime)) {
-				throw new IllegalArgumentException("A session has aready been booked for that time and date.");
+			if(!(session.getStarTime().equals(startTime) && session.getEndTime().equals(endTime))) {
+				throw new IllegalArgumentException("The session to approve could not be found.");
+			}
+			else {
+				approvedSession=session;
 			}
 		}
-		//We then add the new one
-		Session session = createSession(tutorEmail, confirmedDate, cStartTime, cEndTime);
+		//We then approve the session
+		approvedSession.setIsApproved(true);
 
-		return session;
+		return approvedSession;
 	}
 
 	@Transactional
