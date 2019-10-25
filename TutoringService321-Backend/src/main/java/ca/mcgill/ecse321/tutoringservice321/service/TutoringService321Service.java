@@ -259,6 +259,12 @@ public class TutoringService321Service {
 			if(aSession.getStarTime().equals(startTime) && aSession.getEndTime().equals(endTime)) {
 				throw new IllegalArgumentException("There is already a session booked at that time.");
 			}
+			if(aSession.getStarTime().before(startTime)&&aSession.getEndTime().before(startTime)) {
+				throw new IllegalArgumentException("This session would overlap with an existing session.");
+			}
+			if(aSession.getEndTime().after(endTime)&&aSession.getStarTime().after(endTime)) {
+				throw new IllegalArgumentException("This session would overlap with an existing session.");
+			}
 		}
 
 		Session session = new Session();
