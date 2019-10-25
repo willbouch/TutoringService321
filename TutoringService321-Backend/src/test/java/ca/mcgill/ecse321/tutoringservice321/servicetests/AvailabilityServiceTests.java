@@ -61,11 +61,6 @@ public class AvailabilityServiceTests {
 	private static final int TUTOR_HOURLY_RATE=15;
 
 	private String tutorEmail="katie@gmail.com";
-	private String tutorEmail2="will@hotmail.ca";
-	//	private String name="Katie Younge";
-	//	private String password="password";
-	//	private String phoneNumber="8193296836";
-	//	private int hourlyRate=15;
 
 	private Date date=Date.valueOf("2019-12-01");
 	private Time startTime = Time.valueOf("10:00:00");
@@ -82,9 +77,7 @@ public class AvailabilityServiceTests {
 	private Time invalidEndTime = Time.valueOf("22:00:00");
 	private Time invalidStartTime = Time.valueOf("7:00:00");
 
-
 	Availability availability;
-	Tutor tutor;
 
 	@Before
 	public void setUp() {
@@ -143,8 +136,6 @@ public class AvailabilityServiceTests {
 			return invocation.getArgument(0);
 		};
 		when(availabilityDao.save(any(Availability.class))).thenAnswer(returnParameterAsAnswer);
-		when(tutorDao.save(any(Tutor.class))).thenAnswer(returnParameterAsAnswer);
-
 	}
 
 	@Test
