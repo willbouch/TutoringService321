@@ -216,6 +216,9 @@ public class TutoringService321Service {
 		if(subject != null) {
 			subjectRepository.delete(subject);
 		}
+		else {
+			throw new IllegalArgumentException("Subject could not be found.");
+		}
 	}
 
 	@Transactional
