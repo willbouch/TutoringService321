@@ -272,6 +272,7 @@ public class TutoringService321Service {
 		session.setDate(date);
 		session.setStarTime(startTime);
 		session.setEndTime(endTime);
+		session.setIsApproved(false);
 		session.setSessionID(date.hashCode()*startTime.hashCode()*endTime.hashCode());
 		session.setTutor(tutor);
 		tutor.getSession().add(session);
@@ -292,7 +293,7 @@ public class TutoringService321Service {
 			}
 		}
 
-		//Not suppose to happen
+		//Not supposed to happen
 		return null;
 	}
 
