@@ -59,7 +59,7 @@ public class Session{
 	private Tutor tutor;
 
 	@ManyToOne(optional=false)
-	public Tutor getTutor() {
+	public Tutor getTutor(String sessionKey) {
 		return this.tutor;
 	}
 

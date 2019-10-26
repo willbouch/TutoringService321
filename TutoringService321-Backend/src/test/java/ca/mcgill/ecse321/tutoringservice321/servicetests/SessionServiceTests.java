@@ -25,6 +25,8 @@ import static org.mockito.Mockito.when;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.HashSet;
+import java.util.Set;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SessionServiceTests {
@@ -34,19 +36,32 @@ public class SessionServiceTests {
 
 	@InjectMocks
 	private TutoringService321Service service;
-
 	private Session session;
-
-	private static final String SESSION_KEY = "TestSession";
-	private static final String NONEXISTING_KEY = "NotAPSession";
+	
+	private static final String TUTOR_EMAIL = ("tutor@gmail.com");
+	private static final Time START_TIME = Time.valueOf("12:00:00");
+	private static final Time END_TIME = Time.valueOf("13:00:00");
+	private static final Time QSTART_TIME = Time.valueOf("12:00:00");
+	private static final Time QEND_TIME = Time.valueOf("13:00:00");
+	private static final Time CSTART_TIME = Time.valueOf("12:00:00");
+	private static final Time CEND_TIME = Time.valueOf("13:00:00");
+	private static final Date DATE = Date.valueOf("2019-10-01");
+	private static final Date QDATE = Date.valueOf("2019-10-01");
+	private static final Date CDATE = Date.valueOf("2019-10-01");
+	
 
 	@Before
 	public void setMockOutput() {
-		when(sessionDao.findSessionByTutorAndDateAndStartTime(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-			if(invocation.getArgument(0).equals(SESSION_KEY)) {
+		when(sessionDao.findSessionByTutor(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
+			if(invocation.getArgument(0).equals(TUTOR_EMAIL)) {
+				Set<Session> courses = new HashSet<Session>();
 				Session session = new Session();
-				session.setName(SESSION_KEY);
-				return session;
+				session.setDate(DATE);
+				session.setStarTime(START_TIME);
+				session.setEndTime(END_TIME);
+				session.add(session);
+
+				return s;
 			} else {
 				return null;
 			}

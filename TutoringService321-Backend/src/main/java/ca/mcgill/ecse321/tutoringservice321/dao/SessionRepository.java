@@ -10,6 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface SessionRepository extends CrudRepository<Session, Integer>{
 	
 	Set<Session> findSessionByStudent(Student student);
+	Tutor findSessionByTutor(String tutor);
 	Set<Session> findSessionByTutor(Tutor tutor);
 	Set<Session> findSessionByTutorAndDate(Tutor tutor, Date date);
 	Set<Session> findSessionByTutorAndStudent(Tutor tutor, Student student);
