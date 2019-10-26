@@ -59,12 +59,22 @@ public class Session{
 	private Tutor tutor;
 
 	@ManyToOne(optional=false)
-	public Tutor getTutor(String sessionKey) {
+	public Tutor getTutor() {
 		return this.tutor;
 	}
 
 	public void setTutor(Tutor tutor) {
 		this.tutor = tutor;
+	}
+	
+	private boolean isApproved;
+
+	public boolean getIsApproved() {
+		return this.isApproved;
+	}
+
+	public void setIsApproved(boolean isApproved) {
+		this.isApproved = isApproved;
 	}
 
 	private Set<Review> review;

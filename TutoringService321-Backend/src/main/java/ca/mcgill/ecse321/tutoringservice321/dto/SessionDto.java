@@ -11,6 +11,7 @@ public class SessionDto {
 	private Time endTime;
 	private TutorDto tutor;
 	private Set<ReviewDto> reviews;
+	private boolean isApproved;
 
 	public SessionDto() {
 
@@ -20,6 +21,7 @@ public class SessionDto {
 		this.date = date;
 		this.startTime = startTime;
 		this.endTime = endTime;
+		this.isApproved=false;
 		this.tutor = tutor;
 		this.reviews = reviews;
 	}
@@ -46,6 +48,14 @@ public class SessionDto {
 
 	public void setEndTime(Time endTime) {
 		this.endTime = endTime;
+	}
+	
+	public boolean getIsApproved() {
+		return isApproved;
+	}
+
+	public void setIsApproved(boolean isApproved) {
+		this.isApproved = isApproved;
 	}
 
 	public TutorDto getTutor() {

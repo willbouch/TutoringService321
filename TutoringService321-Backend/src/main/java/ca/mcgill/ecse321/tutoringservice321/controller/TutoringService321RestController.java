@@ -50,7 +50,7 @@ public class TutoringService321RestController {
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime endTime) {
 
 		Availability availability = service.addAvailability(tutorEmail, date, Time.valueOf(startTime), Time.valueOf(endTime));
-
+//checking
 		return converToDto(availability);
 	}
 
@@ -60,10 +60,9 @@ public class TutoringService321RestController {
 		for(Availability availability : service.getAllTutorAvailabilities(tutorEmail)) {
 			dtos.add(converToDto(availability));
 		}
-
 		return dtos;
 	}
-
+	
 	@DeleteMapping(value = {"/availabilities/{tutorEmail}", "/availabilities/{tutorEmail}/"})
 	public List<AvailabilityDto> deleteAvailability(@PathVariable("tutorEmail") String tutorEmail,
 			@RequestParam Date date,
@@ -284,12 +283,10 @@ public class TutoringService321RestController {
 	public SessionDto approveSession(@PathVariable("tutorEmail") String tutorEmail,
 			@RequestParam Date requestedDate,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime qStartTime,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime qEndTime,
-			@RequestParam Date confirmedDate,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime cStartTime,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime cEndTime) {
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime qEndTime
+		) {
 
-		Session session= service.approveSession(tutorEmail, requestedDate, Time.valueOf(qStartTime), Time.valueOf(qEndTime), confirmedDate, Time.valueOf(cStartTime), Time.valueOf(cEndTime));
+		Session session= service.approveSession(tutorEmail, requestedDate, Time.valueOf(qStartTime), Time.valueOf(qEndTime));
 		return converToDto(session);
 	}
 
