@@ -550,6 +550,25 @@ public class TutorServiceTests {
 
 		assertEquals(newPassword, tutor.getPassword());
 	}
+	
+	@Test
+	public void testChangePasswordTutorNotFound() {
+
+		String email = "ppp@gmail.com";
+		String password = TUTOR_PASSWORD;
+
+		String newPassword = "aaaaaaaaaaa";
+
+		String error = null;
+		
+		try {
+			tutor = service.changePassword(email, password, newPassword);
+		} catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertEquals("Tutor could not be found.", error);
+	}
 
 	@Test
 	public void testChangePasswordNull() {

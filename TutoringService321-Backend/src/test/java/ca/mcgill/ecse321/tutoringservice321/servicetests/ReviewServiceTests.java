@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ca.mcgill.ecse321.tutoringservice321.dao.ReviewRepository;
 import ca.mcgill.ecse321.tutoringservice321.dao.SessionRepository;
 import ca.mcgill.ecse321.tutoringservice321.dao.TutorRepository;
+import ca.mcgill.ecse321.tutoringservice321.model.Course;
 import ca.mcgill.ecse321.tutoringservice321.model.Review;
 import ca.mcgill.ecse321.tutoringservice321.model.Session;
 import ca.mcgill.ecse321.tutoringservice321.model.Tutor;
@@ -87,6 +88,39 @@ public class ReviewServiceTests {
 				session.setDate(DATE);
 				session.setStarTime(START_TIME);
 				session.setEndTime(END_TIME);
+				
+				Set<Session> sessions = new HashSet<Session>();
+				sessions.add(session);
+
+				return sessions;
+			} else {
+				return null;
+			}
+		});
+		
+		when(sessionDao.findSessionByTutor(any(Tutor.class))).thenAnswer( (InvocationOnMock invocation) -> {
+			if(invocation.getArgument(0).equals(TUTOR)) {
+				Session session = new Session();
+				session.setTutor(TUTOR);
+				session.setDate(DATE);
+				session.setStarTime(START_TIME);
+				session.setEndTime(END_TIME);
+				
+				Set<Review> reviews = new HashSet<Review>();
+				Review review1 = new Review();
+				review1.setAuthorEmail("1@gmail.com");
+				review1.setTextualReview("Good");
+				reviews.add(review1);
+				Review review2 = new Review();
+				review2.setAuthorEmail("2@gmail.com");
+				review2.setTextualReview("Good");
+				reviews.add(review2);
+				Review review3 = new Review();
+				review3.setAuthorEmail(TUTOR_EMAIL);
+				review3.setTextualReview("Good");
+				reviews.add(review3);
+				
+				session.setReview(reviews);
 
 				Set<Session> sessions = new HashSet<Session>();
 				sessions.add(session);
@@ -95,6 +129,24 @@ public class ReviewServiceTests {
 			} else {
 				return null;
 			}
+		});
+		
+		when(reviewDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+			Set<Review> reviews = new HashSet<Review>();
+			Review review1 = new Review();
+			review1.setAuthorEmail("1@gmail.com");
+			review1.setTextualReview("Good");
+			reviews.add(review1);
+			Review review2 = new Review();
+			review2.setAuthorEmail("2@gmail.com");
+			review2.setTextualReview("Good");
+			reviews.add(review2);
+			Review review3 = new Review();
+			review3.setAuthorEmail(TUTOR_EMAIL);
+			review3.setTextualReview("Good");
+			reviews.add(review3);
+			
+			return reviews;
 		});
 
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -258,4 +310,28 @@ public class ReviewServiceTests {
 
 		assertEquals("Sessions with that date and tutor could not be found.", error);
 	}
+	
+	@Test
+	public void testGetAllTutorReviews() {
+		assertEquals(2, service.getAllTutorReviews(TUTOR_EMAIL).size());
+	}
+	
+	@Test
+	public void testGetAllTutorTutorNotFound() {
+		String error = null;
+		
+		try {
+			service.getAllTutorReviews("hey");
+		} catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Tutor could not be found.", error);
+	}
+	
+	@Test
+	public void testGetAllReviews() {
+		assertEquals(3, service.getAllReviews().size());
+	}
+	
 }

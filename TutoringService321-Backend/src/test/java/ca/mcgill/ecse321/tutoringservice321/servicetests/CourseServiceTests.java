@@ -11,8 +11,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.tutoringservice321.dao.CourseRepository;
+import ca.mcgill.ecse321.tutoringservice321.dao.SubjectRepository;
 import ca.mcgill.ecse321.tutoringservice321.dao.TutorRepository;
 import ca.mcgill.ecse321.tutoringservice321.model.Course;
+import ca.mcgill.ecse321.tutoringservice321.model.Subject;
 import ca.mcgill.ecse321.tutoringservice321.model.Tutor;
 import ca.mcgill.ecse321.tutoringservice321.service.TutoringService321Service;
 
@@ -34,6 +36,9 @@ public class CourseServiceTests {
 
 	@Mock
 	TutorRepository tutorDao;
+	
+	@Mock
+	SubjectRepository subjectDao;
 
 	@InjectMocks
 	private TutoringService321Service service;
@@ -47,6 +52,7 @@ public class CourseServiceTests {
 	private static final String TUTOR_PASSWORD = "TestPassword";
 	private static final String TUTOR_PHONE = "6666666666";
 	private static final int TUTOR_HOURLYRATE = 10;
+	private static final Tutor TUTOR = new Tutor();
 
 	@Before
 	public void setMockOutput() {
@@ -65,16 +71,66 @@ public class CourseServiceTests {
 			}
 		});
 
+		when(courseDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+			Set<Course> courses = new HashSet<Course>();
+			Course course = new Course();
+			course.setCourseCode(COURSE_CODE);
+			course.setDescription(COURSE_DESCRIPTION);
+			course.setSchool(SCHOOL);
+			
+			Course course2 = new Course();
+			course2.setCourseCode(COURSE_CODE);
+			course2.setDescription(COURSE_DESCRIPTION);
+			course2.setSchool(SCHOOL);
+			
+			courses.add(course);
+			courses.add(course2);
+
+			return courses;
+		});
+		
+		when(subjectDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+			Set<Tutor> tutors1 = new HashSet<>();
+			tutors1.add(TUTOR);
+			
+			Set<Tutor> tutors2 = new HashSet<>();
+			tutors2.add(new Tutor());
+			
+			Set<Subject> subjects = new HashSet<Subject>();
+			Subject subject1 = new Subject();
+			subject1.setCourse(new HashSet<Course>());
+			subject1.setTutor(tutors1);
+			subject1.setSubjectName("Maths");
+			
+			Subject subject2 = new Subject();
+			subject2.setCourse(new HashSet<Course>());
+			subject2.setTutor(tutors2);
+			subject2.setSubjectName("Java Programming");
+			
+			Course course1 = new Course();
+			Course course2 = new Course();
+			Course course3 = new Course();
+			Course course4 = new Course();
+			
+			subject1.getCourse().add(course1);
+			subject1.getCourse().add(course2);
+			subject2.getCourse().add(course3);
+			subject2.getCourse().add(course4);
+
+			subjects.add(subject1);
+			subjects.add(subject2);
+			return subjects;
+		});
+
 		when(tutorDao.findTutorByEmail(anyString())).thenAnswer(
 				(InvocationOnMock invocation) -> {
 					if(invocation.getArgument(0).equals(TUTOR_EMAIL)) {
-						Tutor tutor = new Tutor();
-						tutor.setEmail(TUTOR_EMAIL);
-						tutor.setName(TUTOR_NAME);
-						tutor.setPassword(TUTOR_PASSWORD);
-						tutor.setHourlyRate(TUTOR_HOURLYRATE);
-						tutor.setPhoneNumber(TUTOR_PHONE);
-						return tutor;
+						TUTOR.setEmail(TUTOR_EMAIL);
+						TUTOR.setName(TUTOR_NAME);
+						TUTOR.setPassword(TUTOR_PASSWORD);
+						TUTOR.setHourlyRate(TUTOR_HOURLYRATE);
+						TUTOR.setPhoneNumber(TUTOR_PHONE);
+						return TUTOR;
 					} else {
 						return null;
 					}
@@ -89,6 +145,11 @@ public class CourseServiceTests {
 	@Test
 	public void testGetNonExistingCourse() {
 		assertNull(service.getCourse(NONEXISTING_SCHOOL, COURSE_CODE));
+	}
+
+	@Test
+	public void testGetCourseWrongCode() {
+		assertNull(service.getCourse(SCHOOL, "1"));
 	}
 
 	@Test
@@ -171,6 +232,29 @@ public class CourseServiceTests {
 			error = e.getMessage();
 		}
 
+		assertEquals("Tutor could not be found.", error);
+	}
+	
+	@Test
+	public void testGetAllCourses() {
+		assertEquals(2, service.getAllCourses().size());
+	}
+	
+	@Test
+	public void testGetAllTutorCourses() {
+		assertEquals(2, service.getAllTutorCourses(TUTOR_EMAIL).size());
+	}
+	
+	@Test
+	public void testGetAllTutorCoursesTutorNotFound() {
+		String error = null;
+		
+		try {
+			service.getAllTutorCourses("hey");
+		} catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
 		assertEquals("Tutor could not be found.", error);
 	}
 }
