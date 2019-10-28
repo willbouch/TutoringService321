@@ -5,6 +5,9 @@ import java.sql.Time;
 import java.util.Set;
 
 public class TutorDto {
+	private String email;
+	private String name;
+	private String password;
 	private Set<AvailabilityDto> availabilities;
 	private Set<SubjectDto> subjects;
 	private int hourlyrate;
@@ -12,7 +15,10 @@ public class TutorDto {
 	private Set<SessionDto> sessions;
 	
 	
-	public TutorDto(Set<AvailabilityDto> availabilities, Set<SubjectDto> subjects, Set<SessionDto> sessions, int hourlyrate, float rating) {
+	public TutorDto(String email, String name, String password, Set<AvailabilityDto> availabilities, Set<SubjectDto> subjects, Set<SessionDto> sessions, int hourlyrate, float rating) {
+		this.email = email;
+		this.name = name;
+		this.password = password;
 		this.availabilities = availabilities;
 		this.subjects = subjects;
 		this.sessions = sessions;
@@ -58,6 +64,30 @@ public class TutorDto {
 
 	public void setAvailabilities(Set<AvailabilityDto> availabilities) {
 		this.availabilities = availabilities;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 

@@ -85,7 +85,10 @@ public class TutoringService321Service {
 		tutor.setHourlyRate(hourlyRate);
 		tutor.setRating(-1);
 		tutor.setUserID(name.hashCode()*password.hashCode()*email.hashCode());
-
+		tutor.setAvailability(new HashSet<>());
+		tutor.setSession(new HashSet<>());
+		tutor.setSubject(new HashSet<>());
+		
 		tutorRepository.save(tutor);
 		return tutor;
 	}
@@ -122,7 +125,7 @@ public class TutoringService321Service {
 		if(tutor==null) {
 			throw new IllegalArgumentException("Tutor could not be found.");
 		}
-		if (tutor.getPassword()!=oldPassword) {
+		if (!tutor.getPassword().equals(oldPassword)) {
 			throw new IllegalArgumentException("That is not the correct password.");
 		}
 		if (newPassword==null || newPassword.trim().length()==0) {
@@ -174,6 +177,8 @@ public class TutoringService321Service {
 		//Setting the attributes
 		subject.setSubjectName(name);
 		subject.setSubjectID(name.hashCode());
+		subject.setCourse(new HashSet<>());
+		subject.setTutor(new HashSet<>());
 
 		subjectRepository.save(subject);
 		return subject;
@@ -183,7 +188,7 @@ public class TutoringService321Service {
 	public Subject addSubjectToTutor(String subjectName, String tutorEmail) {
 		//Find the tutor
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
-
+		
 		if(tutor == null) {
 			throw new IllegalArgumentException("Tutor could not be found.");
 		}
@@ -195,7 +200,8 @@ public class TutoringService321Service {
 			throw new IllegalArgumentException("Subject could not be found.");
 		}
 
-		tutor.getSubject().add(subject);
+		subject.getTutor().add(tutor);
+		
 		return subject;
 	}
 
@@ -243,8 +249,6 @@ public class TutoringService321Service {
 
 	//====================================================================================
 	//SESSION METHODS
-
-	//TODO add review
 
 	@Transactional
 	public Session createSession(String tutorEmail, Date date, Time startTime, Time endTime) {
@@ -543,6 +547,7 @@ public class TutoringService321Service {
 		course.setDescription(description);
 		course.setSchool(school);
 		course.setCourseID(courseCode.hashCode()*school.hashCode());
+		course.setSubject(new HashSet<>());
 
 		courseRepository.save(course);
 		return course;

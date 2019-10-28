@@ -50,7 +50,7 @@ public class TutoringService321RestController {
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime endTime) {
 
 		Availability availability = service.addAvailability(tutorEmail, date, Time.valueOf(startTime), Time.valueOf(endTime));
-//checking
+
 		return converToDto(availability);
 	}
 
@@ -62,7 +62,7 @@ public class TutoringService321RestController {
 		}
 		return dtos;
 	}
-	
+
 	@DeleteMapping(value = {"/availabilities/{tutorEmail}", "/availabilities/{tutorEmail}/"})
 	public List<AvailabilityDto> deleteAvailability(@PathVariable("tutorEmail") String tutorEmail,
 			@RequestParam Date date,
@@ -97,8 +97,7 @@ public class TutoringService321RestController {
 			throw new IllegalArgumentException("There is no such Availability.");
 		}
 
-		TutorDto tutorDto = converToDto(availability.getTutor());
-		AvailabilityDto dto = new AvailabilityDto(availability.getDate(), availability.getStartTime(), availability.getEndTime(), tutorDto);
+		AvailabilityDto dto = new AvailabilityDto(availability.getDate(), availability.getStartTime(), availability.getEndTime());
 		return dto;
 	}
 
@@ -145,6 +144,15 @@ public class TutoringService321RestController {
 		return converToDto(tutor);
 	}
 
+	@GetMapping(value = {"/tutors", "/tutors/"})
+	public List<TutorDto> getTutor() {
+		List<TutorDto> dtos = new ArrayList<TutorDto>();
+		for (Tutor tutor : service.getAllTutors()) {
+			dtos.add(converToDto(tutor));
+		}
+		return dtos;
+	}
+	
 	private TutorDto converToDto(Tutor tutor) {
 		if(tutor == null) {
 			throw new IllegalArgumentException("There is no such Tutor.");
@@ -165,15 +173,16 @@ public class TutoringService321RestController {
 			availabilitiesDto.add(converToDto(availability));
 		}
 
-		TutorDto dto = new TutorDto(availabilitiesDto, subjectsDto, sessionsDto, tutor.getHourlyRate(), tutor.getRating());
+		TutorDto dto = new TutorDto(tutor.getEmail(), tutor.getName(), tutor.getPassword(), availabilitiesDto, subjectsDto, sessionsDto, tutor.getHourlyRate(), tutor.getRating());
 		return dto;
 	}
 
 	//====================================================================================
 	//COURSE METHODS
 
-	@GetMapping(value = {"/courses/{courseCode+school}", "/courses/{courseCode+school}/"})
-	public CourseDto getCourse(@PathVariable("courseCode"+"school") String courseCode, String school) {
+	@GetMapping(value = {"/courses/{courseCode}", "/courses/{courseCode}/"})
+	public CourseDto getCourse(@PathVariable("courseCode") String courseCode, 
+			@RequestParam String school) {
 		Course course = service.getCourse(school, courseCode);
 
 		return converToDto(course);
@@ -188,15 +197,19 @@ public class TutoringService321RestController {
 		return dtos;
 	}
 
-	@PostMapping(value = {"/courses/{courseCode+school+subjectName}", "/courses/{courseCode+school+subjectName}/"})
-	public CourseDto addCourseToSubject(@PathVariable("courseCode+school+subjectName") String courseCode, String school, String subjectName) {
+	@PostMapping(value = {"/courses/subject/{courseCode}", "/courses/subject/{courseCode}/"})
+	public CourseDto addCourseToSubject(@PathVariable("courseCode") String courseCode, 
+			@RequestParam String school, 
+			@RequestParam String subjectName) {
 		Course course = service.addCourseToSubject(school, courseCode, subjectName);
 
 		return converToDto(course);
 	}
 
-	@DeleteMapping(value = {"/courses/{courseCode+school+subjectName}", "/courses/{courseCode+school+subjectName}/"})
-	public List<CourseDto> removeCourseFromSubject(@PathVariable("courseCode+school+subjectName") String courseCode, String school, String subjectName) {
+	@DeleteMapping(value = {"/courses/{courseCode}", "/courses/{courseCode}/"})
+	public List<CourseDto> removeCourseFromSubject(@PathVariable("courseCode") String courseCode, 
+			@RequestParam String school, 
+			@RequestParam String subjectName) {
 		service.removeCourseFromSubject(school, courseCode, subjectName);
 
 		List<CourseDto> dtos = new ArrayList<CourseDto>();
@@ -207,7 +220,7 @@ public class TutoringService321RestController {
 		return dtos;
 	}
 
-	@GetMapping(value = {"/courses/{tutorEmail}", "/courses/{tutorEmail}/"})
+	@GetMapping(value = {"/courses/tutor/{tutorEmail}", "/courses/tutor/{tutorEmail}/"})
 	public List<CourseDto> getTutorCourses(@PathVariable("tutorEmail") String tutorEmail) {
 		List<Course> tutorCourses = service.getAllTutorCourses(tutorEmail);
 
@@ -219,31 +232,61 @@ public class TutoringService321RestController {
 		return dtos;
 	}
 
+	@PostMapping(value = {"/courses/{courseCode}", "/courses/{courseCode}/"})
+	public CourseDto createCourse(@PathVariable("courseCode") String courseCode, 
+			@RequestParam String school,
+			@RequestParam String description) {
+		Course course = service.createCourse(description, school, courseCode);
+
+		return converToDto(course);
+	}
+
 	private CourseDto converToDto(Course course) {
 		if (course == null) {
 			throw new IllegalArgumentException("There is no such course.");
 		}
 
-		Set<SubjectDto> subjects = new HashSet<SubjectDto>();
-		for(Subject subject : course.getSubject()) {
-			subjects.add(converToDto(subject));
-		}
-
-		CourseDto dto = new CourseDto(course.getDescription(), course.getSchool(), course.getCourseCode(), subjects);
+		CourseDto dto = new CourseDto(course.getDescription(), course.getSchool(), course.getCourseCode());
 		return dto;
 	}
 
 	//====================================================================================
 	//SUBJECT METHODS
 
+	@PostMapping(value = {"/subjects/{name}", "/subjects/{name}/"})
+	public SubjectDto createSubject(@PathVariable("name") String name) {
+		Subject subject = service.createSubject(name);
+
+		return converToDto(subject);
+	}
+
+	@PostMapping(value = {"/subjects/tutor/{name}", "/subjects/tutor/{name}/"})
+	public SubjectDto addSubjectToTutor(@PathVariable("name") String name,
+			@RequestParam String tutorEmail) {
+		Subject subject = service.addSubjectToTutor(name, tutorEmail);
+
+		return converToDto(subject);
+	}
+	
+	@GetMapping(value = {"/subjects/{name}", "/subjects/{name}/"})
+	public SubjectDto getSubject(@PathVariable("name") String name) {
+		Subject subject = service.getSubject(name);
+
+		return converToDto(subject);
+	}
+	
+	@GetMapping(value = {"/subjects", "/subjects/"})
+	public List<SubjectDto> getAllSubjects() {
+		List<SubjectDto> dtos = new ArrayList<SubjectDto>();
+		for (Subject subject : service.getAllSubjects()) {
+			dtos.add(converToDto(subject));
+		}
+		return dtos;
+	}
+	
 	private SubjectDto converToDto(Subject subject) {
 		if (subject == null) {
 			throw new IllegalArgumentException("There is no such subject.");
-		}
-
-		Set<TutorDto> tutors = new HashSet<TutorDto>();
-		for(Tutor tutor : subject.getTutor()) {
-			tutors.add(converToDto(tutor));
 		}
 
 		Set<CourseDto> courses = new HashSet<CourseDto>();
@@ -251,10 +294,10 @@ public class TutoringService321RestController {
 			courses.add(converToDto(course));
 		}
 
-		SubjectDto dto = new SubjectDto(subject.getSubjectName(), tutors, courses);
+		SubjectDto dto = new SubjectDto(subject.getSubjectName(), courses);
 		return dto;
 	}
-
+	
 	//====================================================================================
 	//SESSION METHODS
 
@@ -284,7 +327,7 @@ public class TutoringService321RestController {
 			@RequestParam Date requestedDate,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime qStartTime,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") LocalTime qEndTime
-		) {
+			) {
 
 		Session session= service.approveSession(tutorEmail, requestedDate, Time.valueOf(qStartTime), Time.valueOf(qEndTime));
 		return converToDto(session);
@@ -335,7 +378,7 @@ public class TutoringService321RestController {
 
 		return converToDto(review);
 	}
-	
+
 	@GetMapping(value = {"/reviews/{tutorEmail}", "/reviews/{tutorEmail}/"})
 	public List<ReviewDto> getTutorReviews(@PathVariable("tutorEmail") String tutorEmail) {
 		List<Review> tutorReviews = service.getAllTutorReviews(tutorEmail);
