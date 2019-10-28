@@ -65,7 +65,7 @@ public class TutoringService321Service {
 		if(password.length() < 8) {
 			throw new IllegalArgumentException("Password has to be at least 8 characters long.");
 		}
-		
+
 		//Check if email already used
 		List<Tutor> allTutors = getAllTutors();
 		for(Tutor tutor : allTutors) {
@@ -73,9 +73,9 @@ public class TutoringService321Service {
 				throw new IllegalArgumentException("A tutor with the same email already exists.");
 			}
 		}
-		
+
 		Tutor tutor = new Tutor();
-		
+
 		//Setting the attributes
 		//Note that rating starts at -1 as a flag for "no rating yet"
 		tutor.setEmail(email);
@@ -112,7 +112,7 @@ public class TutoringService321Service {
 		if(phoneNumber.length() != 10) {
 			throw new IllegalArgumentException("Phone number has to be 10 character long.");
 		}
-		
+
 		tutor.setEmail(email);
 		tutor.setName(name);
 		tutor.setPhoneNumber(phoneNumber);
@@ -135,7 +135,7 @@ public class TutoringService321Service {
 		if(newPassword.length() < 8) {
 			throw new IllegalArgumentException("Password has to be at least 8 characters long.");
 		}
-		
+
 		tutor.setPassword(newPassword);
 		return tutor;
 	}
@@ -154,9 +154,9 @@ public class TutoringService321Service {
 
 	@Transactional
 	public Tutor getTutor(String email) {
-//		if(!email.matches(".{1,}@.{1,}\\..{2,3}")) {
-//			throw new IllegalArgumentException("The email should be in the format of <example@something.ca/com/etc.>.");
-//		}
+		//		if(!email.matches(".{1,}@.{1,}\\..{2,3}")) {
+		//			throw new IllegalArgumentException("The email should be in the format of <example@something.ca/com/etc.>.");
+		//		}
 		Tutor tutor = tutorRepository.findTutorByEmail(email);
 		return tutor;
 	}
@@ -241,7 +241,7 @@ public class TutoringService321Service {
 		Tutor tutor = getTutor(tutorEmail);
 
 		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
-		
+
 		//Input validation
 		if(date == null) {
 			throw new IllegalArgumentException("Date cannot be empty.");
@@ -254,15 +254,14 @@ public class TutoringService321Service {
 		if(endTime == null) {
 			throw new IllegalArgumentException("End time cannot be empty.");
 		}
-		
+
 		for(Session aSession : sessions) {
 			if(aSession.getStarTime().equals(startTime) || aSession.getEndTime().equals(endTime)) {
 				throw new IllegalArgumentException("There is already a session booked at that time.");
 			}
-			if(aSession.getStarTime().before(startTime)&&aSession.getEndTime().before(startTime)) {
-				throw new IllegalArgumentException("This session would overlap with an existing session.");
-			}
-			if(aSession.getEndTime().after(endTime)&&aSession.getStarTime().after(endTime)) {
+			if((aSession.getStarTime().before(startTime)&&aSession.getEndTime().after(startTime)) ||
+					(aSession.getStarTime().before(endTime)&&aSession.getEndTime().after(endTime)) ||
+					(aSession.getStarTime().after(startTime)&& aSession.getEndTime().before(endTime))) {
 				throw new IllegalArgumentException("This session would overlap with an existing session.");
 			}
 		}
@@ -302,17 +301,24 @@ public class TutoringService321Service {
 
 		//We first check that there is no session at that time
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
+		
+		if(tutor == null) {
+			throw new IllegalArgumentException("Tutor could not be found.");
+		}
+		
 		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
 		Session approvedSession=null;
-		
+
 		for(Session session : sessions) {
-			if(!(session.getStarTime().equals(startTime) && session.getEndTime().equals(endTime))) {
-				throw new IllegalArgumentException("The session to approve could not be found.");
-			}
-			else {
+			if(session.getStarTime().equals(startTime) && session.getEndTime().equals(endTime)) {
 				approvedSession=session;
 			}
 		}
+
+		if(approvedSession == null) {
+			throw new IllegalArgumentException("The session to approve could not be found.");
+		}
+		
 		//We then approve the session
 		approvedSession.setIsApproved(true);
 
@@ -370,7 +376,7 @@ public class TutoringService321Service {
 		if(startTime.after(endTime)) {
 			throw new IllegalArgumentException("Start time must be before End time.");
 		}
-		
+
 		//Checking if this Availability already exists
 		List<Availability> availabilities = toList(availabilityRepository.findAvailabilityByDateAndTutor(date, tutor));
 		for(Availability avail :  availabilities) {
@@ -388,7 +394,7 @@ public class TutoringService321Service {
 		availability.setStartTime(startTime);
 		availability.setAvailabilityID(tutorEmail.hashCode()*date.hashCode()*startTime.hashCode()*endTime.hashCode());
 		availability.setTutor(tutor);
-		
+
 		availabilityRepository.save(availability);
 		return availability;
 	}
@@ -401,14 +407,14 @@ public class TutoringService321Service {
 		if(tutor == null) {
 			throw new IllegalArgumentException("Tutor could not be found.");
 		}
-		
+
 		//We check the set of availabilities with that date
 		Set<Availability> availabilities = availabilityRepository.findAvailabilityByDateAndTutor(date, tutor);
-		
+
 		if(availabilities == null) {
 			return null;
 		}
-		
+
 		for(Availability availability : availabilities) {
 			if(startTime.equals(availability.getStartTime()) && endTime.equals(availability.getEndTime())) {
 				return availability;
@@ -496,11 +502,11 @@ public class TutoringService321Service {
 				break;
 			}
 		}
-		
+
 		if(foundTutor == null) {
 			throw new IllegalArgumentException("Could not find any corresponding tutor account.");
 		}
-		
+
 		return foundTutor;
 	}
 
@@ -540,11 +546,11 @@ public class TutoringService321Service {
 	@Transactional
 	public Course getCourse(String school, String courseCode) {
 		Set<Course> courses = courseRepository.findCourseBySchool(school);
-		
+
 		if(courses == null) {
 			return null;
 		}
-		
+
 		for(Course course : courses) {
 			if(courseCode.equals(course.getCourseCode())) return course;
 		}
@@ -640,13 +646,13 @@ public class TutoringService321Service {
 		if(tutorEmail == null || tutorEmail.trim().length() == 0) {
 			throw new IllegalArgumentException("Tutor Email cannot be empty.");
 		}
-		
+
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail); 
-		
+
 		if(tutor == null) {
 			throw new IllegalArgumentException("Tutor could not be found.");
 		}
-		
+
 		String tutorName = tutor.getName();
 		String email = "Dear Manager,\n"
 				+ "	I would like to offer a new course, "+courseCode+"\n"
@@ -690,11 +696,11 @@ public class TutoringService321Service {
 
 		Session foundSession = null;
 		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
-		
+
 		if(sessions == null) {
 			throw new IllegalArgumentException("Sessions with that date and tutor could not be found.");
 		}
-		
+
 		for(Session session : sessions) {
 			if(startTime.equals(session.getStarTime()) && endTime.equals(session.getEndTime())) {
 				foundSession = session;
@@ -741,7 +747,7 @@ public class TutoringService321Service {
 	public List<Review> getAllReviews() {
 		return toList(reviewRepository.findAll());
 	}
-	
+
 	//====================================================================================
 
 	//Helper method provided in EventRegistration
