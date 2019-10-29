@@ -232,15 +232,11 @@ public class TutoringService321Service {
 	//====================================================================================
 	//SESSION METHODS
 
-	//TODO add review
-
 	@Transactional
 	public Session createSession(String tutorEmail, Date date, Time startTime, Time endTime) {
 
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
-
-		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
 
 		//Input validation
 		if(date == null) {
@@ -271,17 +267,6 @@ public class TutoringService321Service {
 		if(startTime.after(endTime)) {
 					throw new IllegalArgumentException("Start time must be before End time.");
 					
-		}
-
-		for(Session aSession : sessions) {
-			if(aSession.getStarTime().equals(startTime) || aSession.getEndTime().equals(endTime)) {
-				throw new IllegalArgumentException("There is already a session booked at that time.");
-			}
-			if((aSession.getStarTime().before(startTime)&&aSession.getEndTime().after(startTime)) ||
-					(aSession.getStarTime().before(endTime)&&aSession.getEndTime().after(endTime)) ||
-					(aSession.getStarTime().after(startTime)&& aSession.getEndTime().before(endTime))) {
-				throw new IllegalArgumentException("This session would overlap with an existing session.");
-			}
 		}
 
 		Session session = new Session();
@@ -322,8 +307,6 @@ public class TutoringService321Service {
 		return null;
 	}
 
-
-
 	@Transactional
 	public Session approveSession(String tutorEmail, Date date, Time startTime, Time endTime) {
 
@@ -347,6 +330,24 @@ public class TutoringService321Service {
 			throw new IllegalArgumentException("The session to approve could not be found.");
 		}
 		
+		//We check to see if other approved sessions would overlap with that one
+		//We first get all approves Sessions
+		List<Session> approvedSessions = new ArrayList<>();
+		for(Session session : sessions) {
+			if(session.getIsApproved()) {
+				approvedSessions.add(session);
+			}
+		}
+		
+		//Then we check for overlap
+		for(Session aSession : approvedSessions) {
+			if(endTime.compareTo(aSession.getStarTime()) >= 0 && startTime.compareTo(aSession.getStarTime()) <= 0 ||
+					startTime.compareTo(aSession.getEndTime()) <= 0 && endTime.compareTo(aSession.getEndTime()) >= 0 ||
+					startTime.compareTo(aSession.getStarTime()) >= 0 && endTime.compareTo(aSession.getEndTime()) <= 0) {
+				throw new IllegalArgumentException("This session would overlap with an existing approved session.");
+			}
+		}
+		
 		//We then approve the session
 		approvedSession.setIsApproved(true);
 
@@ -361,17 +362,13 @@ public class TutoringService321Service {
 		if(session != null) {
 			sessionRepository.delete(session);
 		}
+		else {
+			throw new IllegalArgumentException("Could not cancel the session.");
+		}
 	}
 
 	@Transactional
-	public List<Session> getAllSessions(String tutorEmail) {
-		//Find the tutor first
-		Tutor tutor = getTutor(tutorEmail);
-	
-
-		if(tutor == null) {
-			throw new IllegalArgumentException("There is no such Tutor.");
-		}
+	public List<Session> getAllSessions() {
 		return toList(sessionRepository.findAll());
 	}	
 
