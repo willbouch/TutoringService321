@@ -113,6 +113,8 @@ public class TutoringService321Service {
 			throw new IllegalArgumentException("Phone number has to be 10 character long.");
 		}
 
+
+		tutor.setEmail(email);
 		tutor.setName(name);
 		tutor.setPhoneNumber(phoneNumber);
 		tutor.setHourlyRate(hourlyRate);
@@ -153,6 +155,9 @@ public class TutoringService321Service {
 
 	@Transactional
 	public Tutor getTutor(String email) {
+		//		if(!email.matches(".{1,}@.{1,}\\..{2,3}")) {
+		//			throw new IllegalArgumentException("The email should be in the format of <example@something.ca/com/etc.>.");
+		//		}
 		Tutor tutor = tutorRepository.findTutorByEmail(email);
 		return tutor;
 	}
@@ -269,6 +274,24 @@ public class TutoringService321Service {
 
 		if(endTime == null) {
 			throw new IllegalArgumentException("End time cannot be empty.");
+			
+		}
+		
+		if(tutor == null) {
+			throw new IllegalArgumentException("Tutor cannot be empty.");
+		}
+		
+		if(startTime.before(Time.valueOf("9:00:00"))) {
+					throw new IllegalArgumentException("Start time must be between 9 am and 9 pm.");
+		}
+		
+		if(endTime.after(Time.valueOf("21:00:00"))) {
+					throw new IllegalArgumentException("End time must be between 9 am and 9 pm.");
+		}
+		
+		if(startTime.after(endTime)) {
+					throw new IllegalArgumentException("Start time must be before End time.");
+					
 		}
 
 		for(Session aSession : sessions) {
@@ -296,20 +319,28 @@ public class TutoringService321Service {
 		sessionRepository.save(session);
 		return session;
 	}
-
 	@Transactional
-	public Session getSession(String tutorEmail, Date date, Time startTime, Time endTime) {
+	public Session getSession(String tutorEmail, Date date, Time startTime, Time endTime) {	
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
+		if(tutor == null) {
+			throw new IllegalArgumentException("Tutor could not be found.");
+		}
+
+		//We check the set of availabilities with that date
 		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
+
+		if( sessions == null) {
+			return null;
+		}
+
 		for(Session session : sessions) {
 			if(startTime.equals(session.getStarTime()) && endTime.equals(session.getEndTime())) {
 				return session;
 			}
 		}
-
-		//Not supposed to happen
+    
 		return null;
 	}
 
@@ -318,17 +349,42 @@ public class TutoringService321Service {
 
 		//We first check that there is no session at that time
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
+		
+		if(tutor == null) {
+			throw new IllegalArgumentException("Tutor could not be found.");
+		}
+		
 		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
 		Session approvedSession=null;
 
 		for(Session session : sessions) {
-			if(!(session.getStarTime().equals(startTime) && session.getEndTime().equals(endTime))) {
-				throw new IllegalArgumentException("The session to approve could not be found.");
-			}
-			else {
+			if(session.getStarTime().equals(startTime) && session.getEndTime().equals(endTime)) {
 				approvedSession=session;
 			}
 		}
+
+		if(approvedSession == null) {
+			throw new IllegalArgumentException("The session to approve could not be found.");
+		}
+		
+		//We check to see if other approved sessions would overlap with that one
+		//We first get all approves Sessions
+		List<Session> approvedSessions = new ArrayList<>();
+		for(Session session : sessions) {
+			if(session.getIsApproved()) {
+				approvedSessions.add(session);
+			}
+		}
+		
+		//Then we check for overlap
+		for(Session aSession : approvedSessions) {
+			if(endTime.compareTo(aSession.getStarTime()) >= 0 && startTime.compareTo(aSession.getStarTime()) <= 0 ||
+					startTime.compareTo(aSession.getEndTime()) <= 0 && endTime.compareTo(aSession.getEndTime()) >= 0 ||
+					startTime.compareTo(aSession.getStarTime()) >= 0 && endTime.compareTo(aSession.getEndTime()) <= 0) {
+				throw new IllegalArgumentException("This session would overlap with an existing approved session.");
+			}
+		}
+		
 		//We then approve the session
 		approvedSession.setIsApproved(true);
 
@@ -343,16 +399,13 @@ public class TutoringService321Service {
 		if(session != null) {
 			sessionRepository.delete(session);
 		}
+		else {
+			throw new IllegalArgumentException("Could not cancel the session.");
+		}
 	}
 
 	@Transactional
-	public List<Session> getAllSessions(String tutorEmail) {
-		//Find the tutor first
-		Tutor tutor = getTutor(tutorEmail);
-
-		if(tutor == null) {
-			throw new IllegalArgumentException("There is no such Tutor.");
-		}
+	public List<Session> getAllSessions() {
 		return toList(sessionRepository.findAll());
 	}	
 
