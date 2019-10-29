@@ -6,17 +6,15 @@ public class CourseDto {
 	private String description;
 	private String school;
 	private String courseCode;
-	private Set<SubjectDto> subjects;
 	
 	public CourseDto() {
 		
 	}
 	
-	public CourseDto(String description, String school, String courseCode, Set<SubjectDto> subjects) {
+	public CourseDto(String description, String school, String courseCode) {
 		this.description = description;
 		this.school = school;
 		this.courseCode = courseCode;
-		this.subjects = subjects;
 	}
 	
 	public String getDescription() {
@@ -41,13 +39,5 @@ public class CourseDto {
 	
 	public void setCourseCode(String courseCode) {
 		this.courseCode = courseCode;
-	}
-	
-	public Set<SubjectDto> getSubject() {
-		return subjects;
-	}
-	
-	public void setSubject(Set<SubjectDto> subjects) {
-		this.subjects = subjects;
 	}
 }
