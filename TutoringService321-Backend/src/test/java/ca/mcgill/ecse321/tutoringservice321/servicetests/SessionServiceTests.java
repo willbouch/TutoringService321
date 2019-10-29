@@ -58,6 +58,8 @@ public class SessionServiceTests {
 	private static final String TUTOR_PASSWORD="password";
 	private static final String TUTOR_PHONE="250-510-2578";
 	private static final int TUTOR_HOURLY_RATE=14;
+	private static final Date NON_EXISTING_DATE = Date.valueOf("1999-11-01");
+	
 	
 	Session session;
 
@@ -119,6 +121,38 @@ public class SessionServiceTests {
 		assertEquals(Time.valueOf("10:00:00"), session.getEndTime());
 	}
 	
+	@Test
+	public void testCreateSessionPast9() {
+		
+		String error = null;
+
+		try {
+			session=service.createSession(TUTOR_EMAIL, DATE, Time.valueOf("22:00:00"), Time.valueOf("23:00:00"));
+		}
+		catch(IllegalArgumentException e){
+			error = e.getMessage();
+			
+		}
+		assertEquals("End time must be between 9 am and 9 pm.", error);
+		
+	}
+	
+	@Test
+	public void testCreateSessionBefore9() {
+		
+		String error = null;
+
+		try {
+			session=service.createSession(TUTOR_EMAIL, DATE, Time.valueOf("7:00:00"), Time.valueOf("8:00:00"));
+		}
+		catch(IllegalArgumentException e){
+			error = e.getMessage();
+			
+		}
+		assertEquals("Start time must be between 9 am and 9 pm.", error);
+		
+	}
+	
 
 	@Test
 	public void testApproveSession() {
@@ -161,6 +195,8 @@ public class SessionServiceTests {
 		
 		assertEquals("Tutor could not be found.", error);
 	}
+	
+	
 	
 	@Test
 	public void testApproveSessionNullDate() {
@@ -244,11 +280,55 @@ public class SessionServiceTests {
 		assertEquals(END_TIME, service.getSession(TUTOR_EMAIL, DATE, START_TIME, END_TIME).getEndTime());
 		
 	
-	}	
+	}
+	
+	@Test
 	
 		public void testGetNonExistingSession() {
-			assertNull(service.getSession(TUTOR_EMAIL, DATE, START_TIME, END_TIME));
+			assertNull(service.getSession(TUTOR_EMAIL, NON_EXISTING_DATE, START_TIME, END_TIME));
 	}
+	
+	/*@Test
+	public void testApproveSessionConflictingSessionInfringeBefore() {
+		String error = null;
+
+		try {
+			service.addAvailability(TUTOR_EMAIL, DATE, Time.valueOf("11:00:00"), Time.valueOf("12:30:00"));
+		}
+		catch(IllegalArgumentException e){
+			error=e.getMessage();
+		}
+
+		assertEquals(error,"Session conflicts with already existing session.");
+	}
+
+	@Test
+	public void testApproveConflictingSessionInfringeMiddle() {
+		String error = null;
+
+		try {
+			service.addAvailability(TUTOR_EMAIL, DATE, Time.valueOf("12:30:00"), Time.valueOf("12:40:00"));
+		}
+		catch(IllegalArgumentException e){
+			error=e.getMessage();
+		}
+
+		assertEquals(error,"Session conflicts with already existing session.");
+	}
+
+	@Test
+	public void testApproveSessionConflictingSessionInfringeEnd() {
+		String error = null;
+
+		try {
+			service.addAvailability(TUTOR_EMAIL, DATE, Time.valueOf("12:30:00"), Time.valueOf("14:00:00"));
+		}
+		catch(IllegalArgumentException e){
+			error=e.getMessage();
+		}
+
+		assertEquals(error,"Session conflicts with already existing session.");
+	}*/
 	
 	
 }

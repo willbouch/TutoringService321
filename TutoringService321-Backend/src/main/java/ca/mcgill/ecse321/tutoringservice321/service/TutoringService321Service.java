@@ -253,6 +253,24 @@ public class TutoringService321Service {
 
 		if(endTime == null) {
 			throw new IllegalArgumentException("End time cannot be empty.");
+			
+		}
+		
+		if(tutor == null) {
+			throw new IllegalArgumentException("Tutor cannot be empty.");
+		}
+		
+		if(startTime.before(Time.valueOf("9:00:00"))) {
+					throw new IllegalArgumentException("Start time must be between 9 am and 9 pm.");
+		}
+		
+		if(endTime.after(Time.valueOf("21:00:00"))) {
+					throw new IllegalArgumentException("End time must be between 9 am and 9 pm.");
+		}
+		
+		if(startTime.after(endTime)) {
+					throw new IllegalArgumentException("Start time must be before End time.");
+					
 		}
 
 		for(Session aSession : sessions) {
@@ -292,7 +310,7 @@ public class TutoringService321Service {
 		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
 
 		if( sessions == null) {
-			throw new IllegalArgumentException("The session to approve could not be found.");
+			return null;
 		}
 
 		for(Session session : sessions) {
@@ -349,6 +367,7 @@ public class TutoringService321Service {
 	public List<Session> getAllSessions(String tutorEmail) {
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
+	
 
 		if(tutor == null) {
 			throw new IllegalArgumentException("There is no such Tutor.");
