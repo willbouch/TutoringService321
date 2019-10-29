@@ -210,7 +210,11 @@ public class SessionServiceTests {
 	
 	
 	@Test	
+<<<<<<< HEAD
 	public void testApproveNonExistingSession() {
+=======
+	public void testApproveUnexistingSession() {
+>>>>>>> b67cd6cd29ad7916192c53836e5ba552ea376087
 		
 		String error = null;
 
