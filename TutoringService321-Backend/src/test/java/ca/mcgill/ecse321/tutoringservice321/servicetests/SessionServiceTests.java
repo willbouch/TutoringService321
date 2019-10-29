@@ -77,30 +77,14 @@ public class SessionServiceTests {
 					} else {
 						return null;
 					}
-				});
-		when(sessionDao.findSessionByTutor(anyString())).thenAnswer( (InvocationOnMock invocation) -> {
-			if(invocation.getArgument(0).equals(TUTOR_EMAIL)) {
-				Set<Session> sessions = new HashSet<Session>();
+				});		
+		when(sessionDao.findSessionByTutorAndDate(any(Tutor.class),any(Date.class))).thenAnswer( (InvocationOnMock invocation) -> {
+			if(invocation.getArgument(0).equals(TUTOR) && invocation.getArgument(1).equals(DATE)) {
 				Session session = new Session();
 				session.setTutor(TUTOR);
 				session.setDate(DATE);
 				session.setStarTime(START_TIME);
 				session.setEndTime(END_TIME);
-				sessions.add(session);
-
-				return session;
-			} else {
-				return null;
-			}
-		});
-		
-		when(sessionDao.findSessionByTutorAndDateAndStartTime(any(Tutor.class), any(Date.class), any(Time.class))).thenAnswer( (InvocationOnMock invocation) -> {
-			if(invocation.getArgument(0).equals(DATE)) {
-				Session session = new Session();
-				session.setTutor(TUTOR);
-				session.setDate(DATE);
-				session.setStarTime(Time.valueOf("16:00:00"));
-				session.setEndTime(Time.valueOf("19:00:00"));
 
 				Set<Session> sessions = new HashSet<Session>();
 				sessions.add(session);
@@ -110,40 +94,6 @@ public class SessionServiceTests {
 				return null;
 			}
 		});
-
-		when(sessionDao.findSessionByDate(any(Date.class))).thenAnswer( (InvocationOnMock invocation) -> {
-			if(invocation.getArgument(0).equals(DATE)) {
-				Session session = new Session();
-				session.setTutor(TUTOR);
-				session.setDate(DATE);
-				session.setStarTime(Time.valueOf("9:00:00"));
-				session.setEndTime(Time.valueOf("10:00:00"));
-
-				Set<Session> sessions = new HashSet<Session>();
-				sessions.add(session);
-
-				return sessions;
-			} else {
-				return null;
-			}
-		});
-		
-		/*when(sessionDao.findSessionByTutorAndDate(any(Tutor.class),any(Date.class))).thenAnswer( (InvocationOnMock invocation) -> {
-			if(invocation.getArgument(0).equals(DATE)) {
-				Session session = new Session();
-				session.setTutor(TUTOR);
-				session.setDate(DATE);
-				session.setStarTime(Time.valueOf("11:00:00"));
-				session.setEndTime(Time.valueOf("12:00:00"));
-
-				Set<Session> sessions = new HashSet<Session>();
-				sessions.add(session);
-
-				return sessions;
-			} else {
-				return null;
-			}
-		});*/
 
 		// Whenever anything is saved, just return the parameter object
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -157,54 +107,44 @@ public class SessionServiceTests {
 	public void testCreateSession() {
 
 		try {
-			session=service.createSession(TUTOR_EMAIL, DATE, START_TIME, END_TIME);
+			session=service.createSession(TUTOR_EMAIL, DATE, Time.valueOf("9:00:00"), Time.valueOf("10:00:00"));
 		}
 		catch(IllegalArgumentException e){
+			System.out.println(e.getMessage());
 			fail();
 		}
 
 		assertEquals(DATE, session.getDate());
-		assertEquals(START_TIME, session.getStarTime());
-		assertEquals(END_TIME, session.getEndTime());
+		assertEquals(Time.valueOf("9:00:00"), session.getStarTime());
+		assertEquals(Time.valueOf("10:00:00"), session.getEndTime());
 	}
 	
 
 	@Test
 	public void testApproveSession() {
 		
-		session=service.createSession(TUTOR_EMAIL, DATE, START_TIME, END_TIME);
-
-		try {
-
-			
+		try {	
 			session=service.approveSession(TUTOR_EMAIL, DATE, START_TIME, END_TIME);
 		}
 		catch(IllegalArgumentException e){
 			fail();
 		}
 
-		assertEquals(DATE, session.getDate());
-		assertEquals(START_TIME, session.getStarTime());
-		assertEquals(END_TIME, session.getEndTime());
+		assertEquals(true, session.getIsApproved());
 	}
 	
 	@Test
 	public void testApproveSessionNullEmail() {
-
 		
 		String error = null;
-
 
 		try {
 				session = service.approveSession(null, DATE, START_TIME, END_TIME);
 			
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-			e.getMessage();
+			error = e.getMessage();
 		}
-		
-		assertEquals("A tutor must be signed in to approve a session", error);
-		//assertEquals(tutorEmail, session.getSessionID());
+		assertEquals("Tutor could not be found.", error);
 	}
 	
 	@Test
@@ -213,95 +153,102 @@ public class SessionServiceTests {
 
 		String error = null;
 
-
 		try {
-			session = service.approveSession(" ", DATE, START_TIME, END_TIME);
+			session = service.approveSession("", DATE, START_TIME, END_TIME);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-			e.getMessage();
+			error = e.getMessage();
 		}
 		
-		assertEquals("A tutor must have a valid email to approve a session!", error);
-		//assertEquals(tutorEmail, session.getSessionID());
+		assertEquals("Tutor could not be found.", error);
 	}
 	
 	@Test
-	
 	public void testApproveSessionNullDate() {
 
 		String error = null;
-
-
+		
 		try {
 			session = service.approveSession(TUTOR_EMAIL, null, START_TIME, END_TIME);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-			e.getMessage();
+			error = e.getMessage();
 		}
 		
-		assertEquals("Requested Date cannot be empty!", error);
-		//assertEquals(tutorEmail, session.getSessionID());
+		assertEquals("The session to approve could not be found.", error);
 	}
 	
 	
 	
 	
-	@Test
-	
+	@Test	
 	public void testApproveSessionNullStartTime() {
-		
-		
+			
 		String error = null;
-
 
 		try {
 			session = service.approveSession(TUTOR_EMAIL, DATE, null, END_TIME);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-			e.getMessage();
+			error =e.getMessage();
 		}
-		assertEquals("Start Time cannot be empty!", error);
+		assertEquals("The session to approve could not be found.", error);
 		
-		
-		//assertEquals(tutorEmail, session.getSessionID());
 	}
 	
 	
-	@Test
-	
+	@Test	
 	public void testApproveSessionNullEndTime() {
 		
 		String error = null;
 
-
 		try {
 			session = service.approveSession(TUTOR_EMAIL, DATE, START_TIME, null);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-			e.getMessage();
+			error = e.getMessage();
 		}
 		
-		assertEquals("Requested end time cannot be empty!", error);
-		//assertEquals(tutorEmail, session.getSessionID());
+		assertEquals("The session to approve could not be found.", error);
 	}
 	
 	
-	@Test
-	
-	public void testApproveNullSession() {
+	@Test	
+	public void testApproveNonExistingSession() {
 		
 		String error = null;
 
-
 		try {
-			session = service.approveSession(null, null, null, null);
+			session = service.approveSession(TUTOR_EMAIL, DATE, Time.valueOf("18:00:00"), Time.valueOf("19:00:00"));
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-			e.getMessage();
+			error = e.getMessage();
 		}
 		
-		assertEquals("You cannot approve a session that does not exist!", error);
-		//assertEquals(tutorEmail, session.getSessionID());
+		assertEquals("The session to approve could not be found.", error);
 	}
+	
+	@Test	
+	public void testApproveSessionTutorNotFound() {
+		
+		String error = null;
+
+		try {
+			session = service.approveSession("max@gmail.com", DATE, Time.valueOf("18:00:00"), Time.valueOf("19:00:00"));
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Tutor could not be found.", error);
+	}
+	
+	@Test
+	public void testGetExistingSession() {
+		assertEquals(DATE, service.getSession(TUTOR_EMAIL, DATE, START_TIME, END_TIME).getDate());
+		assertEquals(START_TIME, service.getSession(TUTOR_EMAIL, DATE, START_TIME, END_TIME).getStarTime());
+		assertEquals(END_TIME, service.getSession(TUTOR_EMAIL, DATE, START_TIME, END_TIME).getEndTime());
+		
+	
+	}	
+	
+		public void testGetNonExistingSession() {
+			assertNull(service.getSession(TUTOR_EMAIL, DATE, START_TIME, END_TIME));
+	}
+	
 	
 }
