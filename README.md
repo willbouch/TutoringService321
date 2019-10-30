@@ -117,7 +117,7 @@ The contributions of the members for this deliverable can be found below:
     
   <tr>
     <td>William Bouchard</td>
-    <td>Wrote tests for Subject, Tutor, Course and Review. Also tested RESTful Services</td>
+    <td>Availability/Review service methods, Subject/Review/Tutor/Course service tests, RESTful services test</td>
   </tr>
   
 </table>
