@@ -315,7 +315,7 @@ public class TutoringService321RestController {
 	@GetMapping(value = {"/sessions/{tutorEmail}", "/sessions/{tutorEmail}/"})
 	public List<SessionDto> getAllSessions(@PathVariable("tutorEmail") String tutorEmail) {
 		List<SessionDto> dtos = new ArrayList<SessionDto>();
-		for(Session session : service.getAllSessions(tutorEmail)) {
+		for(Session session : service.getAllSessions()) {
 			dtos.add(converToDto(session));
 		}
 
@@ -340,7 +340,7 @@ public class TutoringService321RestController {
 		service.cancelSession(tutorEmail, date, Time.valueOf(startTime), Time.valueOf(endTime));
 
 		List<SessionDto> dtos = new ArrayList<SessionDto>();
-		for(Session session : service.getAllSessions(tutorEmail)) {
+		for(Session session : service.getAllSessions()) {
 			dtos.add(converToDto(session));
 		}
 
@@ -352,14 +352,12 @@ public class TutoringService321RestController {
 			throw new IllegalArgumentException("There is no such Session.");
 		}
 
-		TutorDto tutorDto = converToDto(session.getTutor());
-
 		Set<ReviewDto> reviews = new HashSet<ReviewDto>();
 		for(Review review : session.getReview()) {
 			reviews.add(converToDto(review));
 		}
 
-		SessionDto dto = new SessionDto(session.getDate(), session.getStarTime(), session.getEndTime(), tutorDto, reviews);
+		SessionDto dto = new SessionDto(session.getDate(), session.getStarTime(), session.getEndTime(), session.getIsApproved(), reviews);
 		return dto;
 	}
 
@@ -395,7 +393,7 @@ public class TutoringService321RestController {
 			throw new IllegalArgumentException("There is no such course.");
 		}
 
-		ReviewDto dto = new ReviewDto(review.getTextualReview(), review.getAuthorEmail(), converToDto(review.getSession()), review.getReviewID());
+		ReviewDto dto = new ReviewDto(review.getTextualReview(), review.getAuthorEmail(), review.getReviewID());
 		return dto;
 	}
 

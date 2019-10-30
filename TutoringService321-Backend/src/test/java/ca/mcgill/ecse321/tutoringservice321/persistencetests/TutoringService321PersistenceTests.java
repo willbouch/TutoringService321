@@ -34,7 +34,7 @@ import ca.mcgill.ecse321.tutoringservice321.model.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TutoringService321ApplicationTests {
+public class TutoringService321PersistenceTests {
 
 	@Autowired
 	TutoringService321Service service;
@@ -148,13 +148,13 @@ public class TutoringService321ApplicationTests {
 
 		try {
 			tutor = service.createTutor(tutorEmail, "Katie", "123456789", "4185730193", 34);
-			assertEquals(0, service.getAllSessions(tutorEmail).size());
+			assertEquals(0, service.getAllSessions().size());
 			session = service.createSession(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
 
-		assertEquals(1, service.getAllSessions(tutorEmail).size());
+		assertEquals(1, service.getAllSessions().size());
 		assertEquals(date, session.getDate());
 		assertEquals(startTime, session.getStarTime());
 		assertEquals(endTime, session.getEndTime());
@@ -170,7 +170,7 @@ public class TutoringService321ApplicationTests {
 
 		try {
 			tutor = service.createTutor(tutorEmail, "Katie", "123456789", "4185730193", 34);
-			assertEquals(0, service.getAllSessions(tutorEmail).size());
+			assertEquals(0, service.getAllSessions().size());
 			service.createSession(tutorEmail, date, startTime, endTime);
 			session = service.getSession(tutorEmail, date, startTime, endTime);
 		} catch (IllegalArgumentException e) {

@@ -16,6 +16,5 @@ public interface SessionRepository extends CrudRepository<Session, Integer>{
 	Set<Session> findSessionByTutorAndStudent(Tutor tutor, Student student);
 	Set<Session> findSessionByDate(Date date);
 	Set<Session> findSessionBySessionID(int id);
-	Set<Session> findSessionByTutorAndDateAndStartTime(Tutor tutor, Date date, Time startTime);
 	
 }

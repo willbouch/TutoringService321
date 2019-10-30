@@ -261,8 +261,6 @@ public class TutoringService321Service {
 		//Find the tutor first
 		Tutor tutor = getTutor(tutorEmail);
 
-		Set<Session> sessions = sessionRepository.findSessionByTutorAndDate(tutor, date);
-
 		//Input validation
 		if(date == null) {
 			throw new IllegalArgumentException("Date cannot be empty.");
@@ -294,18 +292,6 @@ public class TutoringService321Service {
 					
 		}
 
-		for(Session aSession : sessions) {
-			if(aSession.getStarTime().equals(startTime) || aSession.getEndTime().equals(endTime)) {
-				throw new IllegalArgumentException("There is already a session booked at that time.");
-			}
-			if(aSession.getStarTime().before(startTime)&&aSession.getEndTime().before(startTime)) {
-				throw new IllegalArgumentException("This session would overlap with an existing session.");
-			}
-			if(aSession.getEndTime().after(endTime)&&aSession.getStarTime().after(endTime)) {
-				throw new IllegalArgumentException("This session would overlap with an existing session.");
-			}
-		}
-
 		Session session = new Session();
 		//Setting the attributes
 		session.setDate(date);
@@ -314,11 +300,13 @@ public class TutoringService321Service {
 		session.setIsApproved(false);
 		session.setSessionID(date.hashCode()*startTime.hashCode()*endTime.hashCode());
 		session.setTutor(tutor);
+		session.setReview(new HashSet<>());
 		tutor.getSession().add(session);
 
 		sessionRepository.save(session);
 		return session;
 	}
+	
 	@Transactional
 	public Session getSession(String tutorEmail, Date date, Time startTime, Time endTime) {	
 		//Find the tutor first
