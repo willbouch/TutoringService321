@@ -657,6 +657,9 @@ public class TutoringService321Service {
 		}
 
 		//Find the subject
+		if (subjectName == null) {
+			throw new IllegalArgumentException("No subject name has been specified");
+		}
 		Subject subject = subjectRepository.findSubjectBySubjectName(subjectName);
 
 		if(subject == null) {
