@@ -4,8 +4,9 @@ Welcome to the ECSE 321 Group 2 GitHub repository!<br>
 Kyjauna Marshall<br>
 Katie Younge<br>
 Sharon Kattar<br>
-William Bouchard<br>
 Syed Hadi Zia Rizvi<br>
+William Bouchard<br>
+
 
 <br>*Scope of Project:*
 The goal of our project is to create the Tutor's perspective of a tutoring application. 
