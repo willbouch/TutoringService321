@@ -33,18 +33,18 @@ The roles of the members can be found below:
   </tr>
   
   <tr>
-    <td>William Bouchard</td>
-    <td>Software Architecture Lead</td>
+    <td>Sharon Kattar</td>
+    <td>Software Consulting Lead</td>
   </tr>
-  
+    
   <tr>
     <td>Syed Hadi Zia Rizvi</td>
     <td>Software Developer</td>
   </tr>
-  
+
   <tr>
-    <td>Sharon Kattar</td>
-    <td>Software Consulting Lead</td>
+    <td>William Bouchard</td>
+    <td>Software Architecture Lead</td>
   </tr>
   
  </table>
@@ -69,20 +69,20 @@ The contributions of the members for this deliverable can be found below:
   </tr>
   
   <tr>
-    <td>William Bouchard</td>
-    <td>Heroku application, domain model, CRUD repositories, service class, persistence test adjustments</td>
+    <td>Sharon Kattar</td>
+    <td>Second draft of use case diagrams, persistence testing</td>
   </tr>
   
   <tr>
     <td>Syed Hadi Zia Rizvi</td>
     <td>Textual descriptions including user stories, second drafts of Use Case diagrams, documentation, system requirements</td>
   </tr>
-  
-  <tr>
-    <td>Sharon Kattar</td>
-    <td>Second draft of use case diagrams, persistence testing</td>
-  </tr>
 
+  <tr>
+    <td>William Bouchard</td>
+    <td>Heroku application, domain model, CRUD repositories, service class, persistence test adjustments</td>
+  </tr>
+  
 </table>
 
 
@@ -103,22 +103,22 @@ The contributions of the members for this deliverable can be found below:
     <td>Kyjauna Marshall</td>
     <td></td>
   </tr>
-  
+
+  <tr>
+    <td>Sharon Kattar</td>
+    <td>Documentation, textual testing for interface business methods</td>
+  </tr>
+
+  <tr>
+    <td>Syed Hadi Zia Rizvi</td>
+    <td></td>
+  </tr>
+    
   <tr>
     <td>William Bouchard</td>
     <td></td>
   </tr>
   
-  <tr>
-    <td>Syed Hadi Zia Rizvi</td>
-    <td></td>
-  </tr>
-  
-  <tr>
-    <td>Sharon Kattar</td>
-    <td></td>
-  </tr>
-
 </table>
 
 <br>In this team, we value gender equity. This is the reason why we wanted this team to be formed by males and females.</br>
