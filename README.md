@@ -47,12 +47,85 @@ The roles of the members can be found below:
     <td>Software Consulting Lead</td>
   </tr>
   
+ </table>
   
+Deliverable 1
+<br>Individual Roles<br>
+The contributions of the members for this deliverable can be found below:
+
+<table>
+  <tr>
+    <th><b>NAME</th> 
+    <th><b>Contributions</th>
+  </tr>
+
+  <tr>
+    <td>Katie Younge</td>
+    <td>Gradle build system, Travis CI, domain model, persistence testing</td>
+  </tr>
+  
+  <tr>
+    <td>Kyjauna Marshall</td>
+    <td>First draft of use case diagrams, persistence testing</td>
+  </tr>
+  
+  <tr>
+    <td>William Bouchard</td>
+    <td>Heroku application, domain model, CRUD repositories, service class, persistence test adjustments</td>
+  </tr>
+  
+  <tr>
+    <td>Syed Hadi Zia Rizvi</td>
+    <td>Textual descriptions including user stories, second drafts of Use Case diagrams, documentation, system requirements</td>
+  </tr>
+  
+  <tr>
+    <td>Sharon Kattar</td>
+    <td>Second draft of use case diagrams, persistence testing</td>
+  </tr>
+
+</table>
+
+
+Deliverable 2
+<br>Individual Roles<br>
+The contributions of the members for this deliverable can be found below:
+<table>
+  <tr>
+    <th><b>NAME</th> 
+    <th><b>Contributions</th>
+  </tr>
+
+  <tr>
+    <td>Katie Younge</td>
+    <td>Tutor business methods, availability service tests</td>
+  </tr>
+  
+  <tr>
+    <td>Kyjauna Marshall</td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>William Bouchard</td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>Syed Hadi Zia Rizvi</td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>Sharon Kattar</td>
+    <td></td>
+  </tr>
 
 </table>
 
 <br>In this team, we value gender equity. This is the reason why we wanted this team to be formed by males and females.</br>
 <br>We also embrace differences and we strongly believe those different backgrounds that we all have will contribute to the awesomeness of our project.</br>
+
 
 <br>To see our meeting minutes, key design decisions and architecture
 framework, head over to our wiki page:<br>
