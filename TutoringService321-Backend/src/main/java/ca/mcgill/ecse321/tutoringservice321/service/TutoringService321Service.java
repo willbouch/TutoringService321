@@ -641,6 +641,10 @@ public class TutoringService321Service {
 	public Course addCourseToSubject(String school, String courseNumber, String subjectName) {			
 		// Finds the course offering
 		Course foundCourse = null;
+		if (school == null) {
+			throw new IllegalArgumentException("No school has been specified");
+		}
+		
 		Set<Course> courses = courseRepository.findCourseBySchool(school);
 		for(Course course : courses) {
 			if(course.getCourseCode().equals(courseNumber)) {
