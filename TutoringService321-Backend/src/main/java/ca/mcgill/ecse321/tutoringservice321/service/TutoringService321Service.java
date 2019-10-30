@@ -642,7 +642,7 @@ public class TutoringService321Service {
 		// Finds the course offering
 		Course foundCourse = null;
 		if (school == null) {
-			throw new IllegalArgumentException("No school has been specified");
+			throw new IllegalArgumentException("No school has been specified.");
 		}
 		
 		Set<Course> courses = courseRepository.findCourseBySchool(school);
@@ -658,7 +658,7 @@ public class TutoringService321Service {
 
 		//Find the subject
 		if (subjectName == null) {
-			throw new IllegalArgumentException("No subject name has been specified");
+			throw new IllegalArgumentException("No subject name has been specified.");
 		}
 		Subject subject = subjectRepository.findSubjectBySubjectName(subjectName);
 
@@ -675,6 +675,9 @@ public class TutoringService321Service {
 	public void removeCourseFromSubject(String school, String courseNumber, String subjectName) {
 		// Finds the course offering
 		Course foundCourse = null;
+		if (school == null) {
+			throw new IllegalArgumentException("No school has be specified.");
+		}
 		Set<Course> courses = courseRepository.findCourseBySchool(school);
 		for(Course course : courses) {
 			if(course.getCourseCode().equals(courseNumber)) {
@@ -687,6 +690,9 @@ public class TutoringService321Service {
 		}
 
 		//Find the subject
+		if (subjectName == null) {
+			throw new IllegalArgumentException("No subject name has been specified.");
+		}
 		Subject subject = subjectRepository.findSubjectBySubjectName(subjectName);
 
 		if(subject == null) {
