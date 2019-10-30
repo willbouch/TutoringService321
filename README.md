@@ -49,8 +49,7 @@ The roles of the members can be found below:
   
  </table>
   
-Deliverable 1
-<br>Individual Roles<br>
+Deliverable 1-Individual Roles
 The contributions of the members for this deliverable can be found below:
 
 <table>
@@ -87,8 +86,7 @@ The contributions of the members for this deliverable can be found below:
 </table>
 
 
-Deliverable 2
-<br>Individual Roles<br>
+Deliverable 2-Individual Roles
 The contributions of the members for this deliverable can be found below:
 <table>
   <tr>
