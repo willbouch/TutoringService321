@@ -75,7 +75,7 @@ The roles of the members can be found below:
  </table><br/><br/>
   
 Deliverable 1-Individual Roles
-The contributions of the members for this deliverable can be found below:
+<b>The contributions of the members for this deliverable can be found below:
 
 <table>
   <tr>
@@ -112,7 +112,7 @@ The contributions of the members for this deliverable can be found below:
 
 
 Deliverable 2-Individual Roles
-The contributions of the members for this deliverable can be found below:
+<b>The contributions of the members for this deliverable can be found below:
 <table>
   <tr>
     <th><b>NAME</th> 
@@ -146,7 +146,7 @@ The contributions of the members for this deliverable can be found below:
   
 </table><br/><br/>
 
-<br>In this team, we value gender equity. This is the reason why we wanted this team to be formed by males and females.</br>
+<br>In this team, we value gender equity. This is the reason why we wanted this team to be formed by males and females.
 <br>We also embrace differences and we strongly believe those different backgrounds that we all have will contribute to the awesomeness of our project.</br>
 
 
