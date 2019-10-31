@@ -14,7 +14,7 @@ This will be accessible via an app on any Android device as well as on a website
 will allow tutors to select the courses they want to teach, set their hourly rates, set their availabilities, view past sessions and session requests and post reviews about students.<br>
 
 <h2>Overview Table</h2>
-The roles of the members can be found below:<br/>
+The roles of the members can be found below:<br/><br/>
 
 
 <table>
