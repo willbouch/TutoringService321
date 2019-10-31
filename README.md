@@ -145,11 +145,20 @@ will allow tutors to select the courses they want to teach, set their hourly rat
   </tr>
   
 </table><br/><br/>
+<h2></h2>
 
 <br>In this team, we value gender equity. This is the reason why we wanted this team to be formed by males and females.
 <br>We also embrace differences and we strongly believe those different backgrounds that we all have will contribute to the awesomeness of our project.</br>
 
 
-<br>To see our meeting minutes, key design decisions and architecture
-framework, head over to our wiki page:<br>
+<b><br>To see our meeting minutes, key design decisions and architecture
+framework, head over to our wiki page:<br></b>
 &nbsp;&nbsp;&nbsp;&nbsp;<h2><b><a href="https://github.com/McGill-ECSE321-Fall2019/project-group-2/wiki">Group 2 Wiki</a></b></h2>
+
+
+
+<b><br>For instructions, head over to our How-to page:<br></b>
+&nbsp;&nbsp;&nbsp;&nbsp;<h2><b><a href="https://github.com/McGill-ECSE321-Fall2019/project-group-2/wiki/How-To">Group 2 How-To</a></b></h2>
+
+
+
