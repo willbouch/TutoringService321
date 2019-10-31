@@ -30,7 +30,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
   <tr>
     <td>Katie Younge</td>
     <td>Database Manager</td>
-    <td>19 hours</td>
+    <td>20 hours</td>
     <td>25 hours</td>
     <td></td>
     <td></td>
@@ -39,8 +39,8 @@ will allow tutors to select the courses they want to teach, set their hourly rat
   <tr>
     <td>Kyjauna Marshall</td>
     <td>Systems Analyst</td>
-    <td>17 hours</td>
-    <td>20 hours</td>
+    <td>19 hours</td>
+    <td>23 hours</td>
     <td></td>
     <td></td>
   </tr>
@@ -66,8 +66,8 @@ will allow tutors to select the courses they want to teach, set their hourly rat
   <tr>
     <td>William Bouchard</td>
     <td>Software Architecture Lead</td>
-    <td>20 hours</td>
-    <td>28 hours</td>
+    <td>21 hours</td>
+    <td>30 hours</td>
     <td></td>
     <td></td>
   </tr>
