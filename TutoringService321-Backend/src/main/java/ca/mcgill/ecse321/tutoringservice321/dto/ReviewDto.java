@@ -4,13 +4,11 @@ public class ReviewDto {
 	
 	private String textualReview;
 	private String authorEmail;
-	private SessionDto session;
 	private int reviewID;
 	
-	public ReviewDto(String textualReview, String authorEmail, SessionDto session, int reviewID) {
+	public ReviewDto(String textualReview, String authorEmail, int reviewID) {
 		this.textualReview = textualReview;
 		this.authorEmail = authorEmail;
-		this.session = session;
 		this.reviewID = reviewID;
 	}
 	
@@ -25,12 +23,6 @@ public class ReviewDto {
 	}
 	public void setAuthorEmail(String authorEmail) {
 		this.authorEmail = authorEmail;
-	}
-	public SessionDto getSession() {
-		return session;
-	}
-	public void setSession(SessionDto session) {
-		this.session = session;
 	}
 	public int getReviewID() {
 		return reviewID;

@@ -7,17 +7,15 @@ public class AvailabilityDto {
 	private Date date;
 	private Time startTime;
 	private Time endTime;
-	private TutorDto tutor;
 	
 	public AvailabilityDto() {
 		
 	}
 	
-	public AvailabilityDto(Date date, Time startTime, Time endTime, TutorDto tutor) {
+	public AvailabilityDto(Date date, Time startTime, Time endTime) {
 		this.date = date;
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.tutor = tutor;
 	}
 
 	public Date getDate() {
@@ -42,15 +40,6 @@ public class AvailabilityDto {
 
 	public void setEndTime(Time endTime) {
 		this.endTime = endTime;
-	}
-
-	public TutorDto getTutor() {
-		return tutor;
-	}
-
-	public void setTutor(TutorDto tutor) {
-		this.tutor = tutor;
-	}
-	
+	}	
 	
 }
