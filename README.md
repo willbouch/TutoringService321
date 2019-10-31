@@ -13,13 +13,17 @@ The goal of our project is to create the Tutor's perspective of a tutoring appli
 This will be accessible via an app on any Android device as well as on a website. The application
 will allow tutors to select the courses they want to teach, set their hourly rates, set their availabilities, view past sessions and session requests and post reviews about students.<br>
 
-<br>*Overview Table*<br>
+<h2>Overview Table</h2>
 The roles of the members can be found below:
 
 <table>
   <tr>
     <th><b>NAME</th> 
     <th><b>ROLE</th>
+    <th><b>SPRINT1</th>
+    <th><b>SPRINT2</th>
+    <th><b>SPRINT3</th>
+    <th><b>SPRINT4</th>
   </tr>
 
   <tr>
