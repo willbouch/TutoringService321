@@ -121,22 +121,22 @@ will allow tutors to select the courses they want to teach, set their hourly rat
 
   <tr>
     <td>Katie Younge</td>
-    <td>Tutor business methods, availability service tests</td>
+    <td>Tutor business methods, Availability service tests</td>
   </tr>
   
   <tr>
     <td>Kyjauna Marshall</td>
-    <td></td>
+    <td>Session service tests</td>
   </tr>
 
   <tr>
     <td>Sharon Kattar</td>
-    <td>Documentation, textual testing for interface business methods</td>
+    <td>Documentation, Textual testing for interface business methods</td>
   </tr>
 
   <tr>
     <td>Syed Hadi Zia Rizvi</td>
-    <td></td>
+    <td>Subject serivce tests, Documentation</td>
   </tr>
     
   <tr>
