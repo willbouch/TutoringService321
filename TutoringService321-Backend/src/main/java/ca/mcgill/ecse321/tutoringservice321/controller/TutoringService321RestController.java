@@ -393,7 +393,7 @@ public class TutoringService321RestController {
 			throw new IllegalArgumentException("There is no such course.");
 		}
 
-		ReviewDto dto = new ReviewDto(review.getTextualReview(), review.getAuthorEmail(), review.getReviewID());
+		ReviewDto dto = new ReviewDto(review.getTextualReview(), review.getAuthorEmail(), review.getRating(), review.getReviewID());
 		return dto;
 	}
 
