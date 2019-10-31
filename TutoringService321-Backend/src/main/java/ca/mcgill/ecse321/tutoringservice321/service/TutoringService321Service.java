@@ -192,6 +192,9 @@ public class TutoringService321Service {
 	@Transactional
 	public Subject addSubjectToTutor(String subjectName, String tutorEmail) {
 		//Find the tutor
+		if (tutorEmail == null) {
+			throw new IllegalArgumentException("No tutor email has been specified.");
+		}
 		Tutor tutor = tutorRepository.findTutorByEmail(tutorEmail);
 		
 		if(tutor == null) {
@@ -199,6 +202,9 @@ public class TutoringService321Service {
 		}
 
 		//find the subject
+		if (subjectName == null) {
+			throw new IllegalArgumentException("No subject name has been specified.");
+		}
 		Subject subject = subjectRepository.findSubjectBySubjectName(subjectName);
 
 		if(subject == null) {
