@@ -1,6 +1,6 @@
 Welcome to the ECSE 321 Group 2 GitHub repository!<br>
 
-<br>*Team Members:*<br>
+<h2>Team Members:</h2>
 Kyjauna Marshall<br>
 Katie Younge<br>
 Sharon Kattar<br>
@@ -8,11 +8,10 @@ Syed Hadi Zia Rizvi<br>
 William Bouchard<br>
 
 
-<br>*Scope of Project:*
+<h2>Scope of Project:</h2><br>
 The goal of our project is to create the Tutor's perspective of a tutoring application. 
 This will be accessible via an app on any Android device as well as on a website. The application
-will allow tutors to select the courses they want to teach, set their hourly rates, set their availabilities, view past sessions and session requests 
-and post reviews about students.<br>
+will allow tutors to select the courses they want to teach, set their hourly rates, set their availabilities, view past sessions and session requests and post reviews about students.<br>
 
 <br>*Overview Table*<br>
 The roles of the members can be found below:
