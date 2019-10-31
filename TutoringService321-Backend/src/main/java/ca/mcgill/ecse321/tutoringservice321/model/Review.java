@@ -9,6 +9,7 @@ public class Review {
 	private String textualReview;
 	private String authorEmail;
 	private Session session;
+	private float rating;
 	private int reviewID;
 	
 	public String getTextualReview() {
@@ -36,6 +37,12 @@ public class Review {
 	}
 	public void setReviewID(int reviewID) {
 		this.reviewID = reviewID;
+	}
+	public float getRating() {
+		return rating;
+	}
+	public void setRating(float rating) {
+		this.rating = rating;
 	}
 	
 	

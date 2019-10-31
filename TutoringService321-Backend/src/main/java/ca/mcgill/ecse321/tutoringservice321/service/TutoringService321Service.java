@@ -792,6 +792,7 @@ public class TutoringService321Service {
 		review.setTextualReview(textualReview);
 		review.setSession(foundSession);
 		review.setReviewID(tutorEmail.hashCode()*textualReview.hashCode());
+		review.setRating(-1); //Tutor does not give any rating, so his review has a -1 rating
 		reviewRepository.save(review);
 
 		return review;
