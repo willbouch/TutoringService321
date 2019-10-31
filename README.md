@@ -75,7 +75,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
  </table><br/><br/>
   
 Deliverable 1-Individual Roles
-<b>The contributions of the members for this deliverable can be found below:
+<b>The contributions of the members for this deliverable can be found below:</b>
 
 <table>
   <tr>
@@ -112,7 +112,7 @@ Deliverable 1-Individual Roles
 
 
 Deliverable 2-Individual Roles
-<b>The contributions of the members for this deliverable can be found below:<b>
+<b>The contributions of the members for this deliverable can be found below:</b>
 <table>
   <tr>
     <th><b>NAME</th> 
