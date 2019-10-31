@@ -69,17 +69,6 @@ public class TutoringService321PersistenceTests {
 		subjectRepository.deleteAll();
 		reviewRepository.deleteAll();
 	}
-	
-	
-	/*@After
-	public void clearallDatabase() {
-		availabilityRepository.deleteAll();
-		sessionRepository.deleteAll();
-		tutorRepository.deleteAll();
-		courseRepository.deleteAll();
-		subjectRepository.deleteAll();
-		reviewRepository.deleteAll();
-	}*/
 
 	@Test
 	public void testWriteTutor() {
