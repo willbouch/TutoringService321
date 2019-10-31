@@ -644,6 +644,9 @@ public class TutoringService321Service {
 		if (school == null) {
 			throw new IllegalArgumentException("No school has been specified.");
 		}
+		if (courseNumber == null) {
+			throw new IllegalArgumentException("No course number has been specified");
+		}
 		
 		Set<Course> courses = courseRepository.findCourseBySchool(school);
 		for(Course course : courses) {
@@ -677,6 +680,9 @@ public class TutoringService321Service {
 		Course foundCourse = null;
 		if (school == null) {
 			throw new IllegalArgumentException("No school has be specified.");
+		}
+		if (courseNumber == null) {
+			throw new IllegalArgumentException("No course number has been specified");
 		}
 		Set<Course> courses = courseRepository.findCourseBySchool(school);
 		for(Course course : courses) {
