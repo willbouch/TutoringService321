@@ -16,6 +16,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
 <h2>Overview Table</h2>
 The roles of the members can be found below:
 
+
 <table>
   <tr>
     <th><b>NAME</th> 
@@ -29,26 +30,46 @@ The roles of the members can be found below:
   <tr>
     <td>Katie Younge</td>
     <td>Database Manager</td>
+    <td>19 hours</td>
+    <td>25 hours</td>
+    <td></td>
+    <td></td>
   </tr>
   
   <tr>
     <td>Kyjauna Marshall</td>
     <td>Systems Analyst</td>
+    <td>17 hours</td>
+    <td>20 hours</td>
+    <td></td>
+    <td></td>
   </tr>
   
   <tr>
     <td>Sharon Kattar</td>
     <td>Software Consulting Lead</td>
+    <td>18 hours</td>
+    <td>20 hours</td>
+    <td></td>
+    <td></td>
   </tr>
     
   <tr>
     <td>Syed Hadi Zia Rizvi</td>
     <td>Software Developer</td>
+    <td>16 hours</td>
+    <td>20 hours</td>
+    <td></td>
+    <td></td>
   </tr>
 
   <tr>
     <td>William Bouchard</td>
     <td>Software Architecture Lead</td>
+    <td>20 hours</td>
+    <td>28 hours</td>
+    <td></td>
+    <td></td>
   </tr>
   
  </table>
