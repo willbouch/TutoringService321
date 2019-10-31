@@ -13,8 +13,8 @@ The goal of our project is to create the Tutor's perspective of a tutoring appli
 This will be accessible via an app on any Android device as well as on a website. The application
 will allow tutors to select the courses they want to teach, set their hourly rates, set their availabilities, view past sessions and session requests and post reviews about students.<br>
 
-<h2>Overview Table</h2>
-The roles of the members can be found below:<br/><br/>
+<h2>Overview Tables</h2>
+The roles of the members can be found below:
 
 
 <table>
@@ -72,7 +72,7 @@ The roles of the members can be found below:<br/><br/>
     <td></td>
   </tr>
   
- </table>
+ </table><br/><br/>
   
 Deliverable 1-Individual Roles
 The contributions of the members for this deliverable can be found below:
@@ -108,7 +108,7 @@ The contributions of the members for this deliverable can be found below:
     <td>Heroku application, domain model, CRUD repositories, service class, persistence test adjustments</td>
   </tr>
   
-</table>
+</table><br/><br/>
 
 
 Deliverable 2-Individual Roles
@@ -144,7 +144,7 @@ The contributions of the members for this deliverable can be found below:
     <td>Availability/Review service methods, Subject/Review/Tutor/Course service tests, RESTful services test</td>
   </tr>
   
-</table>
+</table><br/><br/>
 
 <br>In this team, we value gender equity. This is the reason why we wanted this team to be formed by males and females.</br>
 <br>We also embrace differences and we strongly believe those different backgrounds that we all have will contribute to the awesomeness of our project.</br>
