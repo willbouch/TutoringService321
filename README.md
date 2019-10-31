@@ -121,12 +121,12 @@ will allow tutors to select the courses they want to teach, set their hourly rat
 
   <tr>
     <td>Katie Younge</td>
-    <td>Tutor business methods, Availability service tests</td>
+    <td>Tutor business methods, and RESTful methods, Availability service tests, test report documentaion </td>
   </tr>
   
   <tr>
     <td>Kyjauna Marshall</td>
-    <td>Session service tests</td>
+    <td>Testing documentation, Issue Tracking, Session service methods, RESTful method, Session service tests</td>
   </tr>
 
   <tr>
@@ -141,7 +141,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     
   <tr>
     <td>William Bouchard</td>
-    <td>Availability/Review service methods, Subject/Review/Tutor/Course service tests, RESTful services test</td>
+    <td>Availability/Review service methods, Subject/Review/Tutor/Course service tests, RESTful services test, controller test, test coverage</td>
   </tr>
   
 </table><br/><br/>
