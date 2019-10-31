@@ -14,7 +14,7 @@ This will be accessible via an app on any Android device as well as on a website
 will allow tutors to select the courses they want to teach, set their hourly rates, set their availabilities, view past sessions and session requests and post reviews about students.<br>
 
 <h2>Overview Tables</h2>
-The roles of the members can be found below:
+<b>The roles of the members can be found below:</b>
 
 
 <table>
@@ -112,7 +112,7 @@ Deliverable 1-Individual Roles
 
 
 Deliverable 2-Individual Roles
-<b>The contributions of the members for this deliverable can be found below:
+<b>The contributions of the members for this deliverable can be found below:<b>
 <table>
   <tr>
     <th><b>NAME</th> 
