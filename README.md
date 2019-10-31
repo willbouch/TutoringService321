@@ -111,7 +111,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
 </table><br/><br/>
 
 
-Deliverable 2-Individual Roles
+<i>Deliverable 2-Individual Roles</i></br>
 <b>The contributions of the members for this deliverable can be found below:</b>
 <table>
   <tr>
