@@ -4,11 +4,13 @@ public class ReviewDto {
 	
 	private String textualReview;
 	private String authorEmail;
+	private float rating;
 	private int reviewID;
 	
-	public ReviewDto(String textualReview, String authorEmail, int reviewID) {
+	public ReviewDto(String textualReview, String authorEmail, float rating, int reviewID) {
 		this.textualReview = textualReview;
 		this.authorEmail = authorEmail;
+		this.rating = rating;
 		this.reviewID = reviewID;
 	}
 	
@@ -30,4 +32,13 @@ public class ReviewDto {
 	public void setReviewID(int reviewID) {
 		this.reviewID = reviewID;
 	}
+
+	public float getRating() {
+		return rating;
+	}
+
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
+	
 }
