@@ -69,17 +69,6 @@ public class TutoringService321PersistenceTests {
 		subjectRepository.deleteAll();
 		reviewRepository.deleteAll();
 	}
-	
-	
-	/*@After
-	public void clearallDatabase() {
-		availabilityRepository.deleteAll();
-		sessionRepository.deleteAll();
-		tutorRepository.deleteAll();
-		courseRepository.deleteAll();
-		subjectRepository.deleteAll();
-		reviewRepository.deleteAll();
-	}*/
 
 	@Test
 	public void testWriteTutor() {
@@ -209,7 +198,7 @@ public class TutoringService321PersistenceTests {
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
-		
+
 		assertEquals(1, service.getAllTutorAvailabilities(tutorEmail).size());
 		assertEquals(date, availability.getDate());
 		assertEquals(startTime, availability.getStartTime());
@@ -287,7 +276,7 @@ public class TutoringService321PersistenceTests {
 		assertEquals(description, course.getDescription());
 		assertEquals(courseCode, course.getCourseCode());
 	}
-	
+
 	@Test
 	public void testViewCourse() {
 
@@ -306,7 +295,7 @@ public class TutoringService321PersistenceTests {
 		assertEquals(description, course.getDescription());
 		assertEquals(courseCode, course.getCourseCode());
 	}
-	
+
 	@Test
 	public void testWriteReview() {
 		assertEquals(0, service.getAllReviews().size());
@@ -316,7 +305,7 @@ public class TutoringService321PersistenceTests {
 		Date date = Date.valueOf("2019-01-04");
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("12:00:00");
-				
+
 		try {
 			tutor = service.createTutor(tutorEmail, "William", "123456789", "4185730193", 20);
 			session = service.createSession(tutorEmail, date, startTime, endTime);
@@ -329,7 +318,7 @@ public class TutoringService321PersistenceTests {
 		assertEquals(tutorEmail, review.getAuthorEmail());
 		assertEquals(reviewText, review.getTextualReview());
 	}
-	
+
 	@Test
 	public void testViewReview() {
 
@@ -338,7 +327,7 @@ public class TutoringService321PersistenceTests {
 		Date date = Date.valueOf("2019-01-04");
 		Time startTime = Time.valueOf("10:00:00");
 		Time endTime = Time.valueOf("12:00:00");
-				
+
 		try {
 			tutor = service.createTutor(tutorEmail, "William", "123456789", "4185730193", 20);
 			session = service.createSession(tutorEmail, date, startTime, endTime);
