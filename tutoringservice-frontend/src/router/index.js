@@ -1,21 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import TutoringService from '@/components/TutoringService'
+import LoginPage from '@/pages/LoginPage'
+import MainPage from '@/pages/MainPage'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'Hello',
-      component: Hello
+      path: "/",
+      name: 'LoginPage',
+      component: LoginPage
     },
     {
-      path: '/app',
-      name: 'TutoringService',
-      component: TutoringService
+      path: "/mainpage",
+      name: 'MainPage',
+      component: MainPage
     }
   ]
 })
