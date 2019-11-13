@@ -19,9 +19,9 @@ export default new Router({
       component: MainPage
     },
     {
-      path: "/Sessions",
-      name: 'Sessions',
-      component: Sessions
+      path: "/SessionPage",
+      name: 'SessionPage',
+      component: SessionPage
     }
 
   ]
