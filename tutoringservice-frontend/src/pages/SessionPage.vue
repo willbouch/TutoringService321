@@ -1,8 +1,8 @@
 <template>
   <div>
     <SessionsTable
-      student ="Sessions"
-      :student="Sessions"
+      status ="pending"
+      :student="pending"
     />
   </div>
 </template>
