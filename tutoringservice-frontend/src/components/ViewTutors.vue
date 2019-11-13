@@ -3,7 +3,7 @@
 	<div id="viewTutors">
 		<h1>Tutors</h1>
 		<div class="topPage">
-			<img src="default profile picture.png" alt="Avatar" class="Avatar">
+			<img src="profile-picture.png" alt="Avatar" class="Avatar">
 			<button clas="button">My Profile</button>
 		</div>
 
