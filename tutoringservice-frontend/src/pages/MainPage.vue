@@ -9,15 +9,29 @@
 
 		<div>
 			<img src="@/assets/profile-picture.png" width=200>
-  			<label>EMAIL</label>
+  		<label>EMAIL</label>
 			<label>RATING</label>
-			<input type="text" placeholder="CURRENT NAME">
-			<input type="text" placeholder="CURRENT PHONE NUMBER">
- 			<input type="text" placeholder="CURRENT HOURLY RATE">
-  			<button class="glow-on-hover">Update Profile</button>
-			<input type="text" placeholder="New Password">
-			<input type="text" placeholder="Re-enter Password">
-			<button class="glow-on-hover">Change Password</button>
+		  <div>
+        <input type="text" placeholder="CURRENT NAME">
+		  </div>
+      <div>
+			  <input type="text" placeholder="CURRENT PHONE NUMBER">
+      </div>
+      <div>
+ 			  <input type="text" placeholder="CURRENT HOURLY RATE">
+      </div>
+      <div>
+  		  <button class="glow-on-hover">Update Profile</button>
+      </div>
+      <div>
+			  <input type="text" placeholder="New Password">
+      </div>
+      <div>
+			  <input type="text" placeholder="Re-enter Password">
+      </div>
+      <div>
+			  <button class="glow-on-hover">Change Password</button>
+      </div>
 
 		</div>
 
@@ -89,7 +103,7 @@ export default {
 
 /* Style inputs */
 input[type=text] {
-  width: 100%;
+  width: 220px;  
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
