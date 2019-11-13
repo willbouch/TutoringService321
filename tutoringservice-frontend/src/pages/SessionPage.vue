@@ -2,7 +2,7 @@
   <div>
     <SessionsTable
       status ="pending"
-      :student="pending"
+      :Sessions="pending"
     />
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
   },
   computed: {
     ...mapState([
-      'sessions'
+      'Sessions'
     ])
   }
 }

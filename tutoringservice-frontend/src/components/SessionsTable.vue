@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Sessions</h1>
-    <b-table striped hover :items="sessions">
+    <b-table striped hover :items="Sessions">
       <template slot="name" slot-scope="data">
         <router-link :to="`sessions/${status}/${data.index}`">
           {{ data.value }}
@@ -15,7 +15,7 @@
 export default {
   props: {
     status: String,
-    sessions: Array
+    Sessions: Array
   }
 }
 </script>
