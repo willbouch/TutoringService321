@@ -5,7 +5,7 @@
 				<form>
 					<span>
 						Login
-					</span>
+					</span> 
 
 					
 					<div class="wrap-input100 validate-input m-b-16" data-validate = "Username is required">
