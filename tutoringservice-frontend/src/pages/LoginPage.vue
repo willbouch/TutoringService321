@@ -2,6 +2,7 @@
   <div id="loginPage">
 		<h1>LOGIN</h1>
 		<div>
+
 			<input type="text" v-model="username" placeholder="Username">
 		</div>
 		<div>				
