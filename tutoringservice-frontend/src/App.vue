@@ -1,12 +1,17 @@
 <template>
     <div id="app">
         <router-view></router-view>
+        <ViewTutors />
     </div>
 </template>
 
 <script>
+import ViewTutors from './components/ViewTutors'
 export default {
-  name: 'app'
+  name: 'app',
+  components:{
+    ViewTutors
+  }
 }
 </script>
 
