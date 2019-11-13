@@ -2,7 +2,7 @@
   <div>
     <SessionsTable
       status ="pending"
-      :Sessions="pending"
+      :sessionsToApprove="pending"
     />
   </div>
 </template>

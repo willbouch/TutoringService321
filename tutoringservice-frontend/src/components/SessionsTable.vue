@@ -1,9 +1,9 @@
 <template>
   <div>
     <h1>Sessions</h1>
-    <b-table striped hover :items="Sessions">
+    <b-table striped hover :items="sessionsToApprove">
       <template slot="name" slot-scope="data">
-        <router-link :to="`sessions/${status}/${data.index}`">
+        <router-link :to="`sessionsToApprove/${status}/${data.index}`">
           {{ data.value }}
         </router-link>
       </template>
@@ -15,7 +15,7 @@
 export default {
   props: {
     status: String,
-    Sessions: Array
+    sessionsToApprove: Array
   }
 }
 </script>
