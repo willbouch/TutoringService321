@@ -19,7 +19,7 @@ export default new Router({
       component: MainPage
     },
     {
-      path: "/SessionPage",
+      path: "/sessionpage",
       name: 'SessionPage',
       component: SessionPage
     }

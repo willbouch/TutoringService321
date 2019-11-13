@@ -19,7 +19,7 @@ export default {
   },
   computed: {
     ...mapState([
-      'Sessions'
+      'sessions'
     ])
   }
 }
