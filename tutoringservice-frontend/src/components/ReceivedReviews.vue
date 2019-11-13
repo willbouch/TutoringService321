@@ -5,7 +5,7 @@
   			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
 			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
             <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Logout</button>
-            <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Received Reviews</button>
+            <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Write a review</button>
 		</div>
        
                 <div>

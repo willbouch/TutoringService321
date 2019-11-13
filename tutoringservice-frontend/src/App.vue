@@ -1,12 +1,18 @@
 <template>
     <div id="app">
         <router-view></router-view>
+        <Review />
     </div>
 </template>
 
 <script>
+import Review from './components/Reviews'
 export default {
-  name: 'app'
+  name: 'app',
+  components:{
+    Review
+  }
+
 }
 </script>
 
@@ -16,7 +22,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #65a1dd;
   margin-top: 60px;
 }
 </style>
