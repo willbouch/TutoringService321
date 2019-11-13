@@ -3,7 +3,7 @@
 	<div id="viewTutors">
 		<h1>Tutors</h1>
 		<div class="topPage">
-			<img src="profile-picture.png" alt="Avatar" class="Avatar">
+			<img src="@/assets/profile-picture.png" alt="Avatar" class="Avatar">
 			<button clas="button">My Profile</button>
 		</div>
 
@@ -99,14 +99,11 @@
   right: 15px;
 }
 
-.topPage avatar {
+.topPage .avatar {
   vertical-align: middle;
-  width: 50px;
-  height: 50px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  /* position: absolute;
-  top: 5px;
-  right: 10px; */
 }
 
 /* Table */
