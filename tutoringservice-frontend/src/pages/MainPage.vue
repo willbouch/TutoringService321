@@ -4,7 +4,8 @@
 		<div class="tab">
   			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
   			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
-			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
+			  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
+        <button class="tablinks" onclick="openCity(event, 'Tokyo')">All Tutors</button>
 		</div>
 
 		<div>
@@ -12,22 +13,22 @@
   		<label>EMAIL</label>
 			<label>RATING</label>
 		  <div>
-        <input type="text" placeholder="CURRENT NAME">
+        <input type="text" v-model="name" placeholder="CURRENT NAME">
 		  </div>
       <div>
-			  <input type="text" placeholder="CURRENT PHONE NUMBER">
+			  <input type="text" v-model="phoneNumber" placeholder="CURRENT PHONE NUMBER">
       </div>
       <div>
- 			  <input type="text" placeholder="CURRENT HOURLY RATE">
+ 			  <input type="text" v-model="hourlyRate" placeholder="CURRENT HOURLY RATE">
       </div>
       <div>
   		  <button class="glow-on-hover">Update Profile</button>
       </div>
       <div>
-			  <input type="text" placeholder="New Password">
+			  <input type="text" v-model="newPassword" placeholder="New Password">
       </div>
       <div>
-			  <input type="text" placeholder="Re-enter Password">
+			  <input type="text" v-model="confirmationPassword" placeholder="Re-enter Password">
       </div>
       <div>
 			  <button class="glow-on-hover">Change Password</button>
@@ -39,19 +40,35 @@
 </template>
 
 <script>
+function TutorDto(email, rating, name, phoneNumber, hourlyRate) {
+    this.name = name
+    this.rating = rating
+    this.name = name
+    this.phoneNumber = phoneNumber
+    this.hourlyRate = hourlyRate
+}
+
 export default {
   name: 'MainPage',
 
   data() {
 	  return {
-		  componentName: 'tutorProfile'
-	  }
+      email:'',
+      rating:'',
+      name:'',
+      phoneNumber:'',
+      hourlyRate:'',
+      newPassword:'',
+      confirmationPassword:''
+    }
+  },
+
+  created: function() {
+    const tutor = new TutorDto('w@gmail.com', 4.5, 'William Bouchard', '418-573-0193', 18)
   },
 
   methods: {
-	  toProfile() {
-		  
-	  }
+	  
   }
 }
 </script>

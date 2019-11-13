@@ -2,13 +2,13 @@
   <div id="loginPage">
 		<h1>LOGIN</h1>
 		<div>
-			<input type="text" name="username" placeholder="Username">
+			<input type="text" v-model="username" placeholder="Username">
 		</div>
 		<div>				
-			<input type="text" name="pass" placeholder="Password">
+			<input type="text" v-model="password" placeholder="Password">
 		</div>
 		<div>
-			<button v-on:click="goToMainPage" class="glow-on-hover">Login</button>
+			<button v-on:click="login" class="glow-on-hover">Login</button>
 		</div>
   </div>
 </template>
@@ -18,8 +18,16 @@
 export default {
   name: 'LoginPage',
 
+  data() {
+    return {
+      username: '',
+      password: '',
+    }
+  },
+
   methods: {
-	  goToMainPage() {
+	  login() {
+      //CALL THE LOGIN FROM BACKEND AND IF NO ERROR, PUSH TO MAIN PAGE
 		  this.$router.push('MainPage')
 	  }
   }
