@@ -3,8 +3,8 @@
 	<div id="viewTutors">
 		<h1>Tutors</h1>
 		<div class="topPage">
-			<img src="@/assets/profile-picture.png" alt="Avatar" class="Avatar">
-			<button clas="button">My Profile</button>
+			<a href="#"><img src="@/assets/profile-picture.png" alt="Avatar" class="avatar"></a><br>
+			<a href="#"><button class="button">My Profile</button></a>
 		</div>
 
 		<table class="table" align="center">
@@ -83,6 +83,10 @@
   margin-top: 60px;
 }
 
+.topPage {
+  margin-left: 90%
+}
+
 .topPage button {
   background-color: #ddd;
   border: none;
@@ -94,16 +98,15 @@
   margin: 6px 4px;
   cursor: pointer;
   border-radius: 16px;
-  position: absolute;
-  top: 10px;
-  right: 15px;
+  top: 0px;
 }
 
 .topPage .avatar {
   vertical-align: middle;
-  width: 10px;
-  height: 10px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
+  top: 0px;
 }
 
 /* Table */
