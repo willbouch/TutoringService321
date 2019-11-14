@@ -8,6 +8,7 @@ public class TutorDto {
 	private String email;
 	private String name;
 	private String password;
+	private String phoneNumber;
 	private Set<AvailabilityDto> availabilities;
 	private Set<SubjectDto> subjects;
 	private int hourlyrate;
@@ -15,10 +16,11 @@ public class TutorDto {
 	private Set<SessionDto> sessions;
 	
 	
-	public TutorDto(String email, String name, String password, Set<AvailabilityDto> availabilities, Set<SubjectDto> subjects, Set<SessionDto> sessions, int hourlyrate, float rating) {
+	public TutorDto(String email, String name, String password, String phoneNumber, Set<AvailabilityDto> availabilities, Set<SubjectDto> subjects, Set<SessionDto> sessions, int hourlyrate, float rating) {
 		this.email = email;
 		this.name = name;
 		this.password = password;
+		this.phoneNumber = phoneNumber;
 		this.availabilities = availabilities;
 		this.subjects = subjects;
 		this.sessions = sessions;
@@ -88,6 +90,14 @@ public class TutorDto {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 	
 

@@ -42,7 +42,21 @@ public class TutoringService321RestController {
 	@Autowired
 	private TutoringService321Service service;
 
-	@GetMapping(value = {"/tutors", "/tutors/"})
+	@PostMapping(value = {"/login/{tutorEmail}", "/login/{tutorEmail}/"})
+	public void tutorLogin(@PathVariable("tutorEmail") String tutorEmail,
+			@RequestParam String password) {
+		
+		Tutor tutor;
+		try{
+			tutor = service.createTutor(tutorEmail, "William Bouchard", password, "4185730193", 15);
+		}catch(IllegalArgumentException e) {
+			tutor = service.getTutor(tutorEmail);
+		}
+		
+		service.loginAsTutor(tutorEmail, password);
+	}
+	
+	@GetMapping(value = {"/user", "/user/"})
 	public TutorDto getLoggedTutor() {
 		ServiceUser user = TutoringService321Application.getLoggedUser();
 		return converToDto((Tutor)user);
@@ -181,7 +195,7 @@ public class TutoringService321RestController {
 			availabilitiesDto.add(converToDto(availability));
 		}
 
-		TutorDto dto = new TutorDto(tutor.getEmail(), tutor.getName(), tutor.getPassword(), availabilitiesDto, subjectsDto, sessionsDto, tutor.getHourlyRate(), tutor.getRating());
+		TutorDto dto = new TutorDto(tutor.getEmail(), tutor.getName(), tutor.getPassword(), tutor.getPhoneNumber(), availabilitiesDto, subjectsDto, sessionsDto, tutor.getHourlyRate(), tutor.getRating());
 		return dto;
 	}
 
