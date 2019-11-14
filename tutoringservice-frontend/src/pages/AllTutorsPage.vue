@@ -1,10 +1,9 @@
 <template>
 
 	<div id="viewTutors">
-		<h1>Tutors</h1>
+		<h1>TUTORS</h1>
 		<div class="topPage">
-			<a href="#"><img src="@/assets/profile-picture.png" alt="Avatar" class="avatar"></a><br>
-			<a href="#"><button class="button">My Profile</button></a>
+			<button class="button" v-on:click="toMainPage">My Profile</button>
 		</div>
 
 		<table class="table" align="center">
@@ -73,7 +72,26 @@
 	</div>
 </template>
 
-#<style>
+<script>
+
+export default {
+  name: 'AllTutorsPage',
+
+  data() {
+    return {
+      
+    }
+  },
+
+  methods: {
+	  toMainPage() {
+		  this.$router.push('MainPage')
+	  }
+  }
+}
+</script>
+
+<style>
 #mainPage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

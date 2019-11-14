@@ -5,7 +5,7 @@
   			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
   			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
 			  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
-        <button class="tablinks" onclick="openCity(event, 'Tokyo')">All Tutors</button>
+        <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
 
 		<div>
@@ -68,7 +68,9 @@ export default {
   },
 
   methods: {
-	  
+	  toAllTutorsPage() {
+		  this.$router.push('AllTutorsPage')
+	  }
   }
 }
 </script>
