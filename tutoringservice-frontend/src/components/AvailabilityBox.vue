@@ -1,72 +1,88 @@
-<template>
-<div id="jquery-script-menu">
-<div class="jquery-script-center">
-<ul>
-<li><a href="http://www.jqueryscript.net/time-clock/Create-A-Basic-Weekly-Schedule-with-Hour-Selector-Using-jQuery.html">Download This Plugin</a></li>
-<li><a href="http://www.jqueryscript.net/">Back To jQueryScript.Net</a></li>
-</ul>
-<div class="jquery-script-clear"></div>
-<div id="day-schedule"></div>
-<h1 style="margin:150px auto 30px auto;">Day Schedule Selector jQuery Plugin Demo</h1>
-</div>
-</div>
-</template>
+  <template>
+        <JqxScheduler ref="myScheduler"
+          :width="getWidth" :height="600" :source="dataAdapter" :date="date" :showLegend="true" :view="'weekView'"
+          :appointmentDataFields="appointmentDataFields" :resources="resources" :views="views"
+      />
+  </template>
 
-<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script src="../src/index.js"></script>
   <script>
-    (function ($) {
-      $("#day-schedule").dayScheduleSelector({
-        /*
-        days: [1, 2, 3, 5, 6],
-        interval: 15,
-        startTime: '09:50',
-        endTime: '21:06'
-        */
-      });
-      $("#day-schedule").on('selected.artsy.dayScheduleSelector', function (e, selected) {
-        console.log(selected);
-      })
-      $("#day-schedule").data('artsy.dayScheduleSelector').deserialize({
-        '0': [['09:30', '11:00'], ['13:00', '16:30']]
-      });
-    })($);
+  export default {
+        components: {
+          JqxScheduler
+      },
+        data: function () {
+          return {
+              getWidth: getWidth('scheduler'),
+            date: new jqx.date(2016, 11, 23),
+            appointmentDataFields: 
+            {
+                from: 'start',
+                to: 'end',
+                id: 'id',
+                description: 'description',
+                location: 'location',
+                subject: 'subject',
+                resourceId: 'calendar'
+            },
+            resources:
+            {
+                colorScheme: 'scheme05',
+                dataField: 'calendar',
+                source: new jqx.dataAdapter(this.source)
+            },
+            views:
+            [
+                'dayView',
+                'weekView',
+                'monthView'
+            ]
+      }
+  },
+  beforeCreate: function () {
+      const generateAppointments =  function () {
+      const appointments = new Array();
+      const appointment1 = {
+          id: 'id1',
+          description: 'George brings projector for presentations.',
+          location: '',
+          subject: 'Quarterly Project Review Meeting',
+          calendar: 'Room 1',
+          start: new Date(2016, 10, 23, 9, 0, 0),
+          end: new Date(2016, 10, 23, 16, 0, 0)
+          };
+        appointments.push(appointment1);
+        this.source =
+          {
+              dataType: 'array',
+              dataFields: [
+                  { name: 'id', type: 'string' },
+                  { name: 'description', type: 'string' },
+                  { name: 'location', type: 'string' },
+                  { name: 'subject', type: 'string' },
+                  { name: 'calendar', type: 'string' },
+                  { name: 'start', type: 'date' },
+                  { name: 'end', type: 'date' }
+                ],
+                  id: 'id',
+                  localData: generateAppointments()
+          };
+          this.dataAdapter = new jqx.dataAdapter(this.source);
+      }
+  },
 
+      mounted: function () {
+              this.$refs.myScheduler.ensureAppointmentVisible('id1');
+          },
 
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-36251023-1']);
-  _gaq.push(['_setDomainName', 'jqueryscript.net']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+          views:
+  [
+        { type: 'dayView', showWeekends: true, timeRuler: { hidden: false, timeZones: [{ id: 'UTC', text: 'UTC' }, { id: 'Pacific Standard Time', text: 'PST' }] } },
+        { type: 'weekView', showWeekends: true, timeRuler: { hidden: false, timeZones: [{ id: 'UTC', text: 'UTC' }, { id: 'Pacific Standard Time', text: 'PST' }] } },
+        'monthView',
+        'agendaView'
+  ]
+  }
+  this.$refs.myScheduler.setAppointmentProperty('id5', 'hidden', true);
+  this.$refs.myScheduler.setAppointmentProperty('id6', 'hidden', true);
+  this.$refs.myScheduler.endAppointmentsUpdate();
   </script>
-
-<style>
-
-.schedule-rows td {
-  width: 80px;
-  height: 30px;
-  margin: 3px;
-  padding: 5px;
-  background-color: #3498DB;
-  cursor: pointer;
-}
-
-.schedule-rows td:first-child {
-  background-color: transparent;
-  text-align: right;
-  position: relative;
-  top: -12px;
-}
-
-.schedule-rows td[data-selected],
-.schedule-rows td[data-selecting] { background-color: #E74C3C; }
-
-.schedule-rows td[data-disabled] { opacity: 0.55; }
-
-</style>
