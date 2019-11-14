@@ -1,20 +1,12 @@
 <template>
     <div id="app">
         <router-view></router-view>
-       <!-- <Review /> -->
-        <ReceivedReviews />
     </div>
 </template>
 
 <script>
-import Review from './components/Reviews'
-import ReceivedReviews from './components/ReceivedReviews'
 export default {
-  name: 'app',
-  components:{
-    Review,ReceivedReviews
-  }
-
+  name: 'app'
 }
 </script>
 

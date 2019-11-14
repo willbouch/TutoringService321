@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import LoginPage from '@/pages/LoginPage'
 import MainPage from '@/pages/MainPage'
 import AllTutorsPage from '@/pages/AllTutorsPage'
+import TutorReviewsPage from '@/pages/TutorReviewsPage'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: "/alltutorspage",
       name: 'AllTutorsPage',
       component: AllTutorsPage
+    },
+    {
+      path: "/tutorreviewspage",
+      name: 'TutorReviewsPage',
+      component: TutorReviewsPage
     }
   ]
 })

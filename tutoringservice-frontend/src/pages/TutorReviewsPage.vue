@@ -13,14 +13,7 @@
 
 
     <div>
-<!------ Include the above in your HEAD tag ---------->
-
-  
-    <!-- Fixed navbar -->
-   
-
-    <div class="container">
-    			
+    <div class="container">	
 		<div class="row">
 			<div class="col-sm-3">
 				<div class="rating-block">
