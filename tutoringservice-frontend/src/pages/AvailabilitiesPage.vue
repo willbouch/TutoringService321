@@ -185,18 +185,51 @@ export default {
 		},
 
 		setAvailability(){
-			var row = document.getElementById("schedule").rows[]
+			var availabilities;
 			var i;
-			for (i=1;i<14;i++)
-			
-			var availabilities = .getElementsByClassName("available");
-			var i;
-
-			for (i=0; i<availabilities.length; i++){
-				availabilities[i].cellIndex;
+			var j;
+			var day;
+			var sTime;
+			var eTime;
+			for (i=1;i<13;i++){
+				availabilities = document.getElementById("schedule").row[i].getElementsByClassName("available");
+				for (j=0; j<availabilities.length; j++){
+				
+				switch(availabilities[i].cellIndex){
+					case 1:
+						day="Monday";
+						break;
+					case 2: 
+						day="Tuesday";
+						break;
+					case 3:
+						day="Wednesday"
+						break;
+					case 4:
+						day="Thursday";
+						break;
+					case 5:
+						day="Friday";
+						break;
+					case 6:
+						day="Saturday"
+						break;
+					case 7: 
+						day="Sunday";
+						break;
+				}
+				sTime=i+8;
+				eTime=i+9;
+				availabilityDto(day, sTime, eTime);
+				}
 			}
+		},
+
+		displayAvailability(){
+			
 		}
-		}
+
+	}
 }
 </script>
 
