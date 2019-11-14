@@ -142,16 +142,6 @@
 				<td class='notavailable' v-on:click="toggle"></td>
 				<td class='notavailable' v-on:click="toggle"></td>
 			</tr>
-			<tr id="9pm">
-				<th align="right"> 9:00 pm </th>
-				<td class='notavailable' v-on:click="toggle"></td>
-				<td class='notavailable' v-on:click="toggle"></td>
-				<td class='notavailable' v-on:click="toggle"></td>
-				<td class='notavailable' v-on:click="toggle"></td>
-				<td class='notavailable' v-on:click="toggle"></td>
-				<td class='notavailable' v-on:click="toggle"></td>
-				<td class='notavailable' v-on:click="toggle"></td>
-			</tr>
 			</table>
 			<button class="button" v-on:click=setAvailability> Set Availability </button>
 			<button class="button" v-on:click="goToMainPage"> Back to Profile </button>
@@ -195,10 +185,15 @@ export default {
 		},
 
 		setAvailability(){
-			var availabilities = table.getElementsByClassName("available");
-			var i; 
-			for (i=0; i<availabilities.length; i++){
+			var row = document.getElementById("schedule").rows[]
+			var i;
+			for (i=1;i<14;i++)
+			
+			var availabilities = .getElementsByClassName("available");
+			var i;
 
+			for (i=0; i<availabilities.length; i++){
+				availabilities[i].cellIndex;
 			}
 		}
 		}
