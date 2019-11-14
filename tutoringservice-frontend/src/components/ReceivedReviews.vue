@@ -1,85 +1,163 @@
 <template>
+
     <div>
-      <div class="tab">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <div class="tab">
   			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
   			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
 			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
             <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Logout</button>
-            <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Write a review</button>
+            <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Received Reviews</button>
 		</div>
-       
-                <div>
-                    <div class="container">
-                        <form action="action_page.php">
 
-                        <label for="Sname">Student's name</label>
-                        <input type="text" id="Sname" name="Student's Name" placeholder="Students name..">
 
-                        <label for="Semail">Student's email</label>
-                        <input type="text" id="Semail" name="Student's Email" placeholder="e.g. xyz@gmail.com">
+    <div>
+<!------ Include the above in your HEAD tag ---------->
 
-                        <label for="subject">Subject</label>
-                        <select id="subject" name="subject">
-                        <option value="other">Other..</option>    
-                        <option value="mathematics">Mathematics</option>
-                        <option value="computer Science">Computer Science</option>
-                        
-                        </select>
+  
+    <!-- Fixed navbar -->
+   
 
-                        <label for="review">Write A Review</label>
-                        <textarea id="review" name="review" placeholder="Let us know what you think.." style="height:200px"></textarea>
+    <div class="container">
+    			
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="rating-block">
+					<h2>Averaged rating</h2>
+					<h2 class="bold padding-bottom-7">4.0 <small>/ 5.0</small></h2>
+                      
+        	                    <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
 
-                        <input type="submit" value="Submit">
+        	       
+				</div>
+			</div>
+						
+		</div>			
+		
+    </div> <!-- /container -->
 
-                        </form>
-                        </div>
+    <div>
+    <div class="container">
+	<h2 class="text-center">Received Reviews</h2><br><br><br>
+	
+	<div class="card">
+	    <div class="card-body">
+	        <div class="row">
+        	    
+        	    <div class="col-md-10">
+        	    
+        	       <div class="clearfix"></div>
+                   <ul>
+                       <li><p>A very caring TA who's readily accessible. Gives the best explanations. 
+                           Helps out in assignments and I definitely feel like I learned a lot in this class. 
+                           Solid dude</p> 
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                       </li>
+                       <li>
+                             <p>He has a thick french accent and he talks slow, but explains everything very well. 
+                        His tests really help me keep up with my class. I learned a lot of algorithms from him, from the very basics.</p>
 
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary active">
-                    <input type="checkbox" checked autocomplete="off"> Post anonymously
-                    </label>
-            </div>     
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                       </li>
+                       <li>
+                             <p>He is personally my type of teacher. If you like a person that works methodically (like a robot) then you will love him. He's fair, 
+                                 straightforward, organized and actually aims for the students' success. 
+                                 The only downside would be his thick accent.
+                             </p>
+                                
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                
+                       </li>
+           
+
+                   </ul>
+        	    
+        	    </div>
+	        </div>
+	        	
+	    </div>
+	</div>
+</div>
+    </div>    
+    
+ 
+
     </div>
-
+    </div>
 </template>
 
 
 
-<style>
-/* Style inputs with type="text", select elements and textareas */
-input[type=text], select, textarea {
-  width: 100%; /* Full width */
-  padding: 12px; /* Some padding */ 
-  border: 1px solid #ccc; /* Gray border */
-  border-radius: 4px; /* Rounded borders */
-  box-sizing: border-box; /* Make sure that padding and width stays in place */
-  margin-top: 6px; /* Add a top margin */
-  margin-bottom: 16px; /* Bottom margin */
-  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+<style scoped>
+body {
+  padding-top: 70px;
+}
+.btn-grey{
+    background-color:#D8D8D8;
+	color:#FFF;
+}
+.rating-block{
+	background-color:#FAFAFA;
+	border:1px solid #EFEFEF;
+	padding:15px 15px 20px 15px;
+	border-radius:3px;
+}
+.bold{
+	font-weight:700;
+}
+.padding-bottom-7{
+	padding-bottom:7px;
 }
 
-/* Style the submit button with a specific background color etc */
-input[type=submit] {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.review-block{
+	background-color:#FAFAFA;
+	border:1px solid #EFEFEF;
+	padding:15px;
+	border-radius:3px;
+	margin-bottom:15px;
 }
-
-/* When moving the mouse over the submit button, add a darker green color */
-input[type=submit]:hover {
-  background-color: #45a049;
+.review-block-name{
+	font-size:12px;
+	margin:10px 0;
 }
-
-/* Add a background color and some padding around the form */
-.container {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
+.review-block-date{
+	font-size:12px;
 }
-
-
+.review-block-rate{
+	font-size:13px;
+	margin-bottom:15px;
+}
+.review-block-title{
+	font-size:15px;
+	font-weight:700;
+	margin-bottom:10px;
+}
+.review-block-description{
+	font-size:13px;
+}
+ 
+/* .card-inner{
+    margin-left: 4rem;
+}
+   */
+   .checked {
+  color: orange;
+}
 </style>

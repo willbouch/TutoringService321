@@ -1,11 +1,14 @@
 <template>
+    <div>   
+
+
     <div>
       <div class="tab">
   			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
   			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
 			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
             <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Logout</button>
-            <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Received Reviews</button>
+            <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Write a review</button>
 		</div>
        
                 <div>
@@ -42,11 +45,16 @@
             </div>     
     </div>
 
+    </div>
+
 </template>
 
 
 
 <style>
+*{
+    margin-top: 0;
+}
 /* Style inputs with type="text", select elements and textareas */
 input[type=text], select, textarea {
   width: 100%; /* Full width */
@@ -79,7 +87,11 @@ input[type=submit]:hover {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+  
 }
 
-
+.tab{
+    margin-bottom: 5%;
+    margin-left: 0%;
+}
 </style>
