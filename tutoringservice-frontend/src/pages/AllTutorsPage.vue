@@ -17,7 +17,7 @@
 			</thead>
 			<tbody>
 
-				<tr v-for="tutor in tutors">
+				<tr v-for="tutor in tutors" :key="tutor">
 					<td>{{tutor.name}}</td>
 					<td>{{tutor.email}}</td>
 					<td>{{tutor.rating}}
