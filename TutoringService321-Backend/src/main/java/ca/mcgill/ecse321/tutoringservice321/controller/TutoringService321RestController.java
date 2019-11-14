@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import ca.mcgill.ecse321.tutoringservice321.TutoringService321Application;
 import ca.mcgill.ecse321.tutoringservice321.dto.AvailabilityDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.SessionDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.SubjectDto;
@@ -26,6 +27,7 @@ import ca.mcgill.ecse321.tutoringservice321.dto.TutorDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.CourseDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.ReviewDto;
 import ca.mcgill.ecse321.tutoringservice321.model.Availability;
+import ca.mcgill.ecse321.tutoringservice321.model.ServiceUser;
 import ca.mcgill.ecse321.tutoringservice321.model.Session;
 import ca.mcgill.ecse321.tutoringservice321.model.Subject;
 import ca.mcgill.ecse321.tutoringservice321.model.Tutor;
@@ -40,6 +42,12 @@ public class TutoringService321RestController {
 	@Autowired
 	private TutoringService321Service service;
 
+	@GetMapping(value = {"/tutors", "/tutors/"})
+	public TutorDto getLoggedTutor() {
+		ServiceUser user = TutoringService321Application.getLoggedUser();
+		return converToDto((Tutor)user);
+	}
+	
 	//====================================================================================
 	//AVAILABILITY METHODS
 

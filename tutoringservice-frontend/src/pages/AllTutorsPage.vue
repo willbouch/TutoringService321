@@ -31,6 +31,16 @@
 </template>
 
 <script>
+import axios from 'axios'
+var config = require('../../config')
+
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
 
 function TutorDto (name, email, rating, hourlyRate) {
 	this.name = name
@@ -54,8 +64,14 @@ export default {
 		const t3 = new TutorDto('Sharon Kattar', 's@gmail.com', 4.9, 17)
 		const t4 = new TutorDto('Kyjauna Marshall', 'km@gmail.com', 2.7, 45)
 		const t5 = new TutorDto('Hadi Zia', 'h@gmail.com', 4.0, 21)
+		// AXIOS.get(`/tutors`)
+		// .then(response => {
+		// 	this.tutors = response.data
+		// })
+		// .catch(e => {
 
-		this.tutors = [t1,t2,t3,t4,t5]
+    // })
+    this.tutors = [t1,t2,t3,t4,t5]
 	},
 
   methods: {

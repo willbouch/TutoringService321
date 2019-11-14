@@ -10,8 +10,8 @@
 
 		<div>
 			<img src="@/assets/profile-picture.png" width=200>
-  		<label>EMAIL</label>
-			<label>RATING</label>
+  		<label> {{ email }} </label>
+			<label>{{ rating }}</label>
 		  <div>
         <input type="text" v-model="name" placeholder="CURRENT NAME">
 		  </div>
@@ -40,6 +40,17 @@
 </template>
 
 <script>
+import axios from 'axios'
+var config = require('../../config')
+
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
+
 export default {
   name: 'MainPage',
 
@@ -54,6 +65,26 @@ export default {
       confirmationPassword:''
     }
   },
+
+  created: function() {
+		// AXIOS.get(`/user`)
+		// .then(response => {
+    //   this.email = response.data.email
+    //   this.rating = response.data.rating
+    //   this.name = response.data.name
+    //   this.phoneNumber = response.data.phoneNumber
+    //   this.hourlyRate = response.data.hourlyrate
+		// })
+		// .catch(e => {
+    //   window.alert(e)
+    // })
+    
+    this.email = 'w@gmail.com'
+    this.rating = 4.8
+    this.name = 'William The Great'
+    this.phoneNumber = '418-573-0193'
+    this.hourlyRate = '22'
+	},
 
   methods: {
 	  toAllTutorsPage() {

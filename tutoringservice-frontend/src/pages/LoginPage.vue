@@ -8,12 +8,22 @@
 			<input type="text" v-model="password" placeholder="Password">
 		</div>
 		<div>
-			<button v-on:click="login" class="glow-on-hover">Login</button>
+			<button @click="loginTutor(username, password)" class="glow-on-hover">Login</button>
 		</div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+var config = require('../../config')
+
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
 
 export default {
   name: 'LoginPage',
@@ -26,10 +36,16 @@ export default {
   },
 
   methods: {
-	  login() {
-      //CALL THE LOGIN FROM BACKEND AND IF NO ERROR, PUSH TO MAIN PAGE
-		  this.$router.push('MainPage')
-	  }
+	  loginTutor: function (username, password) {
+      // AXIOS.post(`/login/`,username, {password})
+      // .then(response => {
+      //   this.$router.push('MainPage')
+      // })
+      // .catch(e => {
+      //   window.alert(e)
+      // });
+      this.$router.push('MainPage')
+    }
   }
 }
 </script>
