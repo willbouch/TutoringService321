@@ -220,13 +220,14 @@ export default {
 				}
 				sTime=i+8;
 				eTime=i+9;
+				//some function to add each availability to the database
 				availabilityDto(day, sTime, eTime);
 				}
 			}
 		},
 
 		displayAvailability(){
-			
+
 		}
 
 	}
