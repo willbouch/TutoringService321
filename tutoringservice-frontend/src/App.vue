@@ -1,12 +1,20 @@
 <template>
     <div id="app">
         <router-view></router-view>
+       <!-- <Review /> -->
+        <ReceivedReviews />
     </div>
 </template>
 
 <script>
+import Review from './components/Reviews'
+import ReceivedReviews from './components/ReceivedReviews'
 export default {
-  name: 'app'
+  name: 'app',
+  components:{
+    Review,ReceivedReviews
+  }
+
 }
 </script>
 
@@ -16,7 +24,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #65a1dd;
+  margin-top: 0px;
 }
 </style>

@@ -5,6 +5,10 @@
   			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
   			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
 			  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
+        <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Logout</button>
+        <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Write a review</button>
+        <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Recieved reviews</button>
+			  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
         <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
 
@@ -229,6 +233,10 @@ label {
   width: 100%;
   margin: 8px 0;
   display: inline-block;
+}
+
+.review {
+ float: right;
 }
 
 </style>
