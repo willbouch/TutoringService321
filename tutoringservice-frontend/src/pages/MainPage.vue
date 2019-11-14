@@ -4,23 +4,39 @@
 		<div class="tab">
   			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
   			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
-			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
-      <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Logout</button>
-      <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Write a review</button>
-      <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Recieved reviews</button>
+			  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
+        <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Logout</button>
+        <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Write a review</button>
+        <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Recieved reviews</button>
+			  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
+        <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
 
 		<div>
 			<img src="@/assets/profile-picture.png" width=200>
-  			<label>EMAIL</label>
-			<label>RATING</label>
-			<input type="text" placeholder="CURRENT NAME">
-			<input type="text" placeholder="CURRENT PHONE NUMBER">
- 			<input type="text" placeholder="CURRENT HOURLY RATE">
-  			<button class="glow-on-hover">Update Profile</button>
-			<input type="text" placeholder="New Password">
-			<input type="text" placeholder="Re-enter Password">
-			<button class="glow-on-hover">Change Password</button>
+  		<label> {{ email }} </label>
+			<label>{{ rating }}</label>
+		  <div>
+        <input type="text" v-model="name" placeholder="CURRENT NAME">
+		  </div>
+      <div>
+			  <input type="text" v-model="phoneNumber" placeholder="CURRENT PHONE NUMBER">
+      </div>
+      <div>
+ 			  <input type="text" v-model="hourlyRate" placeholder="CURRENT HOURLY RATE">
+      </div>
+      <div>
+  		  <button class="glow-on-hover" v-on:click="updateProfile">Update Profile</button>
+      </div>
+      <div>
+			  <input type="text" v-model="newPassword" placeholder="New Password">
+      </div>
+      <div>
+			  <input type="text" v-model="confirmationPassword" placeholder="Re-enter Password">
+      </div>
+      <div>
+			  <button class="glow-on-hover" v-on:click="changePassword">Change Password</button>
+      </div>
 
 		</div>
 
@@ -28,19 +44,64 @@
 </template>
 
 <script>
+import axios from 'axios'
+var config = require('../../config')
+
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
+
 export default {
   name: 'MainPage',
 
   data() {
 	  return {
-		  componentName: 'tutorProfile'
-	  }
+      email:'',
+      rating:'',
+      name:'',
+      phoneNumber:'',
+      hourlyRate:'',
+      newPassword:'',
+      confirmationPassword:''
+    }
   },
 
+  created: function() {
+		// AXIOS.get(`/user`)
+		// .then(response => {
+    //   this.email = response.data.email
+    //   this.rating = response.data.rating
+    //   this.name = response.data.name
+    //   this.phoneNumber = response.data.phoneNumber
+    //   this.hourlyRate = response.data.hourlyrate
+		// })
+		// .catch(e => {
+    //   window.alert(e)
+    // })
+    
+    this.email = 'w@gmail.com'
+    this.rating = 4.8
+    this.name = 'William The Great'
+    this.phoneNumber = '418-573-0193'
+    this.hourlyRate = '22'
+	},
+
   methods: {
-	  toProfile() {
-		  
-	  }
+	  toAllTutorsPage() {
+		  this.$router.push('AllTutorsPage')
+    },
+
+    updateProfile() {
+      //WE UPDATE THE PROFILE HERE
+    },
+
+    changePassword() {
+      //WE CHANGE THE PASSWORD HERE
+    }
   }
 }
 </script>
@@ -92,7 +153,7 @@ export default {
 
 /* Style inputs */
 input[type=text] {
-  width: 100%;
+  width: 220px;  
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
