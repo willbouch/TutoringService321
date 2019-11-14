@@ -1,8 +1,9 @@
 <template>
   <div id="AvailabilitiesPage">
 	  	<h1 id="header">Availabilities</h1>
+		  
   <div id="weekly-availabilities"></div>
-		<table id="schedule" style="width:100%">
+		<table id="schedule" style="width:80%">
 			<col id="time" width="80">
 			<col width="140" id="monday">
 			<col width="140" id="tuesday">
@@ -149,11 +150,21 @@
 </template>
 
 <script>
+import axios from 'axios'
+var config = require('../../config')
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
+
 function availabilityDto (day, startTime, endTime) {
 	this.day = day
 	this.startTime = startTime
 	this.endTime = endTime
-}
+
+	}
 
 export default {
 	name: 'AvailabilitiesPage', 
@@ -165,34 +176,78 @@ export default {
 	},
 	
 	created: function() {
-		const a1 = new availabilityDto("Monday", '10:00:00', '12:00:00')
-		const a2 = new availabilityDto("Friday", '10:00:00', '12:00:00')
-		const a3 = new availabilityDto("Thursday", '10:00:00', '12:00:00')
+		const a1 = new availabilityDto("Monday", 10, 11);
+		const a2 = new availabilityDto("Friday", 10, 11);
+		const a3 = new availabilityDto("Thursday", 16, 17);
 
-		this.availabilities = [a1,a2,a3]
+		this.availabilities = [a1,a2,a3,4];
 	},
+	
+	mounted: function(){
+			var a;
+			//console.log(this.availabilities)
+			for(var i=0; i < this.availabilities.length; i++){
+				a=this.availabilities[i];
+				this.displayAvailability(a);
+			}
+	},
+	
 	methods: {
+		displayAvailability(a){
+		var col;
+		var row;
+		var td;
+		var table;
+			switch(a.day){
+				case "Monday":
+					col=1;
+					break;
+				case "Tuesday": 
+					col=2;
+					break;
+				case "Wednesday":
+					col=3;
+					break;
+				case "Thursday":
+					col=4;
+					break;
+				case "Friday":
+					col=5;
+					break;
+				case "Saturday":
+					col=6;
+					break;
+				case "Sunday": 
+					col=7;
+					break;
+			}
+			row=a.sTime-8;
+			table=document.getElementById("schedule");
+			td=table.rows[row].cells[col];
+			td.className="available";
+		}
+		},
+		
 		goToMainPage(){
 			this.$router.push('MainPage')
 		},
 
  		toggle(event){
-			 var cell=event.target;			 
-					 if (cell.className == "available")
-						 cell.className = "notavailable";
-						else if(cell.className == "notavailable")
-							cell.className = "available";
+			var cell=event.target;			 
+				if (cell.className == "available")
+					cell.className = "notavailable";
+				else if(cell.className == "notavailable")
+					cell.className = "available";
 		},
 
 		setAvailability(){
-			var availabilities;
 			var i;
 			var j;
 			var day;
 			var sTime;
 			var eTime;
 			for (i=1;i<13;i++){
-				availabilities = document.getElementById("schedule").row[i].getElementsByClassName("available");
+				availabilities = this.getElementById("schedule").row[i].getElementsByClassName("available");
 				for (j=0; j<availabilities.length; j++){
 				
 				switch(availabilities[i].cellIndex){
@@ -226,12 +281,8 @@ export default {
 			}
 		},
 
-		displayAvailability(){
-
-		}
 
 	}
-}
 </script>
 
 <style>
