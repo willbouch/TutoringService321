@@ -11,61 +11,19 @@
 				<tr>
 				<th scope="col">Tutor Name</th>
 				<th scope="col">Contact</th>
-				<th scope="col">Courses</th>
-				<th scope="col">Profile</th>
+				<th scope="col">Rating</th>
+				<th scope="col">Hourly Rate</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-				<th scope="row">Hadi Zia</th>
-				<td>hadi.zia@gmail.com</td>
-				<td><div class="dropdown">
-						<button class="dropbtn">Courses</button>
-						<div class="dropdown-content">
-							<a href="#">COMP 202</a>
-							<a href="#">COMP 250</a>
-							<a href="#">COMP 251</a>
-						</div>
-				</div></td>
-				<td><a href="#">Hadi's Profile</a></td>
-				</tr>
-				<tr>
-				<th scope="row">Jonathan Roy</th>
-				<td>jonathan.roy@gmail.com</td>
-				<td><div class="dropdown">
-						<button class="dropbtn">Courses</button>
-						<div class="dropdown-content">
-							<a href="#">CIVE 207</a>
-							<a href="#">CIVE 323</a>
-							<a href="#">CIVE 527</a>
-						</div>
-				</div></td>
-				<td><a href="#">Jonathan's Profile</a></td>
-				</tr>
-				<tr>
-				<th scope="row">Sharon Kattar</th>
-				<td>sharon.kattar@gmail.com</td>
-				<td><div class="dropdown">
-						<button class="dropbtn">Courses</button>
-						<div class="dropdown-content">
-							<a href="#">ECSE 205</a>
-							<a href="#">MATH 263</a>
-						</div>
-				</div></td>
-				<td><a href="#">Sharon's Profile</a></td>
-				</tr>
-				<tr>
-				<th scope="row">Julia London</th>
-				<td>julia.london@gmail.com</td>
-				<td><div class="dropdown">
-						<button class="dropbtn">Courses</button>
-						<div class="dropdown-content">
-							<a href="#">ECSE 326</a>
-							<a href="#">ECSE 301</a>
-							<a href="#">ECSE 251</a>
-						</div>
-				</div></td>
-				<td><a href="#">Julia's Profile</a></td>
+
+				<tr v-for="tutor in tutors">
+					<td>{{tutor.name}}</td>
+					<td>{{tutor.email}}</td>
+					<td>{{tutor.rating}}
+						<img src="@/assets/rating-star.png" width=20>
+					</td>
+					<td>{{tutor.hourlyRate}}</td>
 				</tr>
 			</tbody>
 		</table>
@@ -74,14 +32,31 @@
 
 <script>
 
+function TutorDto (name, email, rating, hourlyRate) {
+	this.name = name
+	this.email = email
+	this.rating = rating
+	this.hourlyRate = hourlyRate
+}
+
 export default {
   name: 'AllTutorsPage',
 
   data() {
     return {
-      
+      tutors: []
     }
-  },
+	},
+	
+	created: function() {
+		const t1 = new TutorDto('William Bouchard', 'w@gmail.com', 4.8, 18)
+		const t2 = new TutorDto('Katie Younge', 'k@gmail.com', 5.0, 24)
+		const t3 = new TutorDto('Sharon Kattar', 's@gmail.com', 4.9, 17)
+		const t4 = new TutorDto('Kyjauna Marshall', 'km@gmail.com', 2.7, 45)
+		const t5 = new TutorDto('Hadi Zia', 'h@gmail.com', 4.0, 21)
+
+		this.tutors = [t1,t2,t3,t4,t5]
+	},
 
   methods: {
 	  toMainPage() {

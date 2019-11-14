@@ -22,7 +22,7 @@
  			  <input type="text" v-model="hourlyRate" placeholder="CURRENT HOURLY RATE">
       </div>
       <div>
-  		  <button class="glow-on-hover">Update Profile</button>
+  		  <button class="glow-on-hover" v-on:click="updateProfile">Update Profile</button>
       </div>
       <div>
 			  <input type="text" v-model="newPassword" placeholder="New Password">
@@ -31,7 +31,7 @@
 			  <input type="text" v-model="confirmationPassword" placeholder="Re-enter Password">
       </div>
       <div>
-			  <button class="glow-on-hover">Change Password</button>
+			  <button class="glow-on-hover" v-on:click="changePassword">Change Password</button>
       </div>
 
 		</div>
@@ -40,14 +40,6 @@
 </template>
 
 <script>
-function TutorDto(email, rating, name, phoneNumber, hourlyRate) {
-    this.name = name
-    this.rating = rating
-    this.name = name
-    this.phoneNumber = phoneNumber
-    this.hourlyRate = hourlyRate
-}
-
 export default {
   name: 'MainPage',
 
@@ -63,14 +55,18 @@ export default {
     }
   },
 
-  created: function() {
-    const tutor = new TutorDto('w@gmail.com', 4.5, 'William Bouchard', '418-573-0193', 18)
-  },
-
   methods: {
 	  toAllTutorsPage() {
 		  this.$router.push('AllTutorsPage')
-	  }
+    },
+
+    updateProfile() {
+      //WE UPDATE THE PROFILE HERE
+    },
+
+    changePassword() {
+      //WE CHANGE THE PASSWORD HERE
+    }
   }
 }
 </script>
