@@ -1,15 +1,15 @@
 <template>
   <div id="AvailabilitiesPage">
 	  	<h1>Availabilities</h1>
-		  	<div id="weekly-schedule"></div>
-				<Schedule> class="AvailabilityBox" </Schedule>
+  <div id="weekly-availabilities"> Weekly Availability</div>
+		<AvailabilityBox></AvailabilityBox>
 	</div>
 </template>
 
 <script>
 export default {
 	name: 'AvailabilitiesPage',
-
+	components:'AvailabilityBox', 
 	methods: {
 		goToMainPage(){
 			this.$router.push('MainPage')
@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style>
-#loginPage {
+#AvailabilityPage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -27,5 +27,4 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
 </style>
