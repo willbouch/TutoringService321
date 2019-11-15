@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,21 +46,17 @@ public class TutoringService321RestController {
 	@PostMapping(value = {"/login/{tutorEmail}", "/login/{tutorEmail}/"})
 	public void tutorLogin(@PathVariable("tutorEmail") String tutorEmail,
 			@RequestParam String password) {
-		
-		Tutor tutor;
-		try{
-			tutor = service.createTutor(tutorEmail, "William Bouchard", password, "4185730193", 15);
-		}catch(IllegalArgumentException e) {
-			tutor = service.getTutor(tutorEmail);
-		}
-		
 		service.loginAsTutor(tutorEmail, password);
+	}
+	
+	@PutMapping(value = {"/logout", "/logout/"})
+	public void logout() {
+		service.logout();
 	}
 	
 	@GetMapping(value = {"/user", "/user/"})
 	public TutorDto getLoggedTutor() {
-		ServiceUser user = TutoringService321Application.getLoggedUser();
-		return converToDto((Tutor)user);
+		return converToDto((Tutor)service.getLoggedInUser());
 	}
 	
 	//====================================================================================

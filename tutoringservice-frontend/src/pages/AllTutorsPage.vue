@@ -59,19 +59,15 @@ export default {
 	},
 	
 	created: function() {
-		const t1 = new TutorDto('William Bouchard', 'w@gmail.com', 4.8, 18)
-		const t2 = new TutorDto('Katie Younge', 'k@gmail.com', 5.0, 24)
-		const t3 = new TutorDto('Sharon Kattar', 's@gmail.com', 4.9, 17)
-		const t4 = new TutorDto('Kyjauna Marshall', 'km@gmail.com', 2.7, 45)
-		const t5 = new TutorDto('Hadi Zia', 'h@gmail.com', 4.0, 21)
-		// AXIOS.get(`/tutors`)
-		// .then(response => {
-		// 	this.tutors = response.data
-		// })
-		// .catch(e => {
-
-    // })
-    this.tutors = [t1,t2,t3,t4,t5]
+		AXIOS.get(`/tutors`)
+		.then(response => {
+      for(var i = 0; i < response.data.length; i++) {
+        this.tutors.push(new TutorDto(response.data[i].name,response.data[i].email,response.data[i].rating,response.data[i].hourlyrate))
+      }
+		})
+		.catch(e => {
+      
+    })
 	},
 
   methods: {

@@ -36,16 +36,21 @@ export default {
   },
 
   methods: {
-	  loginTutor: function (username, password) {
-      // AXIOS.post(`/login/`,username, {password})
-      // .then(response => {
-      //   this.$router.push('MainPage')
-      // })
-      // .catch(e => {
-      //   window.alert(e)
-      // });
-      this.$router.push('MainPage')
-    }
+    loginTutor: function(username, password){
+      AXIOS.post(`/register/`+username+`?name=William+Bouchard&password=`+password+`&phoneNumber=4185730193&hourlyRate=15`,{},{})
+      .then(response => {
+        AXIOS.post(`/login/`+username+`?password=`+password,{},{})
+        .then(response => {
+          this.$router.push('MainPage')
+        })
+        .catch(e => {
+        
+        });
+      })
+      .catch(e => {
+
+      });
+    },
   }
 }
 </script>

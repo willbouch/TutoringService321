@@ -4,9 +4,9 @@
 		<div class="tab">
   			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
   			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
-			  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
-        <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Logout</button>
-        <button class="tablinks" onclick="openCity(event, 'Tokyo)">Recieved reviews</button>
+			  <button class="tablinks" v-on:click="toCoursePage">Courses</button>
+        <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
+        <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
         <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
 
@@ -27,10 +27,10 @@
   		  <button class="glow-on-hover" v-on:click="updateProfile">Update Profile</button>
       </div>
       <div>
-			  <input type="text" v-model="newPassword" placeholder="New Password">
+			  <input type="text" v-model="oldPassword" placeholder="Old Password">
       </div>
       <div>
-			  <input type="text" v-model="confirmationPassword" placeholder="Re-enter Password">
+			  <input type="text" v-model="newPassword" placeholder="New Password">
       </div>
       <div>
 			  <button class="glow-on-hover" v-on:click="changePassword">Change Password</button>
@@ -63,29 +63,24 @@ export default {
       name:'',
       phoneNumber:'',
       hourlyRate:'',
-      newPassword:'',
-      confirmationPassword:''
+      oldPassword:'',
+      newPassword:''
     }
   },
 
   created: function() {
-		// AXIOS.get(`/user`)
-		// .then(response => {
-    //   this.email = response.data.email
-    //   this.rating = response.data.rating
-    //   this.name = response.data.name
-    //   this.phoneNumber = response.data.phoneNumber
-    //   this.hourlyRate = response.data.hourlyrate
-		// })
-		// .catch(e => {
-    //   window.alert(e)
-    // })
-    
-    this.email = 'w@gmail.com'
-    this.rating = 4.8
-    this.name = 'William The Great'
-    this.phoneNumber = '418-573-0193'
-    this.hourlyRate = '22'
+		AXIOS.get(`/user`)
+		.then(response => {
+      this.email = response.data.email
+      this.rating = response.data.rating
+      this.name = response.data.name
+      this.phoneNumber = response.data.phoneNumber
+      this.hourlyRate = response.data.hourlyrate
+      this.oldPassword = response.data.password
+		})
+		.catch(e => {
+      
+    })
 	},
 
   methods: {
@@ -93,12 +88,42 @@ export default {
 		  this.$router.push('AllTutorsPage')
     },
 
+    toTutorReviewsPage() {
+		  this.$router.push('TutorReviewsPage')
+    },
+
+    toCoursePage() {
+		  this.$router.push('CoursePage')
+    },
+
+    toLoginPage() {
+      AXIOS.put(`/logout`)
+		  .then(response => {
+        this.$router.push('LoginPage')
+		  })
+		  .catch(e => {
+      })
+    },
+
     updateProfile() {
-      //WE UPDATE THE PROFILE HERE
+      AXIOS.put(`/tutors/profile/`+this.email+`?name=`+this.name+`&phoneNumber=`+this.phoneNumber+`&hourlyRate=`+this.hourlyRate)
+		  .then(response => {
+        this.phoneNumber = response.data.phoneNumber
+        this.name = response.data.name
+        this.hourlyRate = response.data.hourlyrate
+		  })
+		  .catch(e => {
+      })
     },
 
     changePassword() {
-      //WE CHANGE THE PASSWORD HERE
+      AXIOS.put(`/tutors/password/`+this.email+`?oldPassword=`+this.oldPassword+`&newPassword=`+this.newPassword)
+		  .then(response => {
+        this.oldPassword = response.data.password
+        this.newPassword = ''
+		  })
+		  .catch(e => {
+      })
     }
   }
 }

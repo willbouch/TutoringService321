@@ -1,49 +1,13 @@
 <template>
-
     <div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <div class="tab">
-  			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
-  			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
-			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
-            <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Logout</button>
-            <button class="tablinks" style="float:right" onclick="openCity(event, 'Tokyo)">Received Reviews</button>
-		</div>
-
-
-    <div>
-    <div class="container">	
-		<div class="row">
-			<div class="col-sm-3">
-				<div class="rating-block">
-					<h2>Averaged rating</h2>
-					<h2 class="bold padding-bottom-7">4.0 <small>/ 5.0</small></h2>
-                      
-        	                    <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-
-        	       
-				</div>
-			</div>
-						
-		</div>			
-		
-    </div> <!-- /container -->
-
-    <div>
     <div class="container">
-	<h2 class="text-center">Received Reviews</h2><br><br><br>
-	
+	<h2 class="text-center">RECEIVED REVIEWS</h2><br><br><br>
 	<div class="card">
 	    <div class="card-body">
 	        <div class="row">
-        	    
         	    <div class="col-md-10">
-        	    
         	       <div class="clearfix"></div>
                    <ul>
                        <li><p>A very caring TA who's readily accessible. Gives the best explanations. 
@@ -75,25 +39,15 @@
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                
-                       </li>
-           
-
+                                <span class="fa fa-star checked"></span>        
+                       </li>  
                    </ul>
-        	    
-        	    </div>
+        	       </div>
+	            </div>  	
 	        </div>
-	        	
 	    </div>
-	</div>
-</div>
+    </div>
     </div>    
-    
- 
-
-    </div>
-    </div>
 </template>
 
 

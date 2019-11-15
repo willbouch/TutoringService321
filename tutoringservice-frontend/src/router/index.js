@@ -4,6 +4,7 @@ import LoginPage from '@/pages/LoginPage'
 import MainPage from '@/pages/MainPage'
 import AllTutorsPage from '@/pages/AllTutorsPage'
 import TutorReviewsPage from '@/pages/TutorReviewsPage'
+import CoursePage from '@/pages/CoursePage'
 
 Vue.use(Router)
 
@@ -23,6 +24,16 @@ export default new Router({
       path: "/alltutorspage",
       name: 'AllTutorsPage',
       component: AllTutorsPage
+    },
+    {
+      path: "/loginpage",
+      name: 'LoginPage',
+      component: LoginPage
+    },
+    {
+      path: "/coursepage",
+      name: 'CoursePage',
+      component: CoursePage
     },
     {
       path: "/tutorreviewspage",
