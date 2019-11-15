@@ -5,8 +5,8 @@ export default [
 	date: '05/05/2019',
 	room: 'TR5104',
 	email: 'kyjauna.marshall@mail.mcgill.ca',
-	phone: '(250) 510-2578',
-	status:'pending'
+	course:'ECSE 321',
+	status:''
   },
   {
 	student: 'William Bouchard',
@@ -14,8 +14,8 @@ export default [
 	date: '05/05/2019',
 	room: 'TR5106',
 	email: 'william.bouchard@mail.mcgill.ca',
-	phone: '(418) 573-0193',
-	status:'pending'
+	course:'FACC 300',
+	status:''
   },
   {
 	student: 'Katie Younge',
@@ -23,8 +23,8 @@ export default [
 	date: '05/05/2019',
 	room: 'TR5103',
 	email: 'katie.younge@mail.mcgill.ca',
-	phone: '(819) 329-6836',
-	status:'pending'
+	course:'MATH 240',
+	status:''
   },
   {
 	student: 'Sharon Kattar',
@@ -32,8 +32,8 @@ export default [
 	date: '05/05/2019',
 	room: 'TR5104',
 	email: 'sharon.kattar@mail.mcgill.ca',
-	phone: '(438) 503-1273',
-	status:'pending'
+	course:'COMP 250',
+	status:''
   },
   {
 	student: 'Hadi Zia',
@@ -41,7 +41,7 @@ export default [
 	date: '05/05/2019',
 	room: 'TR5105',
 	email: 'syed.h.rizvi@mail.mcgill.ca',
-	phone: '(514) 659-9839',
-	status:'pending'
+	course:'ECSE 324',
+	status:''
   },
 ]
