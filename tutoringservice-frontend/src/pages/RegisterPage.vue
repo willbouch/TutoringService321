@@ -1,18 +1,24 @@
 <template>
-  <div id="loginPage">
-		<h1>LOGIN</h1>
+  <div id="registerPage">
+		<h1>REGISTER</h1>
 		<div>
-			<input type="text" v-model="username" placeholder="Username">
+			<input type="text" v-model="email" placeholder="Email address">
+		</div>
+		<div>				
+			<input type="text" v-model="name" placeholder="Name">
 		</div>
 		<div>				
 			<input type="text" v-model="password" placeholder="Password">
 		</div>
-    <div>
-			<button @click="loginTutor(username, password)" class="glow-on-hover">Login</button>
+		<div>				
+			<input type="text" v-model="phoneNumber" placeholder="Phone Number">
 		</div>
-    <div>
-      <a href="#/RegisterPage">Register</a>
-    </div>
+		<div>				
+			<input type="text" v-model="hourlyRate" placeholder="Hourly Rate">
+		</div>
+		<div>
+			<button @click="registerTutor(email, name, password, phoneNumber, hourlyRate)" class="glow-on-hover">Register</button>
+		</div>
   </div>
 </template>
 
@@ -29,31 +35,34 @@ var AXIOS = axios.create({
 })
 
 export default {
-  name: 'LoginPage',
+  name: 'RegisterPage',
 
   data() {
     return {
-      username: '',
-      password: '',
+	  email: '',
+	  name: '',
+	  password: '',
+	  phoneNumber:'',
+	  hourlyRate:''
     }
   },
 
   methods: {
-    loginTutor: function(username, password){
-      AXIOS.post(`/login/`+username+`?password=`+password,{},{})
+    registerTutor: function(email, name, password, phoneNumber, hourlyRate){
+      AXIOS.post(`/register/`+email+`?name=`+name+`&password=`+password+`&phoneNumber=`+phoneNumber+`&hourlyRate=`+hourlyRate,{},{})
       .then(response => {
-        this.$router.push('MainPage')
+		  this.$router.go(-1)
       })
       .catch(e => {
-        
-      });  
+
+      });
     },
   }
 }
 </script>
 
 <style>
-#loginPage {
+#registerPage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -138,5 +147,4 @@ input[type=text] {
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
 }
-
 </style>
