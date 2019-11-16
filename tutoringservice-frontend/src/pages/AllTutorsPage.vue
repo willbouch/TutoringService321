@@ -1,5 +1,5 @@
-/* This page represents all the tutors in the database.
-   Included are the links to their individual profile pages. */
+<!-- This page represents all the tutors in the database.
+     Included are the links to their individual profile pages. -->
 
 <template>
 
@@ -19,7 +19,7 @@
 				</tr>
 			</thead>
 			<tbody>
-
+        <!-- None of this is working -->
 				<tr v-for="tutor in tutors" :key="tutor">
 					<td>{{tutor.name}}</td>
 					<td>{{tutor.email}}</td>
@@ -27,6 +27,13 @@
 						<img src="@/assets/rating-star.png" width=20>
 					</td>
 					<td>{{tutor.hourlyRate}}</td>
+          <!-- Added content -->
+          <td><div class="dropdown">
+              <button class="dropbtn">Subjects</button>
+              <div class="dropdown-content" v-for="subject in subjects" :key="subject">
+                <a href="#">{{subject}}</a>
+              </div>
+          </div></td>
 				</tr>
 			</tbody>
 		</table>
