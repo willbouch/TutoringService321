@@ -4,14 +4,16 @@
 		<div class="tab">
   			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
   			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
-			  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
-        <button class="tablinks" onclick="openCity(event, 'Tokyo')">All Tutors</button>
+			  <button class="tablinks" v-on:click="toCoursePage">Courses</button>
+        <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
+        <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
+        <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
 
 		<div>
 			<img src="@/assets/profile-picture.png" width=200>
-  		<label>EMAIL</label>
-			<label>RATING</label>
+  		<label> {{ email }} </label>
+			<label>{{ rating }}</label>
 		  <div>
         <input type="text" v-model="name" placeholder="CURRENT NAME">
 		  </div>
@@ -22,16 +24,16 @@
  			  <input type="text" v-model="hourlyRate" placeholder="CURRENT HOURLY RATE">
       </div>
       <div>
-  		  <button class="glow-on-hover">Update Profile</button>
+  		  <button class="glow-on-hover" v-on:click="updateProfile">Update Profile</button>
+      </div>
+      <div>
+			  <input type="text" v-model="oldPassword" placeholder="Old Password">
       </div>
       <div>
 			  <input type="text" v-model="newPassword" placeholder="New Password">
       </div>
       <div>
-			  <input type="text" v-model="confirmationPassword" placeholder="Re-enter Password">
-      </div>
-      <div>
-			  <button class="glow-on-hover">Change Password</button>
+			  <button class="glow-on-hover" v-on:click="changePassword">Change Password</button>
       </div>
 
 		</div>
@@ -40,13 +42,16 @@
 </template>
 
 <script>
-function TutorDto(email, rating, name, phoneNumber, hourlyRate) {
-    this.name = name
-    this.rating = rating
-    this.name = name
-    this.phoneNumber = phoneNumber
-    this.hourlyRate = hourlyRate
-}
+import axios from 'axios'
+var config = require('../../config')
+
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
 
 export default {
   name: 'MainPage',
@@ -58,17 +63,76 @@ export default {
       name:'',
       phoneNumber:'',
       hourlyRate:'',
-      newPassword:'',
-      confirmationPassword:''
+      oldPassword:'',
+      newPassword:''
     }
   },
 
   created: function() {
-    const tutor = new TutorDto('w@gmail.com', 4.5, 'William Bouchard', '418-573-0193', 18)
-  },
+		AXIOS.get(`/user`)
+		.then(response => {
+      this.email = response.data.email
+      
+      if(response.data.rating == -1) {
+        this.rating = 'No rating yet'
+      }
+      else {
+        this.rating = response.data.rating
+      }
+      
+      this.name = response.data.name
+      this.phoneNumber = response.data.phoneNumber
+      this.hourlyRate = response.data.hourlyrate
+      this.oldPassword = response.data.password
+		})
+		.catch(e => {
+      var errorMsg = e.response.data.message
+      window.alert(errorMsg)
+    })
+	},
 
   methods: {
-	  
+	  toAllTutorsPage() {
+		  this.$router.push('AllTutorsPage')
+    },
+
+    toTutorReviewsPage() {
+		  this.$router.push('TutorReviewsPage')
+    },
+
+    toCoursePage() {
+		  this.$router.push('CoursePage')
+    },
+
+    toLoginPage() {
+      AXIOS.put(`/logout`)
+		  .then(response => {
+        this.$router.push('LoginPage')
+		  })
+		  .catch(e => {
+      })
+    },
+
+    updateProfile() {
+      AXIOS.put(`/tutors/profile/`+this.email+`?name=`+this.name+`&phoneNumber=`+this.phoneNumber+`&hourlyRate=`+this.hourlyRate)
+		  .then(response => {
+        this.phoneNumber = response.data.phoneNumber
+        this.name = response.data.name
+        this.hourlyRate = response.data.hourlyrate
+		  })
+		  .catch(e => {
+      })
+    },
+
+    changePassword() {
+      AXIOS.put(`/tutors/password/`+this.email+`?oldPassword=`+this.oldPassword+`&newPassword=`+this.newPassword)
+		  .then(response => {
+        this.oldPassword = response.data.password
+        this.newPassword = ''
+		  })
+		  .catch(e => {
+      })
+    }
   }
 }
 </script>
@@ -200,6 +264,10 @@ label {
   width: 100%;
   margin: 8px 0;
   display: inline-block;
+}
+
+.review {
+ float: right;
 }
 
 </style>
