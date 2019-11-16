@@ -54,7 +54,8 @@ export default {
 		  this.$router.go(-1)
       })
       .catch(e => {
-
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
       });
     },
   }

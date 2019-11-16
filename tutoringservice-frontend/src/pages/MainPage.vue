@@ -86,7 +86,8 @@ export default {
       this.oldPassword = response.data.password
 		})
 		.catch(e => {
-      
+      var errorMsg = e.response.data.message
+      window.alert(errorMsg)
     })
 	},
 
