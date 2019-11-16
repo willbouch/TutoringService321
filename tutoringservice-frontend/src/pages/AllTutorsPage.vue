@@ -1,3 +1,6 @@
+/* This page represents all the tutors in the database.
+   Included are the links to their individual profile pages. */
+
 <template>
 
 	<div id="viewTutors">
@@ -42,9 +45,12 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
-function TutorDto (name, email, rating, hourlyRate) {
+function TutorDto (name, email, rating, hourlyRate, subjects) {
+  /*add list of subjects */
 	this.name = name
-	this.email = email
+  this.email = email
+  this.subjects = subjects
+  /* These subjects should be a list */
 	if(rating == -1) {
     this.rating = 'No rating yet'
   }
@@ -64,7 +70,14 @@ export default {
 	},
 	
 	created: function() {
-		
+    AXIOS.get(`/tutors`)
+    .then(response => {
+      this.tutors = response.data.tutors
+    })
+    .catch(e => {
+
+    })
+
 	},
 
   methods: {
