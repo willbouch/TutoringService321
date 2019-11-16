@@ -45,7 +45,8 @@ export default {
         this.$router.push('MainPage')
       })
       .catch(e => {
-        
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
       });  
     },
   }
