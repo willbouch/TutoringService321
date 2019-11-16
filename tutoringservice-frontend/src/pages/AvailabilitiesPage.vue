@@ -144,7 +144,7 @@
 				<td class='notavailable' v-on:click="toggle"></td>
 			</tr>
 			</table>
-			<button class="button" v-on:click=setAvailability> Set Availability </button>
+			<!-- <button class="button" v-on:click=setAvailability> Set Availability </button> -->
 			<button class="button" v-on:click="goToMainPage"> Back to Profile </button>
 	</div>
 </template>
@@ -185,10 +185,16 @@ export default {
 	
 	mounted: function(){
 			var a;
-			//console.log(this.availabilities)
+			console.log(this.availabilities)
 			for(var i=0; i < this.availabilities.length; i++){
 				a=this.availabilities[i];
+				//alert(""+a.day);
 				this.displayAvailability(a);
+			}
+			var b;
+			b=document.getElementsByTagName('td');
+			for(i=0; i < b.length; i++){
+				b[i].onclick=this.toggle($event);;
 			}
 	},
 	
@@ -221,11 +227,10 @@ export default {
 					col=7;
 					break;
 			}
-			row=a.sTime-8;
+			row=a.startTime-8;
 			table=document.getElementById("schedule");
 			td=table.rows[row].cells[col];
 			td.className="available";
-		}
 		},
 		
 		goToMainPage(){
@@ -280,9 +285,8 @@ export default {
 				}
 			}
 		},
-
-
 	}
+}
 </script>
 
 <style>
