@@ -2,8 +2,13 @@
 
 	<div id="CoursePage">
 		<h1>COURSES</h1>
-		<div class="topPage">
-			<button class="button" v-on:click="toMainPage">My Profile</button>
+		<div class="tab">
+  			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
+  			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
+			  <button class="tablinks" v-on:click="toCoursePage">Courses</button>
+        <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
+        <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
+        <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
 
 	<div>
@@ -82,9 +87,26 @@ export default {
 	},
 
   methods: {
-	  toMainPage() {
-		  this.$router.push('MainPage')
-	  }
+	  toAllTutorsPage() {
+		  this.$router.push('AllTutorsPage')
+    },
+
+    toTutorReviewsPage() {
+		  this.$router.push('TutorReviewsPage')
+    },
+
+    toCoursePage() {
+		  this.$router.push('CoursePage')
+    },
+
+    toLoginPage() {
+      AXIOS.put(`/logout`)
+		  .then(response => {
+        this.$router.push('LoginPage')
+		  })
+		  .catch(e => {
+      })
+    },
   }
 }
 </script>
@@ -101,6 +123,41 @@ export default {
 
 ul {
   text-align: left;
+}
+
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
 }
 
 input[type=text] {
