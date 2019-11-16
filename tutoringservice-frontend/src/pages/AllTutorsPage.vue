@@ -72,7 +72,14 @@ export default {
 	created: function() {
     AXIOS.get(`/tutors`)
     .then(response => {
-      this.tutors = response.data.tutors
+      this.tutors = reponse.data.tutors
+      if (response.data.tutors == -1) {
+        this.tutors = 'No other tutors yet'
+      } else {
+          $.each(response.data.tutors, function(key, value){
+            tutors.push(key);
+          });
+      }
     })
     .catch(e => {
 
