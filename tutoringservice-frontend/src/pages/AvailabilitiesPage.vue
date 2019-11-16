@@ -163,8 +163,7 @@
 		this.day = day
 		this.startTime = startTime
 		this.endTime = endTime
-
-		}
+	}
 
 	export default {
 		name: 'AvailabilitiesPage', 
@@ -175,13 +174,9 @@
 			}
 		},
 		
-		created: function() {
-			const a1 = new availabilityDto("Monday", 10, 11);
-			const a2 = new availabilityDto("Friday", 10, 11);
-			const a3 = new availabilityDto("Thursday", 16, 17);
-
-			this.availabilities = [a1,a2,a3];
-		},
+		 created: function() {
+		 	AXIOS.get('/availabilities/{tutorEmail}/');
+		 },
 		
 		mounted: function(){
 			var a;
@@ -197,7 +192,6 @@
 			var row;
 			var td;
 			var table;
-				//alert(a.day);
 				switch(a.day){
 					case "Monday":
 						col=1;
@@ -275,11 +269,10 @@
 
 						sTime=i+8;
 						eTime=i+9;
-
-						console.log(new availabilityDto(day, sTime, eTime));;
+;
 						selections.push(new availabilityDto(day, sTime, eTime));
-						this.availabilities=selections;
-						console.log(this.availabilities)
+						AXIOS.post('/availabilities/{tutorEmail}/');
+						
 					}
 					}
 				}
