@@ -1,5 +1,6 @@
 <template>
     <div id="tutorReviewsPage">
+    <h1>RECEIVED REVIEWS</h1>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <div class="tab">
@@ -12,7 +13,6 @@
 	</div>
 
     <div class="container">
-	<h2 class="text-center">RECEIVED REVIEWS</h2><br><br><br>
 	<div class="card">
 	    <div class="card-body">
 	        <div class="row">
@@ -96,7 +96,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0px;
 }
 
 .tab {
@@ -180,5 +180,8 @@ export default {
    */
    .checked {
   color: orange;
+}
+.container{
+  margin: 0 auto;
 }
 </style>
