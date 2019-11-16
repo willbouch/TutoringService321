@@ -1,5 +1,10 @@
-<!-- This page represents all the tutors in the database.
-     Included are the links to their individual profile pages. -->
+<!-- This page represents all the tutors in the database. Included are their
+     names, email, ratings (-1 if no ratings), hourly rate, the subjects they
+     teach featured in a drop down menu, and the links to their individual
+     profile pages. The links are empty and will only be used for the demo.
+     Also to note is that they are not associated to any subjects because that
+     is done in the Manager's perspective. There is room for dummy information
+     for the demo if needed. -->
 
 <template>
 
@@ -26,7 +31,7 @@
 					<td>{{tutor.rating}}
 						<img src="@/assets/rating-star.png" width=20>
 					</td>
-					<td>{{tutor.hourlyRate}}</td>
+					<td>{{tutor.hourlyrate}}</td>
           <!-- Added content -->
           <td><div class="dropdown">
               <button class="dropbtn">Subjects</button>
@@ -34,6 +39,7 @@
                 <a href="#">{{subject}}</a>
               </div>
           </div></td>
+          <td><a href="#">{{tutor.name}}'s Profile</a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -64,7 +70,7 @@ function TutorDto (name, email, rating, hourlyRate, subjects) {
   else {
     this.rating = rating
   }
-	this.hourlyRate = hourlyRate
+	this.hourlyrate = hourlyrate
 }
 
 export default {
