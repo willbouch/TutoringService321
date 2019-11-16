@@ -23,14 +23,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr :class="$data._rowVarient" v-for="Session in cptItems" :key="Session">
-					<td>{{Session.student}}</td>
-					<td>{{Session.time}}</td>
-					<td>{{Session.date}}</td>
+				<tr v-bind:class="{approved : Session.variant}" v-for="Session in cptItems" :key="Session">
+					<td >{{Session.student}}</td>
+					<td >{{Session.time}}</td>
+					<td >{{Session.date}}</td>
 					<td>{{Session.room}}</td>
 					<td>{{Session.email}}</td>
 					<td>{{Session.course}}</td>
-					<td><button  :disabled='isEnabled' @click="approvedClass(Session)" class="btn btn-success">Approve</button></td>
+					<td><button  @click="approvedClass(Session)" class="btn btn-success">Approve</button></td>
 					<td><button  @click="declineClass(Session)" class="btn btn-danger" >Decline</button></td>
 				</tr>
 			</tbody>
@@ -40,33 +40,76 @@
 </template>
 
 <script>
-import Sessions from '@/data/Sessions'
+//import Sessions from '@/data/Sessions'
+import axios from 'axios'
+var config = require('../../config')
+
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
 export default {
+	//name: SessionPage,
 	
-  data : function()  {
-	  return{
-			Sessions,
-			approved: false,
-			_rowVarient: this.variant
-	  }
+  //data : function()  {
+	 // return{
+		//	Sessions,
+		//	_rowVarient: this.variant,
+		//	approved: null
+	  //}
+	//},
+
+	data() {
+    return {
+      tutorname: '',
+			starTime: '',
+			endTime: '',
+			Sessions:[]
+    }
+	},
+	created : function() {
+		AXIOS.get(`/user`)
+		.then(response => {
+			AXIOS.post(`/sessions/`+response.data.email+`/?date=2020-05-05&startTime=13:00&endTime=14:00`)
+			.then(response =>{
+				this.Sessions=response.data
+			})
+			.catch(e => {
+      })
+		})
+		.catch(e => {
+    })
 	},
 	
 	computed: {
   	isEnabled: function(){
-    	return this.approved;
+    	return !this.approved;
 		},
      cptItems(){
         return this.Sessions.map((Sessions)=>{
 							 let tmp=Sessions;
 							 _rowVarient:{
-								Sessions.Session==this.approved?tmp.variant='warning':tmp.variant='success';
+								Sessions.Session==this.approved==true?tmp.variant=null:tmp.variant='success';
 							 }
                 return tmp;
 
         })  
         }
 	},
+
 	methods: {
+
+		ApproveSession: function(tutor, date, startTime, endTime){
+      AXIOS.post(`/login/`+username+`?password=`+password,{},{})
+      .then(response => {
+      })
+      .catch(e => {
+        
+      });  
+    },
   	declineClass(Session) {
 			for(var i = 0; i < this.Sessions.length; i++){
 				if(Sessions[i].student == Session.student){
@@ -78,8 +121,7 @@ export default {
 		approvedClass(Session) {
 			for(var i = 0; i < this.Sessions.length; i++){
 				if(Sessions[i].student == Session.student){
-				approved: true 
-				this.class="approved";
+				this.Session=true 
 		   console.log(Session);
 		    }
 	    }
@@ -104,7 +146,7 @@ export default {
 		background-color: #f2f2f2;
 }
 	tr.approved td{
-		background-color: lightyellow;
+		background-color: lightgreen;
 	}
 
   .tab {

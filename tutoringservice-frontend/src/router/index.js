@@ -32,6 +32,7 @@ export default new Router({
       name: 'SessionPage',
       component: SessionPage
     },
+    {
       path: "/alltutorspage",
       name: 'AllTutorsPage',
       component: AllTutorsPage
