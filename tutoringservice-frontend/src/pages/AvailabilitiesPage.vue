@@ -3,7 +3,7 @@
 			<h1 id="header">Availabilities</h1>
 			
 	<div id="weekly-availabilities"></div>
-			<table id="schedule" style="width:80%">
+			<table id="schedule" style="width:100%">
 				<col id="time" width="80">
 				<col width="140" id="monday">
 				<col width="140" id="tuesday">
