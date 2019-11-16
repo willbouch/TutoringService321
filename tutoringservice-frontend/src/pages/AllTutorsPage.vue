@@ -45,7 +45,12 @@ var AXIOS = axios.create({
 function TutorDto (name, email, rating, hourlyRate) {
 	this.name = name
 	this.email = email
-	this.rating = rating
+	if(rating == -1) {
+    this.rating = 'No rating yet'
+  }
+  else {
+    this.rating = rating
+  }
 	this.hourlyRate = hourlyRate
 }
 

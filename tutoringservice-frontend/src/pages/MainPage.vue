@@ -72,7 +72,14 @@ export default {
 		AXIOS.get(`/user`)
 		.then(response => {
       this.email = response.data.email
-      this.rating = response.data.rating
+      
+      if(response.data.rating == -1) {
+        this.rating = 'No rating yet'
+      }
+      else {
+        this.rating = response.data.rating
+      }
+      
       this.name = response.data.name
       this.phoneNumber = response.data.phoneNumber
       this.hourlyRate = response.data.hourlyrate
