@@ -79,7 +79,7 @@ export default {
 	created: function() {
     AXIOS.get(`/tutors`)
     .then(response => {
-      this.tutors = reponse.data.tutors
+      this.tutors = response.data
       if (response.data.tutors == -1) {
         this.tutors = 'No other tutors yet'
       } else {
