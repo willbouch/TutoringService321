@@ -23,13 +23,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-bind:class="{approved : Session.variant}" v-for="Session in cptItems" :key="Session">
-					<td >{{Session.student}}</td>
-					<td >{{Session.time}}</td>
+				<tr v-bind:class="{approved : Session.variant}" v-for="Session in Sessions" :key="Session">
+				
+					<td >{{Session.startTime}}</td>
+					<td >{{Session.endTime}}</td>
 					<td >{{Session.date}}</td>
-					<td>{{Session.room}}</td>
-					<td>{{Session.email}}</td>
-					<td>{{Session.course}}</td>
+		
 					<td><button  @click="approvedClass(Session)" class="btn btn-success">Approve</button></td>
 					<td><button  @click="declineClass(Session)" class="btn btn-danger" >Decline</button></td>
 				</tr>
