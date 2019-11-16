@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import LoginPage from '@/pages/LoginPage'
 import RegisterPage from '@/pages/RegisterPage'
 import MainPage from '@/pages/MainPage'
+import SessionPage from '@/pages/SessionPage'
 import AllTutorsPage from '@/pages/AllTutorsPage'
 import TutorReviewsPage from '@/pages/TutorReviewsPage'
 import CoursePage from '@/pages/CoursePage'
@@ -27,6 +28,10 @@ export default new Router({
       component: MainPage
     },
     {
+      path: "/sessionpage",
+      name: 'SessionPage',
+      component: SessionPage
+    },
       path: "/alltutorspage",
       name: 'AllTutorsPage',
       component: AllTutorsPage
@@ -46,5 +51,6 @@ export default new Router({
       name: 'TutorReviewsPage',
       component: TutorReviewsPage
     }
+
   ]
 })
