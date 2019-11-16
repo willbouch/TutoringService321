@@ -64,15 +64,7 @@ export default {
 	},
 	
 	created: function() {
-		AXIOS.get(`/tutors`)
-		.then(response => {
-      for(var i = 0; i < response.data.length; i++) {
-        this.tutors.push(new TutorDto(response.data[i].name,response.data[i].email,response.data[i].rating,response.data[i].hourlyrate))
-      }
-		})
-		.catch(e => {
-      
-    })
+		
 	},
 
   methods: {
