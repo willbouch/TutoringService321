@@ -24,7 +24,6 @@
 				</tr>
 			</thead>
 			<tbody>
-        <!-- None of this is working -->
 				<tr v-for="tutor in tutors" :key="tutor">
 					<td>{{tutor.name}}</td>
 					<td>{{tutor.email}}</td>
@@ -32,7 +31,6 @@
 						<img src="@/assets/rating-star.png" width=20>
 					</td>
 					<td>{{tutor.hourlyrate}}</td>
-          <!-- Added content -->
           <td><div class="dropdown">
               <button class="dropbtn">Subjects</button>
               <div class="dropdown-content" v-for="subject in subjects" :key="subject">
@@ -59,11 +57,9 @@ var AXIOS = axios.create({
 })
 
 function TutorDto (name, email, rating, hourlyRate, subjects) {
-  /*add list of subjects */
 	this.name = name
   this.email = email
   this.subjects = subjects
-  /* These subjects should be a list */
 	if(rating == -1) {
     this.rating = 'No rating yet'
   }
