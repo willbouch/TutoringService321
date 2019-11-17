@@ -25,6 +25,7 @@
 					<td>{{session.isApproved}}</td>
 					<td><button  @click="ApproveSession(session.date, session.startTime, session.endTime)" class="btn btn-success">Approve</button></td>
 					<td><button  @click="CancelSession(session.date, session.startTime, session.endTime)" class="btn btn-danger" >Decline</button></td>
+					<td><button  @click="WriteReview(session.date, session.startTime, session.endTime)" class="btn btn-warning" >Write Review</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -112,6 +113,18 @@ export default {
         window.alert(errorMsg)
       });  
 		},
+
+		WriteReview: function(date, startTime, endTime) {
+			var message = window.prompt()
+			AXIOS.post(`/reviews/`+this.email+`?textualReview=`+message+`&date=`+date+`&startTime=`+startTime.slice(0,5)+`&endTime=`+endTime.slice(0,5),{},{})
+      .then(response => {
+				window.alert(response.data)
+			})
+      .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
+      });
+		}
 	}
 }
 
