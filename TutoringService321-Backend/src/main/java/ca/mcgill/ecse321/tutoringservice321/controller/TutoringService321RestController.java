@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import ca.mcgill.ecse321.tutoringservice321.TutoringService321Application;
 import ca.mcgill.ecse321.tutoringservice321.dto.AvailabilityDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.SessionDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.SubjectDto;
@@ -26,6 +28,7 @@ import ca.mcgill.ecse321.tutoringservice321.dto.TutorDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.CourseDto;
 import ca.mcgill.ecse321.tutoringservice321.dto.ReviewDto;
 import ca.mcgill.ecse321.tutoringservice321.model.Availability;
+import ca.mcgill.ecse321.tutoringservice321.model.ServiceUser;
 import ca.mcgill.ecse321.tutoringservice321.model.Session;
 import ca.mcgill.ecse321.tutoringservice321.model.Subject;
 import ca.mcgill.ecse321.tutoringservice321.model.Tutor;
@@ -40,6 +43,22 @@ public class TutoringService321RestController {
 	@Autowired
 	private TutoringService321Service service;
 
+	@PostMapping(value = {"/login/{tutorEmail}", "/login/{tutorEmail}/"})
+	public void tutorLogin(@PathVariable("tutorEmail") String tutorEmail,
+			@RequestParam String password) {
+		service.loginAsTutor(tutorEmail, password);
+	}
+	
+	@PutMapping(value = {"/logout", "/logout/"})
+	public void logout() {
+		service.logout();
+	}
+	
+	@GetMapping(value = {"/user", "/user/"})
+	public TutorDto getLoggedTutor() {
+		return converToDto((Tutor)service.getLoggedInUser());
+	}
+	
 	//====================================================================================
 	//AVAILABILITY METHODS
 
@@ -173,7 +192,7 @@ public class TutoringService321RestController {
 			availabilitiesDto.add(converToDto(availability));
 		}
 
-		TutorDto dto = new TutorDto(tutor.getEmail(), tutor.getName(), tutor.getPassword(), availabilitiesDto, subjectsDto, sessionsDto, tutor.getHourlyRate(), tutor.getRating());
+		TutorDto dto = new TutorDto(tutor.getEmail(), tutor.getName(), tutor.getPassword(), tutor.getPhoneNumber(), availabilitiesDto, subjectsDto, sessionsDto, tutor.getHourlyRate(), tutor.getRating());
 		return dto;
 	}
 
