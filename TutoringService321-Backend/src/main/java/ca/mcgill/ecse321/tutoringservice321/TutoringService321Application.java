@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @SpringBootApplication
 public class TutoringService321Application {
 
-	private static ServiceUser loggedUser = null;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(TutoringService321Application.class, args);
@@ -23,11 +22,4 @@ public class TutoringService321Application {
 		return "Hello";
 	}
 
-	public static ServiceUser getLoggedUser() {
-		return loggedUser;
-	}
-
-	public static void setLoggedUser(ServiceUser aLoggedUser) {
-		loggedUser = aLoggedUser;
-	}
 }
