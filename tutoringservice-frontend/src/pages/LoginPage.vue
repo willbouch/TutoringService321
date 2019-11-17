@@ -1,11 +1,12 @@
 <template>
   <div id="loginPage">
+    <img src="@/assets/company-logo.png" width=300>
 		<h1>LOGIN</h1>
 		<div>
 			<input type="text" v-model="username" placeholder="Username">
 		</div>
 		<div>				
-			<input type="text" v-model="password" placeholder="Password">
+			<input type="password" v-model="password" placeholder="Password">
 		</div>
     <div>
 			<button @click="loginTutor(username, password)" class="glow-on-hover">Login</button>
@@ -78,6 +79,16 @@ input[type=text] {
   box-sizing: border-box;
 }
 
+input[type=password] {
+  width: 220px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 /* Style the submit button */
 .glow-on-hover {
     width: 220px;
@@ -90,7 +101,7 @@ input[type=text] {
     position: relative;
     z-index: 0;
     border-radius: 10px;
-	font-weight: bold;
+	  font-weight: bold;
 }
 
 .glow-on-hover:before {
