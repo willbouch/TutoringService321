@@ -82,12 +82,10 @@ export default {
     AXIOS.get(`/tutors`)
     .then(response => {
       this.tutors = response.data
-      if (response.data.tutors == -1) {
-        this.tutors = 'No other tutors yet'
-      } else {
-          $.each(response.data.tutors, function(key, value){
-            tutors.push(key);
-          });
+      for(var i = 0; i < this.tutors.length; i++){
+        if (this.tutors[i].rating == -1) {
+          this.tutors[i].rating = 'No rating yet'
+        } 
       }
     })
     .catch(e => {
