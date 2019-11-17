@@ -171,6 +171,20 @@
 		
 		 created: function() {
 			this.n=0;
+			this.setDays();
+			//this.availabilities = AXIOS.get('/availabilities/{tutorEmail}/');
+		 },
+		
+		mounted: function(){
+			var a;
+			for(var i=0; i < this.availabilities.length; i++){
+				a=this.availabilities[i];
+				this.displayAvailability(a);
+			}	
+		},
+		
+		methods: {
+			setDays(){
 			var today=new Date();
 
 			var nextday0=new Date();
@@ -196,18 +210,8 @@
 
 			this.days=[nextday0, nextday1, nextday2, nextday3, nextday4, nextday5, nextday6]
 			
-			//his.availabilities = AXIOS.get('/availabilities/{tutorEmail}/');
-		 },
-		
-		mounted: function(){
-			var a;
-			for(var i=0; i < this.availabilities.length; i++){
-				a=this.availabilities[i];
-				this.displayAvailability(a);
-			}	
-		},
-		
-		methods: {
+			},
+
 			displayAvailability(a){
 			var col;
 			var row;
@@ -248,13 +252,17 @@
 			},
 
 			decrease(){
-				if (n>6){
-					n=n-7;
+				if (this.n>6){
+					this.n=this.n-7;
 				}
+				this.setDays();
+				document.location.reload();
 			},
 
 			increase(){
-				n=n+7;
+				this.n=this.n+7;
+				this.setDays();
+				//document.location.reload() 
 			},
 			toggle(event){
 				var cell=event.target;			 
