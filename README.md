@@ -50,7 +50,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>Software Consulting Lead</td>
     <td>18 hours</td>
     <td>20 hours</td>
-    <td></td>
+    <td>26 hours</td>
     <td></td>
   </tr>
     
@@ -59,7 +59,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>Software Developer</td>
     <td>16 hours</td>
     <td>20 hours</td>
-    <td></td>
+    <td>26 hours</td>
     <td></td>
   </tr>
 
@@ -145,7 +145,43 @@ will allow tutors to select the courses they want to teach, set their hourly rat
   </tr>
   
 </table><br/><br/>
+
+<i>Deliverable 3-Individual Roles</i></br>
+<b>The contributions of the members for this deliverable can be found below:</b>
+<table>
+  <tr>
+    <th><b>NAME</th> 
+    <th><b>Contributions</th>
+  </tr>
+
+  <tr>
+    <td>Katie Younge</td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>Kyjauna Marshall</td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>Sharon Kattar</td>
+    <td>Coding the view tutors page and integrating it with the backend, Designing the architecture model for the system, Documentation</td>
+  </tr>
+
+  <tr>
+    <td>Syed Hadi Zia Rizvi</td>
+    <td>Coding the Reviews and Received Reviews components for the front end, Integrating the components with the backend, Making the architecture model for our system,Documentation</td>
+  </tr>
+    
+  <tr>
+    <td>William Bouchard</td>
+    <td></td>
+  </tr>
+  
+</table><br/><br/>
 <h2></h2>
+
 
 <br>In this team, we value gender equity. This is the reason why we wanted this team to be formed by males and females.
 <br>We also embrace differences and we strongly believe those different backgrounds that we all have will contribute to the awesomeness of our project.</br>

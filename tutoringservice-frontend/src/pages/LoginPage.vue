@@ -1,12 +1,12 @@
 <template>
   <div id="loginPage">
-
-		<h1></h1>
+    <img src="@/assets/company-logo.png" width=300>
+		<h1>LOGIN</h1>
 		<div>
 			<input type="text" v-model="username" placeholder="Username">
 		</div>
 		<div>				
-			<input type="text" v-model="password" placeholder="Password">
+			<input type="password" v-model="password" placeholder="Password">
 		</div>
     <div>
 			<button @click="loginTutor(username, password)" class="glow-on-hover">Login</button>
@@ -21,8 +21,8 @@
 import axios from 'axios'
 var config = require('../../config')
 
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+var frontendUrl = 'https://' + config.build.host + ':' + config.build.port
+var backendUrl = 'https://' + config.build.backendHost + ':' + config.build.backendPort
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
@@ -46,7 +46,8 @@ export default {
         this.$router.push('MainPage')
       })
       .catch(e => {
-        
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
       });  
     },
   }
@@ -78,14 +79,16 @@ input[type=text] {
   box-sizing: border-box;
 }
 
-a.button {
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-
-    text-decoration: none;
-    color: initial;
+input[type=password] {
+  width: 220px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
+
 /* Style the submit button */
 .glow-on-hover {
     width: 220px;
@@ -98,7 +101,7 @@ a.button {
     position: relative;
     z-index: 0;
     border-radius: 10px;
-	font-weight: bold;
+	  font-weight: bold;
 }
 
 .glow-on-hover:before {

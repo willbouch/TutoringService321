@@ -1,1 +1,1 @@
- web: cd tutoringservice-frontend && echo $PORT && export PORT && npm start
+ web: npm start --prefix tutoringservice-frontend/

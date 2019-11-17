@@ -2,10 +2,7 @@
   <div>
 	  <h1>SESSIONS</h1>
 		<div class="tab">
-  			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
-  			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
-			  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
-        <button class="tablinks" onclick="openCity(event, 'Tokyo')">All Tutors</button>
+  			<button class="tablinks" v-on:click="toMainPage">Main Menu</button>			
 		</div>
 	  
 		<table class="table" align="center">
@@ -39,8 +36,8 @@
 import axios from 'axios'
 var config = require('../../config')
 
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+var frontendUrl = 'https://' + config.build.host + ':' + config.build.port
+var backendUrl = 'https://' + config.build.backendHost + ':' + config.build.backendPort
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
@@ -71,10 +68,15 @@ export default {
 		})
 
 		.catch(e => {
+			var errorMsg = e.response.data.message
+      window.alert(errorMsg)
     })
 	},
 
 	methods: {
+		toMainPage(){
+      this.$router.go(-1)
+    },
 
 		ApproveSession: function(date, startTime, endTime){
       AXIOS.put(`/sessions/`+this.email+`?requestedDate=`+date+`&qStartTime=`+startTime.slice(0,5)+`&qEndTime=`+endTime.slice(0,5),{},{})
@@ -84,6 +86,8 @@ export default {
 					this.sessions=response.data
 			  })
 			  .catch(e => {
+					var errorMsg = e.response.data.message
+        	window.alert(errorMsg)
         });  
       })
       .catch(e => {
@@ -99,10 +103,13 @@ export default {
 					this.sessions=response.data
 			  })
 			  .catch(e => {
+					var errorMsg = e.response.data.message
+       	 	window.alert(errorMsg)
         }); 
        })
       .catch(e => {
-        
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
       });  
 		},
 	}

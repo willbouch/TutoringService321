@@ -8,10 +8,10 @@
 			<input type="text" v-model="name" placeholder="Name">
 		</div>
 		<div>				
-			<input type="text" v-model="password" placeholder="Password">
+			<input type="password" v-model="password" placeholder="Password (8 characters)">
 		</div>
 		<div>				
-			<input type="text" v-model="phoneNumber" placeholder="Phone Number">
+			<input type="text" v-model="phoneNumber" placeholder="Phone Number (xxx-xxx-xxxx)">
 		</div>
 		<div>				
 			<input type="text" v-model="hourlyRate" placeholder="Hourly Rate">
@@ -26,8 +26,8 @@
 import axios from 'axios'
 var config = require('../../config')
 
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+var frontendUrl = 'https://' + config.build.host + ':' + config.build.port
+var backendUrl = 'https://' + config.build.backendHost + ':' + config.build.backendPort
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
@@ -49,6 +49,7 @@ export default {
 
   methods: {
     registerTutor: function(email, name, password, phoneNumber, hourlyRate){
+      phoneNumber = phoneNumber.split('-').join('')
       AXIOS.post(`/register/`+email+`?name=`+name+`&password=`+password+`&phoneNumber=`+phoneNumber+`&hourlyRate=`+hourlyRate,{},{})
       .then(response => {
 		  this.$router.go(-1)
@@ -78,7 +79,17 @@ export default {
 
 /* Style inputs */
 input[type=text] {
-  width: 220px;
+  width: 300px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=password] {
+  width: 300px;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -89,7 +100,7 @@ input[type=text] {
 
 /* Style the submit button */
 .glow-on-hover {
-    width: 220px;
+    width: 300px;
     height: 50px;
     border: none;
     outline: none;
