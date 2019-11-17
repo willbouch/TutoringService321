@@ -23,14 +23,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-bind:class="{approved : Session.variant}" v-for="Session in Sessions" :key="Session">
-				
-					<td >{{Session.startTime}}</td>
-					<td >{{Session.endTime}}</td>
-					<td >{{Session.date}}</td>
-		
-					<td><button  @click="approvedClass(Session)" class="btn btn-success">Approve</button></td>
-					<td><button  @click="declineClass(Session)" class="btn btn-danger" >Decline</button></td>
+				<tr v-for="session in sessions" :key="session">
+					<td >{{session.date}}</td>
+					<td >{{session.date}}</td>
+					<td >{{session.date}}</td>
+					<td>{{session.date}}</td>
+					<td>{{session.date}}</td>
+					<td>{{session.date}}</td>
+					<td><button  @click="approvedClass(session)" class="btn btn-success">Approve</button></td>
+					<td><button  @click="declineClass(session)" class="btn btn-danger" >Decline</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -39,7 +40,6 @@
 </template>
 
 <script>
-//import Sessions from '@/data/Sessions'
 import axios from 'axios'
 var config = require('../../config')
 
@@ -50,53 +50,29 @@ var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
+
 export default {
 	//name: SessionPage,
-	
-  //data : function()  {
-	 // return{
-		//	Sessions,
-		//	_rowVarient: this.variant,
-		//	approved: null
-	  //}
-	//},
 
 	data() {
     return {
-      tutorname: '',
-			starTime: '',
-			endTime: '',
-			Sessions:[]
+			sessions:[]
     }
 	},
 	created : function() {
 		AXIOS.get(`/user`)
 		.then(response => {
 			AXIOS.post(`/sessions/`+response.data.email+`/?date=2020-05-05&startTime=13:00&endTime=14:00`)
-			.then(response =>{
-				this.Sessions=response.data
+			.then(response => {
+				this.sessions.push(response.data)
+				console.log(this.sessions)
 			})
 			.catch(e => {
+				console.log(e.response.data.message)
       })
 		})
 		.catch(e => {
     })
-	},
-	
-	computed: {
-  	isEnabled: function(){
-    	return !this.approved;
-		},
-     cptItems(){
-        return this.Sessions.map((Sessions)=>{
-							 let tmp=Sessions;
-							 _rowVarient:{
-								Sessions.Session==this.approved==true?tmp.variant=null:tmp.variant='success';
-							 }
-                return tmp;
-
-        })  
-        }
 	},
 
 	methods: {
