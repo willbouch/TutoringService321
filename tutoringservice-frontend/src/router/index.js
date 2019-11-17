@@ -5,12 +5,10 @@ import RegisterPage from '@/pages/RegisterPage'
 import MainPage from '@/pages/MainPage'
 import SessionPage from '@/pages/SessionPage'
 import AllTutorsPage from '@/pages/AllTutorsPage'
-<<<<<<< HEAD
 import AvailabilitiesPage from '@/pages/AvailabilitiesPage'
-=======
 import TutorReviewsPage from '@/pages/TutorReviewsPage'
 import CoursePage from '@/pages/CoursePage'
->>>>>>> Sprint-3
+
 
 Vue.use(Router)
 
@@ -42,16 +40,16 @@ export default new Router({
       component: AllTutorsPage
     },
     {
-<<<<<<< HEAD
+
       path: "/availabilitiespage",
       name: 'AvailabilitiesPage',
       component: AvailabilitiesPage
     },
-=======
-      path: "/loginpage",
-      name: 'LoginPage',
-      component: LoginPage
-    },
+
+    //   path: "/loginpage",
+    //   name: 'LoginPage',
+    //   component: LoginPage
+    // },
     {
       path: "/coursepage",
       name: 'CoursePage',
@@ -63,7 +61,6 @@ export default new Router({
       component: TutorReviewsPage
     }
 
->>>>>>> Sprint-3
   ]
 })
 

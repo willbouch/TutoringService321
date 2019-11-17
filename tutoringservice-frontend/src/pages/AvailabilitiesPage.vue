@@ -4,27 +4,12 @@
 			
 	<div id="weekly-availabilities"></div>
 			<table id="schedule" style="width:100%">
-				<col id="time" width="80">
-				<col width="140" id="monday">
-				<col width="140" id="tuesday">
-				<col width="140" id="wednesday">
-				<col width="140" id="thursday">
-				<col width="140" id="friday">
-				<col width="140" id="saturday">
-				<col width="140" id="sunday">
-
-				<tr id="days">
-					<th> </th>
-					<th> Monday </th>
-					<th> Tuesday </th>
-					<th> Wednesday </th>
-					<th> Thursday </th>
-					<th> Friday </th>
-					<th> Saturday </th>
-					<th> Sunday </th>
+				<tr>
+					<th></th>
+					<th v-for="day in days" :key="day">{{day.getMonth()}}/{{day.getDate()}}</th>
 				</tr>
 				<tr id="9am">
-					<th align="right"> 9:00 am </th>
+					<td align="right"> 9:00 am </td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
@@ -34,7 +19,7 @@
 					<td class='notavailable' v-on:click="toggle"></td>
 				</tr>
 				<tr id="10am">
-					<th align="right"> 10:00 am </th>
+					<td align="right"> 10:00 am </td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
@@ -44,7 +29,7 @@
 					<td class='notavailable' v-on:click="toggle"></td>
 				</tr>
 				<tr id="11am">
-					<th align="right"> 11:00 am </th>
+					<td align="right"> 11:00 am </td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
@@ -54,7 +39,7 @@
 					<td class='notavailable' v-on:click="toggle"></td>
 				</tr>
 				<tr id="12pm">
-					<th align="right"> 12:00 pm </th>
+					<td align="right"> 12:00 pm </td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
@@ -64,7 +49,7 @@
 					<td class='notavailable' v-on:click="toggle"></td>
 				</tr>
 				<tr id="1pm">
-					<th align="right"> 1:00 pm </th>
+					<td align="right"> 1:00 pm </td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
@@ -74,7 +59,7 @@
 					<td class='notavailable' v-on:click="toggle"></td>
 				</tr>
 				<tr id="2pm">
-					<th align="right"> 2:00 pm </th>
+					<td align="right"> 2:00 pm </td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
@@ -84,7 +69,7 @@
 					<td class='notavailable' v-on:click="toggle"></td>
 				</tr>
 				<tr id="3pm">
-					<th align="right"> 3:00 pm </th>
+					<td align="right"> 3:00 pm </td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
@@ -94,7 +79,7 @@
 					<td class='notavailable' v-on:click="toggle"></td>
 				</tr>
 				<tr id="4pm">
-					<th align="right"> 4:00 pm </th>
+					<td align="right"> 4:00 pm </td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
@@ -104,7 +89,7 @@
 					<td class='notavailable' v-on:click="toggle"></td>
 				</tr>
 				<tr id="5pm">
-					<th align="right"> 5:00 pm </th>
+					<td align="right"> 5:00 pm </td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
@@ -114,7 +99,7 @@
 					<td class='notavailable' v-on:click="toggle"></td>
 				</tr>
 				<tr id="6pm">
-					<th align="right"> 6:00 pm </th>
+					<td align="right"> 6:00 pm </td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
@@ -124,7 +109,7 @@
 					<td class='notavailable' v-on:click="toggle"></td>
 				</tr>
 				<tr id="7pm">
-					<th align="right"> 7:00 pm </th>
+					<td align="right"> 7:00 pm </td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
@@ -134,7 +119,7 @@
 					<td class='notavailable' v-on:click="toggle"></td>
 				</tr>
 				<tr id="8pm">
-					<th align="right"> 8:00 pm </th>
+					<td align="right"> 8:00 pm </td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
 					<td class='notavailable' v-on:click="toggle"></td>
@@ -169,13 +154,38 @@
 		name: 'AvailabilitiesPage', 
 		
 	data() {
+		 return {
+		 	availabilities: []
+		 	}
 		return {
-		availabilities: []
-			}
+			days: []
+		}
 		},
 		
 		 created: function() {
-		 	AXIOS.get('/availabilities/{tutorEmail}/');
+			var today=new Date();
+
+			var nextday1=new Date();
+			nextday1.setDate(today.getDate()+1);
+
+			var nextday2=new Date();
+			nextday2.setDate(today.getDate()+2);
+
+			var nextday3=new Date();
+			nextday3.setDate(today.getDate()+3);
+
+			var nextday4=new Date();
+			nextday4.setDate(today.getDate()+4);
+
+			var nextday5=new Date();
+			nextday5.setDate(today.getDate()+5);
+
+			var nextday6=new Date();
+			nextday6.setDate(today.getDate()+6);;
+
+			this.days=[today, nextday1, nextday2, nextday3, nextday4, nextday5, nextday6]
+			
+			//his.availabilities = AXIOS.get('/availabilities/{tutorEmail}/');
 		 },
 		
 		mounted: function(){
@@ -192,29 +202,30 @@
 			var row;
 			var td;
 			var table;
-				switch(a.day){
-					case "Monday":
+				switch(a.date){
+					case this.days[0]:
 						col=1;
 						break;
-					case "Tuesday": 
+					case this.days[1]: 
 						col=2;
 						break;
-					case "Wednesday":
+					case this.days[2]:
 						col=3;
 						break;
-					case "Thursday":
+					case this.days[3]:
 						col=4;
 						break;
-					case "Friday":
+					case this.days[4]:
 						col=5;
 						break;
-					case "Saturday":
+					case this.days[5]:
 						col=6;
 						break;
-					case "Sunday": 
+					case this.days[6]: 
 						col=7;
 						break;
 				}
+
 				row=a.startTime-8;
 				table=document.getElementById("schedule");
 				td=table.rows[row].cells[col];
@@ -236,41 +247,43 @@
 			setAvailability(){
 				var i;
 				var k;
-				var day;
+				var date;
 				var sTime;
 				var eTime;
 				var selections=new Array();
+
 				for (i=1;i<13;i++){
 					for(k=1; k<8; k++){
 						if (document.getElementById("schedule").rows[i].cells[k].className=="available"){
 						switch(k){
 							case 1:
-								day="Monday";
+								date=this.days[0];
 								break;
 							case 2: 
-								day="Tuesday";
+								date=this.days[1];
 								break;
 							case 3:
-								day="Wednesday"
+								date=this.days[2];
 								break;
 							case 4:
-								day="Thursday";
+								date=this.days[3];
 								break;
 							case 5:
-								day="Friday";
+								date=this.days[4];
 								break;
 							case 6:
-								day="Saturday"
+								date=this.days[5];
 								break;
 							case 7: 
-								day="Sunday";
+								date=this.days[6];
 								break;
 						}
 
 						sTime=i+8;
-						eTime=i+9;
+						var startTime=sTime+":00";
+						var endTime=sTime+":59";
 ;
-						selections.push(new availabilityDto(day, sTime, eTime));
+						selections.push(new availabilityDto(date, startTime, endTime));
 						AXIOS.post('/availabilities/{tutorEmail}/');
 						
 					}
