@@ -1,7 +1,7 @@
 <template>
   <div id="loginPage">
     <img src="@/assets/company-logo.png" width=300>
-		<h1>LOGIN</h1>
+		<h1></h1>
 		<div>
 			<input type="text" v-model="username" placeholder="Username">
 		</div>
@@ -12,9 +12,10 @@
 			<button @click="loginTutor(username, password)" class="glow-on-hover">Login</button>
 		</div>
     <div>
-      <a href="#/RegisterPage">Register</a>
+      <a href="#/RegisterPage" class="btn btn-default">Register</a>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -150,5 +151,7 @@ input[type=password] {
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
 }
+
+
 
 </style>
