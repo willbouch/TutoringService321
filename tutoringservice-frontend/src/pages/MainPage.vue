@@ -2,7 +2,7 @@
 	<div id="mainPage">
 		<h1>TUTOR PROFILE</h1>
 		<div class="tab">
-  			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
+  			<button class="tablinks" v-on:click="toAvailabilities">Availabilities</button>
   			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
 			  <button class="tablinks" v-on:click="toCoursePage">Courses</button>
         <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
@@ -92,6 +92,9 @@ export default {
 	},
 
   methods: {
+    toAvailabilitiesPage(){
+      this.$router.push('AvailbilitiesPage')
+    },
     toSessionPage(){
       this.$router.push('SessionPage')
     },
