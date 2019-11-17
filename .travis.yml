@@ -1,3 +1,7 @@
 language: java
 script:
 - gradle build
+- cd tutoringservice-frontend
+- heroku git:remote --app tutoringservice-frontend
+- heroku container:push web
+- heroku container:release web
