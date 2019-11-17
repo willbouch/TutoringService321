@@ -3,7 +3,7 @@
 		<h1>TUTOR PROFILE</h1>
 		<div class="tab">
   			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
-  			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
+  			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
 			  <button class="tablinks" v-on:click="toCoursePage">Courses</button>
         <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
         <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
@@ -92,6 +92,9 @@ export default {
 	},
 
   methods: {
+    toSessionPage(){
+      this.$router.push('SessionPage')
+    },
 	  toAllTutorsPage() {
 		  this.$router.push('AllTutorsPage')
     },
