@@ -689,7 +689,7 @@ public class TutorServiceTests {
 			fail();
 		}
 		
-		assertEquals(TutoringService321Application.getLoggedUser(), tutor);
+		assertEquals(TutoringService321Service.getLoggedUser(), tutor);
 	}
 	
 	@Test 
@@ -779,6 +779,6 @@ public class TutorServiceTests {
 			fail();
 		}
 		
-		assertEquals(null, TutoringService321Application.getLoggedUser());
+		assertEquals(null, TutoringService321Service.getLoggedUser());
 	}
 }

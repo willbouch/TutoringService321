@@ -33,6 +33,12 @@ public class TutoringService321Service {
 	AvailabilityRepository availabilityRepository;
 	@Autowired
 	ReviewRepository reviewRepository;
+	
+	private static ServiceUser loggedUser = null;
+	
+	public static ServiceUser getLoggedUser() {
+		return loggedUser;
+	}
 
 	//====================================================================================
 	//TUTOR METHODS
@@ -118,6 +124,7 @@ public class TutoringService321Service {
 		tutor.setName(name);
 		tutor.setPhoneNumber(phoneNumber);
 		tutor.setHourlyRate(hourlyRate);
+		loggedUser = tutor;
 		return tutor;
 	}
 
@@ -138,6 +145,7 @@ public class TutoringService321Service {
 		}
 
 		tutor.setPassword(newPassword);
+		loggedUser = tutor;
 		return tutor;
 	}
 
@@ -553,7 +561,7 @@ public class TutoringService321Service {
 		Tutor foundTutor = null;
 		for(Tutor tutor : tutors) {
 			if(tutor.getEmail().equals(email) && tutor.getPassword().equals(password)) {
-				TutoringService321Application.setLoggedUser(tutor);
+				loggedUser = tutor;
 				foundTutor = tutor;
 				break;
 			}
@@ -568,7 +576,13 @@ public class TutoringService321Service {
 
 	@Transactional
 	public void logout() {
-		TutoringService321Application.setLoggedUser(null);
+		loggedUser = null;
+	}
+	
+	@Transactional
+	public ServiceUser getLoggedInUser() {
+		return loggedUser;
+
 	}
 
 	//====================================================================================

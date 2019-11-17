@@ -1,8 +1,9 @@
 <template>
-	<div id="mainPage">
-		<h1>TUTOR PROFILE</h1>
+
+	<div id="CoursePage">
+		<h1>COURSES</h1>
 		<div class="tab">
-  			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
+  			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
   			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
 			  <button class="tablinks" v-on:click="toCoursePage">Courses</button>
         <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
@@ -10,33 +11,23 @@
         <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
 
-		<div>
-			<img src="@/assets/profile-picture.png" width=200>
-  		<label> {{ email }} </label>
-			<label>{{ rating }}</label>
-		  <div>
-        <input type="text" v-model="name" placeholder="CURRENT NAME">
-		  </div>
-      <div>
-			  <input type="text" v-model="phoneNumber" placeholder="CURRENT PHONE NUMBER">
-      </div>
-      <div>
- 			  <input type="text" v-model="hourlyRate" placeholder="CURRENT HOURLY RATE">
-      </div>
-      <div>
-  		  <button class="glow-on-hover" v-on:click="updateProfile">Update Profile</button>
-      </div>
-      <div>
-			  <input type="text" v-model="oldPassword" placeholder="Old Password">
-      </div>
-      <div>
-			  <input type="text" v-model="newPassword" placeholder="New Password">
-      </div>
-      <div>
-			  <button class="glow-on-hover" v-on:click="changePassword">Change Password</button>
-      </div>
+	<div>
+	<ul>
+		<li v-for="subject in subjects" :key="subject">
+			{{ subject.subjectName }}
+			<ul>
+			<li v-for="course in subject.courses" :key="course">
+				{{ course.courseCode + " ----- " + course.school }}
+			</li>
+			</ul>
+		</li>
+	</ul>
+	</div>
 
-		</div>
+	<div>
+		<input type="text" v-model="username" placeholder="Course Code">
+		<button @click="loginTutor(username, password)" class="glow-on-hover">Request Course</button>
+	</div>
 
 	</div>
 </template>
@@ -53,51 +44,51 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
+function SubjectDto (subjectName, courses) {
+	this.subjectName = subjectName
+	this.courses = courses
+}
+
+function CourseDto (courseCode, description, school) {
+	this.courseCode = courseCode
+	this.description = description
+	this.school = school
+}
+
 export default {
-  name: 'MainPage',
+  name: 'CoursePage',
 
-  data() {
-	  return {
-      email:'',
-      rating:'',
-      name:'',
-      phoneNumber:'',
-      hourlyRate:'',
-      oldPassword:'',
-      newPassword:''
-    }
-  },
+  	data() {
+    	return {
+      	subjects: []
+    	}
+  	},
+	
+	created: function() {
+		// AXIOS.get(`/user`)
+		// .then(response => {
+		// 	  this.subjects = response.data.subjects
+		// })
+		// .catch(e => {
+      
+		// })
+		const c1 = new CourseDto('ECSE321', 'Intro to software engineering', 'McGill')
+		const c2 = new CourseDto('MATH240', 'Proofs that are fucked', 'McGill')
+		const c3 = new CourseDto('ECSE223', 'Love Gunter', 'McGill')
+		const c4 = new CourseDto('COMP250', 'Intro to not having assignments', 'McGill')
+		const c5 = new CourseDto('MATH2340', 'Proofs that are fucked', 'Concordia')
+		const javaCourses = [c1,c3,c4]
+		const mathCourses = [c2,c5]
 
-  created: function() {
-		AXIOS.get(`/user`)
-		.then(response => {
-      this.email = response.data.email
-      
-      if(response.data.rating == -1) {
-        this.rating = 'No rating yet'
-      }
-      else {
-        this.rating = response.data.rating
-      }
-      
-      this.name = response.data.name
-      this.phoneNumber = response.data.phoneNumber
-      this.hourlyRate = response.data.hourlyrate
-      this.oldPassword = response.data.password
-		})
-		.catch(e => {
-      var errorMsg = e.response.data.message
-      window.alert(errorMsg)
-    })
+		const s1 = new SubjectDto('Java prog', javaCourses)
+		const s2 = new SubjectDto('Math', mathCourses)
+		
+		this.subjects = [s1,s2]
 	},
 
   methods: {
 	  toAllTutorsPage() {
 		  this.$router.push('AllTutorsPage')
-    },
-    
-    toAvailabilityPage() {
-      this.$router.push('AvailabilitiesPage')
     },
 
     toTutorReviewsPage() {
@@ -116,39 +107,22 @@ export default {
 		  .catch(e => {
       })
     },
-
-    updateProfile() {
-      AXIOS.put(`/tutors/profile/`+this.email+`?name=`+this.name+`&phoneNumber=`+this.phoneNumber+`&hourlyRate=`+this.hourlyRate)
-		  .then(response => {
-        this.phoneNumber = response.data.phoneNumber
-        this.name = response.data.name
-        this.hourlyRate = response.data.hourlyrate
-		  })
-		  .catch(e => {
-      })
-    },
-
-    changePassword() {
-      AXIOS.put(`/tutors/password/`+this.email+`?oldPassword=`+this.oldPassword+`&newPassword=`+this.newPassword)
-		  .then(response => {
-        this.oldPassword = response.data.password
-        this.newPassword = ''
-		  })
-		  .catch(e => {
-      })
-    }
   }
 }
 </script>
 
 <style>
-#mainPage {
+#CoursePage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+ul {
+  text-align: left;
 }
 
 .tab {
@@ -186,9 +160,8 @@ export default {
   border-top: none;
 }
 
-/* Style inputs */
 input[type=text] {
-  width: 220px;  
+  width: 220px;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -258,20 +231,4 @@ input[type=text] {
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
 }
-
-img {
-  margin: 8px 0;
-}
-
-label {
-  font-weight: bold;
-  width: 100%;
-  margin: 8px 0;
-  display: inline-block;
-}
-
-.review {
- float: right;
-}
-
 </style>
