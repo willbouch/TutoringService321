@@ -7,7 +7,6 @@ import SessionPage from '@/pages/SessionPage'
 import AllTutorsPage from '@/pages/AllTutorsPage'
 import TutorReviewsPage from '@/pages/TutorReviewsPage'
 import CoursePage from '@/pages/CoursePage'
-import AvailabilitesPage from '@/pages/AvailabilitesPage'
 
 Vue.use(Router)
 
@@ -52,13 +51,6 @@ export default new Router({
       path: "/tutorreviewspage",
       name: 'TutorReviewsPage',
       component: TutorReviewsPage
-    },
-    {
-      path: "/availibilitiespage",
-      name: 'AvailabilitesPage',
-      component: AvailabilitesPage
     }
-
-
   ]
 })
