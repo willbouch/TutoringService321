@@ -118,7 +118,6 @@ export default {
 			var message = window.prompt()
 			AXIOS.post(`/reviews/`+this.email+`?textualReview=`+message+`&date=`+date+`&startTime=`+startTime.slice(0,5)+`&endTime=`+endTime.slice(0,5),{},{})
       .then(response => {
-				window.alert(response.data)
 			})
       .catch(e => {
         var errorMsg = e.response.data.message
