@@ -1,7 +1,10 @@
 	<template>
 	<div id="AvailabilitiesPage">
 			<h1 id="header">Availabilities</h1>
-			
+	<div id="next-previous" style="float: right;">
+			<a href="#" class="previous round" v-on:click="decrease()">&#8249;</a>
+			<a href="#" class="next round" v-on:click="increase()">&#8250;</a>
+	</div>
 	<div id="weekly-availabilities"></div>
 			<table id="schedule" style="width:100%">
 				<tr>
@@ -160,30 +163,38 @@
 		return {
 			days: []
 		}
+		return{
+			n
+		}
+
 		},
 		
 		 created: function() {
+			this.n=0;
 			var today=new Date();
 
+			var nextday0=new Date();
+			nextday0.setDate(today.getDate()+this.n)
+
 			var nextday1=new Date();
-			nextday1.setDate(today.getDate()+1);
+			nextday1.setDate(today.getDate()+this.n+1);
 
 			var nextday2=new Date();
-			nextday2.setDate(today.getDate()+2);
+			nextday2.setDate(today.getDate()+this.n+2);
 
 			var nextday3=new Date();
-			nextday3.setDate(today.getDate()+3);
+			nextday3.setDate(today.getDate()+this.n+3);
 
 			var nextday4=new Date();
-			nextday4.setDate(today.getDate()+4);
+			nextday4.setDate(today.getDate()+this.n+4);
 
 			var nextday5=new Date();
-			nextday5.setDate(today.getDate()+5);
+			nextday5.setDate(today.getDate()+this.n+5);
 
 			var nextday6=new Date();
-			nextday6.setDate(today.getDate()+6);;
+			nextday6.setDate(today.getDate()+this.n+6);;
 
-			this.days=[today, nextday1, nextday2, nextday3, nextday4, nextday5, nextday6]
+			this.days=[nextday0, nextday1, nextday2, nextday3, nextday4, nextday5, nextday6]
 			
 			//his.availabilities = AXIOS.get('/availabilities/{tutorEmail}/');
 		 },
@@ -236,6 +247,15 @@
 				this.$router.push('MainPage')
 			},
 
+			decrease(){
+				if (n>6){
+					n=n-7;
+				}
+			},
+
+			increase(){
+				n=n+7;
+			},
 			toggle(event){
 				var cell=event.target;			 
 					if (cell.className == "available")
@@ -353,4 +373,29 @@
 		background-color: #ff6961;
 	}
 
+	/* Styling for Previous-Next Buttons */
+	a {
+		text-decoration: none;
+		display: inline-block;
+		padding: 6px 16px;
+	}
+
+	a:hover {
+		background-color: #ddd;
+		color: black;
+	}
+
+	.previous {
+		background-color: #f1f1f1;
+		color: black;
+	}
+
+	.next {
+		background-color: black;
+		color: white;
+	}
+
+	.round {
+		border-radius: 50%;
+	}
 	</style>
