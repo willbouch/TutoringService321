@@ -1,6 +1,7 @@
 <template>
   <div id="loginPage">
-		<h1>LOGIN</h1>
+
+		<h1></h1>
 		<div>
 			<input type="text" v-model="username" placeholder="Username">
 		</div>
@@ -11,7 +12,7 @@
 			<button @click="loginTutor(username, password)" class="glow-on-hover">Login</button>
 		</div>
     <div>
-      <a href="#/RegisterPage">Register</a>
+      <a href="#/RegisterPage" class="btn btn-default">Register</a>
     </div>
   </div>
 </template>
@@ -77,6 +78,14 @@ input[type=text] {
   box-sizing: border-box;
 }
 
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+}
 /* Style the submit button */
 .glow-on-hover {
     width: 220px;
@@ -137,6 +146,9 @@ input[type=text] {
     0% { background-position: 0 0; }
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
+}
+body {
+  background-color: lightblue;
 }
 
 </style>
