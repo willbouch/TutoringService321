@@ -1,3 +1,11 @@
+<!-- This page represents all the tutors in the database. Included are their
+     names, email, ratings (-1 if no ratings), hourly rate, the subjects they
+     teach featured in a drop down menu, and the links to their individual
+     profile pages. The links are empty and will only be used for the demo.
+     Also to note is that they are not associated to any subjects because that
+     is done in the Manager's perspective. There is room for dummy information
+     for the demo if needed. -->
+
 <template>
 
 	<div id="viewTutors">
@@ -16,14 +24,20 @@
 				</tr>
 			</thead>
 			<tbody>
-
 				<tr v-for="tutor in tutors" :key="tutor">
 					<td>{{tutor.name}}</td>
 					<td>{{tutor.email}}</td>
 					<td>{{tutor.rating}}
 						<img src="@/assets/rating-star.png" width=20>
 					</td>
-					<td>{{tutor.hourlyRate}}</td>
+					<td>{{tutor.hourlyrate}}</td>
+          <td><div class="dropdown">
+              <button class="dropbtn">Subjects</button>
+              <div class="dropdown-content" v-for="subject in subjects" :key="subject">
+                <a href="#">{{subject}}</a>
+              </div>
+          </div></td>
+          <td><a href="#">{{tutor.name}}'s Profile</a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -42,16 +56,17 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
-function TutorDto (name, email, rating, hourlyRate) {
+function TutorDto (name, email, rating, hourlyRate, subjects) {
 	this.name = name
-	this.email = email
+  this.email = email
+  this.subjects = subjects
 	if(rating == -1) {
     this.rating = 'No rating yet'
   }
   else {
     this.rating = rating
   }
-	this.hourlyRate = hourlyRate
+	this.hourlyrate = hourlyrate
 }
 
 export default {
@@ -64,7 +79,21 @@ export default {
 	},
 	
 	created: function() {
-		
+    AXIOS.get(`/tutors`)
+    .then(response => {
+      this.tutors = response.data
+      if (response.data.tutors == -1) {
+        this.tutors = 'No other tutors yet'
+      } else {
+          $.each(response.data.tutors, function(key, value){
+            tutors.push(key);
+          });
+      }
+    })
+    .catch(e => {
+
+    })
+
 	},
 
   methods: {
