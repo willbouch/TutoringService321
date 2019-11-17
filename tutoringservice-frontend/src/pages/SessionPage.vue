@@ -71,6 +71,8 @@ export default {
 		})
 
 		.catch(e => {
+			var errorMsg = e.response.data.message
+      window.alert(errorMsg)
     })
 	},
 
@@ -84,6 +86,8 @@ export default {
 					this.sessions=response.data
 			  })
 			  .catch(e => {
+					var errorMsg = e.response.data.message
+        	window.alert(errorMsg)
         });  
       })
       .catch(e => {
@@ -99,10 +103,13 @@ export default {
 					this.sessions=response.data
 			  })
 			  .catch(e => {
+					var errorMsg = e.response.data.message
+       	 	window.alert(errorMsg)
         }); 
        })
       .catch(e => {
-        
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
       });  
 		},
 	}

@@ -113,6 +113,8 @@ export default {
         this.$router.push('LoginPage')
 		  })
 		  .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
       })
     },
 
@@ -124,6 +126,8 @@ export default {
         this.hourlyRate = response.data.hourlyrate
 		  })
 		  .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
       })
     },
 
@@ -134,6 +138,8 @@ export default {
         this.newPassword = ''
 		  })
 		  .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
       })
     }
   }
