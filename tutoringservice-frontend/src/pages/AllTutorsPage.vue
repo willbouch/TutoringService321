@@ -10,9 +10,9 @@
 
 	<div id="viewTutors">
 		<h1>TUTORS</h1>
-		<div class="topPage">
-			<button class="button" v-on:click="toMainPage">My Profile</button>
-		</div>
+		<div class="tab">
+  		<button class="tablinks" v-on:click="toMainPage">Main Menu</button>			
+	  </div>
 
 		<table class="table" align="center">
 			<thead class="thead-dark">
@@ -96,7 +96,7 @@ export default {
 
   methods: {
 	  toMainPage() {
-		  this.$router.push('MainPage')
+      this.$router.go(-1)
 	  }
   }
 }

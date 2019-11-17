@@ -3,12 +3,7 @@
 	<div id="CoursePage">
 		<h1>COURSES</h1>
 		<div class="tab">
-  			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
-  			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
-			  <button class="tablinks" v-on:click="toCoursePage">Courses</button>
-        <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
-        <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
-        <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
+  			<button class="tablinks" v-on:click="toMainPage">Main Menu</button>
 		</div>
   
 
@@ -124,25 +119,8 @@ export default {
 	},
 
   methods: {
-	  toAllTutorsPage() {
-		  this.$router.push('AllTutorsPage')
-    },
-
-    toTutorReviewsPage() {
-		  this.$router.push('TutorReviewsPage')
-    },
-
-    toCoursePage() {
-		  this.$router.push('CoursePage')
-    },
-
-    toLoginPage() {
-      AXIOS.put(`/logout`)
-		  .then(response => {
-        this.$router.push('LoginPage')
-		  })
-		  .catch(e => {
-      })
+	  toMainPage(){
+      this.$router.go(-1)
     },
   }
 }

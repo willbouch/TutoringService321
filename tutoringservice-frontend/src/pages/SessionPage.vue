@@ -2,10 +2,7 @@
   <div>
 	  <h1>SESSIONS</h1>
 		<div class="tab">
-  			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
-  			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
-			  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
-        <button class="tablinks" onclick="openCity(event, 'Tokyo')">All Tutors</button>
+  			<button class="tablinks" v-on:click="toMainPage">Main Menu</button>			
 		</div>
 	  
 		<table class="table" align="center">
@@ -77,6 +74,9 @@ export default {
 	},
 
 	methods: {
+		toMainPage(){
+      this.$router.go(-1)
+    },
 
 		ApproveSession: function(date, startTime, endTime){
       AXIOS.put(`/sessions/`+this.email+`?requestedDate=`+date+`&qStartTime=`+startTime.slice(0,5)+`&qEndTime=`+endTime.slice(0,5),{},{})
