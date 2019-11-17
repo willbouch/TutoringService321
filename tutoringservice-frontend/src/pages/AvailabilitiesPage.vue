@@ -2,8 +2,9 @@
 	<div id="AvailabilitiesPage">
 			<h1 id="header">Availabilities</h1>
 	<div id="next-previous" style="float: right;">
-			<a href="#" class="previous round" v-on:click="decrease()">&#8249;</a>
-			<a href="#" class="next round" v-on:click="increase()">&#8250;</a>
+			<button @click="increase()">Next Week</button>
+			<button @click="decrease()">Last Week</button>
+			
 	</div>
 	<div id="weekly-availabilities"></div>
 			<table id="schedule" style="width:100%">
@@ -158,15 +159,10 @@
 		
 	data() {
 		 return {
-		 	availabilities: []
+			 availabilities: [],
+			 days: [],
+			 n : 0
 		 	}
-		return {
-			days: []
-		}
-		return{
-			n
-		}
-
 		},
 		
 		 created: function() {
@@ -186,6 +182,7 @@
 		methods: {
 			setDays(){
 			var today=new Date();
+			//today.setDate(today.getDate()+this.n)
 
 			var nextday0=new Date();
 			nextday0.setDate(today.getDate()+this.n)
@@ -255,8 +252,8 @@
 				if (this.n>6){
 					this.n=this.n-7;
 				}
-				this.setDays();
-				document.location.reload();
+				this.setDays(n-7);
+				//document.location.reload();
 			},
 
 			increase(){
