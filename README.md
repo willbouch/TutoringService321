@@ -166,17 +166,17 @@ will allow tutors to select the courses they want to teach, set their hourly rat
 
   <tr>
     <td>Sharon Kattar</td>
-    <td>Coding the view tutors page and integrating it with the backend, Designing the architecture model for the system, Documentation</td>
+    <td>Coded the view tutors page and integrating it with the backend, Designed the architecture model for the system</td>
   </tr>
 
   <tr>
     <td>Syed Hadi Zia Rizvi</td>
-    <td>Coding the Reviews and Received Reviews components, and the courses page for the front end, Integrating the components with the backend, Making the architecture model for our system,Documentation</td>
+    <td>Wrote the Student Review components for the UI, as well as the mock up of a Courses page pertaining to hypothetical courses offered by the tutoring system. Designed the architecture model for our system. </td>
   </tr>
     
   <tr>
     <td>William Bouchard</td>
-    <td>Coding the login/register page, Linking components to pages, linking frontend to backend, Worked on continous integration</td>
+    <td> Coded the login/register page UI, Linking components to pages, linking frontend to backend, Worked on travis CI continous integration</td>
   </tr>
   
 </table><br/><br/>
