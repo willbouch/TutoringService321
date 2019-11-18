@@ -6,10 +6,7 @@ import MainPage from '@/pages/MainPage'
 import SessionPage from '@/pages/SessionPage'
 import AllTutorsPage from '@/pages/AllTutorsPage'
 import AvailTemporaryPage from '@/pages/AvailTemporaryPage'
-<<<<<<< HEAD
 import AvailabilitiesPage from '@/pages/AvailabilitiesPage'
-=======
->>>>>>> 588acfd4c97053694535b38116ad41af662302b3
 import TutorReviewsPage from '@/pages/TutorReviewsPage'
 import CoursePage from '@/pages/CoursePage'
 
