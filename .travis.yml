@@ -3,6 +3,6 @@ script:
 - gradle build
 - cd tutoringservice-frontend
 - docker login -u willbouch -p ecse321password
-- heroku git:remote --app tutoringservice-frontend
+- heroku git:remote --app tutoringservice321-frontend
 - heroku container:push web
 - heroku container:release web
