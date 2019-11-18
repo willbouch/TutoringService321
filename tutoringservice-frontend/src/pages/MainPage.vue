@@ -45,8 +45,8 @@
 import axios from 'axios'
 var config = require('../../config')
 
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+var frontendUrl = 'https://' + config.build.host + ':' + config.build.port
+var backendUrl = 'https://' + config.build.backendHost + ':' + config.build.backendPort
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
@@ -92,6 +92,9 @@ export default {
 	},
 
   methods: {
+    toSessionPage(){
+      this.$router.push('SessionPage')
+    },
 	  toAllTutorsPage() {
 		  this.$router.push('AllTutorsPage')
     },
@@ -114,6 +117,8 @@ export default {
         this.$router.push('LoginPage')
 		  })
 		  .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
       })
     },
 
@@ -125,6 +130,8 @@ export default {
         this.hourlyRate = response.data.hourlyrate
 		  })
 		  .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
       })
     },
 
@@ -135,6 +142,8 @@ export default {
         this.newPassword = ''
 		  })
 		  .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
       })
     }
   }
@@ -148,7 +157,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0px;
 }
 
 .tab {

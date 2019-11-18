@@ -60,7 +60,6 @@ export default new Router({
       name: 'TutorReviewsPage',
       component: TutorReviewsPage
     }
-
   ]
 })
 

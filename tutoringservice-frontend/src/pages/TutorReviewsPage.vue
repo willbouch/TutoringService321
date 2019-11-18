@@ -1,18 +1,13 @@
 <template>
     <div id="tutorReviewsPage">
+    <h1>RECEIVED REVIEWS</h1>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <div class="tab">
-  		<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
-  		<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
-		<button class="tablinks" v-on:click="toCoursePage">Courses</button>
-        <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
-        <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
-        <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
-	</div>
+  		<button class="tablinks" v-on:click="toMainPage">Main Menu</button>			
+	  </div>
 
     <div class="container">
-	<h2 class="text-center">RECEIVED REVIEWS</h2><br><br><br>
 	<div class="card">
 	    <div class="card-body">
 	        <div class="row">
@@ -64,25 +59,8 @@ export default {
   name: 'TutorReviewsPage',
 
   methods: {
-	  toAllTutorsPage() {
-		  this.$router.push('AllTutorsPage')
-    },
-
-    toTutorReviewsPage() {
-		  this.$router.push('TutorReviewsPage')
-    },
-
-    toCoursePage() {
-		  this.$router.push('CoursePage')
-    },
-
-    toLoginPage() {
-      AXIOS.put(`/logout`)
-		  .then(response => {
-        this.$router.push('LoginPage')
-		  })
-		  .catch(e => {
-      })
+	  toMainPage(){
+      this.$router.go(-1)
     },
   }
 }
@@ -96,7 +74,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0px;
 }
 
 .tab {
@@ -180,5 +158,8 @@ export default {
    */
    .checked {
   color: orange;
+}
+.container{
+  margin: 0 auto;
 }
 </style>

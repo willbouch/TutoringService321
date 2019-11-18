@@ -6,7 +6,7 @@ export default [
 	room: 'TR5104',
 	email: 'kyjauna.marshall@mail.mcgill.ca',
 	course:'ECSE 321',
-	status:''
+	
   },
   {
 	student: 'William Bouchard',
@@ -15,7 +15,7 @@ export default [
 	room: 'TR5106',
 	email: 'william.bouchard@mail.mcgill.ca',
 	course:'FACC 300',
-	status:''
+	
   },
   {
 	student: 'Katie Younge',
@@ -24,7 +24,7 @@ export default [
 	room: 'TR5103',
 	email: 'katie.younge@mail.mcgill.ca',
 	course:'MATH 240',
-	status:''
+	
   },
   {
 	student: 'Sharon Kattar',
@@ -33,7 +33,7 @@ export default [
 	room: 'TR5104',
 	email: 'sharon.kattar@mail.mcgill.ca',
 	course:'COMP 250',
-	status:''
+	
   },
   {
 	student: 'Hadi Zia',
@@ -42,6 +42,6 @@ export default [
 	room: 'TR5105',
 	email: 'syed.h.rizvi@mail.mcgill.ca',
 	course:'ECSE 324',
-	status:''
+	
   },
 ]

@@ -2,36 +2,30 @@
   <div>
 	  <h1>SESSIONS</h1>
 		<div class="tab">
-  			<button class="tablinks" onclick="openCity(event, 'Paris')">Availabilities</button>
-  			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
-			  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Courses</button>
-        <button class="tablinks" onclick="openCity(event, 'Tokyo')">All Tutors</button>
+  			<button class="tablinks" v-on:click="toMainPage">Main Menu</button>			
 		</div>
 	  
 		<table class="table" align="center">
 			<thead class="thead-dark">
 				<tr>
-				<th scope="col">Student</th>
-				<th scope="col">Time</th>
 				<th scope="col">Date</th>
-				<th scope="col">Room</th>
-				<th scope="col">Email</th>
-				<th scope="col">Course</th>
-				<th scope="col"></th>
+				<th scope="col">Start Time</th>
+				<th scope="col">End Time</th>
+			  <th scope="col">Approved</th>
 				<th scope="col"></th>
 				<th scope="col"></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr :class="$data._rowVarient" v-for="Session in cptItems" :key="Session">
-					<td>{{Session.student}}</td>
-					<td>{{Session.time}}</td>
-					<td>{{Session.date}}</td>
-					<td>{{Session.room}}</td>
-					<td>{{Session.email}}</td>
-					<td>{{Session.course}}</td>
-					<td><button  :disabled='isEnabled' @click="approvedClass(Session)" class="btn btn-success">Approve</button></td>
-					<td><button  @click="declineClass(Session)" class="btn btn-danger" >Decline</button></td>
+				<tr :style="{ background: session.isApproved == true ? '#ABEBC6' : 'white' }" v-for="session in sessions" :key="session" >
+					<td >{{session.date}}</td>
+					<td >{{session.startTime}}</td>
+					<td >{{session.endTime}}</td>
+					
+					<td>{{session.isApproved}}</td>
+					<td><button  :disabled="session.isApproved == true" @click="ApproveSession(session.date, session.startTime, session.endTime)" class="btn btn-success">Approve</button></td>
+					<td><button  @click="CancelSession(session.date, session.startTime, session.endTime)" class="btn btn-danger" >Decline</button></td>
+					<td><button  @click="WriteReview(session.date, session.startTime, session.endTime)" class="btn btn-warning" >Write Review</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -40,50 +34,104 @@
 </template>
 
 <script>
-import Sessions from '@/data/Sessions'
-export default {
-	
-  data : function()  {
-	  return{
-			Sessions,
-			approved: false,
-			_rowVarient: this.variant
-	  }
-	},
-	
-	computed: {
-  	isEnabled: function(){
-    	return this.approved;
-		},
-     cptItems(){
-        return this.Sessions.map((Sessions)=>{
-							 let tmp=Sessions;
-							 _rowVarient:{
-								Sessions.Session==this.approved?tmp.variant='warning':tmp.variant='success';
-							 }
-                return tmp;
+import axios from 'axios'
+var config = require('../../config')
 
-        })  
-        }
+var frontendUrl = 'https://' + config.build.host + ':' + config.build.port
+var backendUrl = 'https://' + config.build.backendHost + ':' + config.build.backendPort
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
+
+export default {
+	//name: SessionPage,
+
+	data() {
+    return {
+			email:'',
+			sessions:[]
+    }
 	},
+	created : function() {
+		AXIOS.get(`/user`)
+		.then(response => {
+			var email = response.data.email
+			AXIOS.post(`/sessions/`+email+`/?date=2020-05-05&startTime=13:00&endTime=14:00`)
+			.then(response => {
+				AXIOS.post(`/sessions/`+email+`/?date=2020-07-05&startTime=15:00&endTime=16:00`)
+				.then(response => {
+					this.sessions.push(response.data)
+				})
+				.catch(e => {
+					window.alert(e.response.data.message)
+				})
+				this.sessions.push(response.data)
+			})
+			.catch(e => {
+				window.alert(e.response.data.message)
+			})
+
+			this.email=response.data.email
+		})
+
+		.catch(e => {
+			var errorMsg = e.response.data.message
+      window.alert(errorMsg)
+		})
+	},
+
 	methods: {
-  	declineClass(Session) {
-			for(var i = 0; i < this.Sessions.length; i++){
-				if(Sessions[i].student == Session.student){
-					Sessions.splice(i,1)
-				}
-			}
+		toMainPage(){
+      this.$router.go(-1)
 		},
-		
-		approvedClass(Session) {
-			for(var i = 0; i < this.Sessions.length; i++){
-				if(Sessions[i].student == Session.student){
-				approved: true 
-				this.class="approved";
-		   console.log(Session);
-		    }
-	    }
-	  }
+
+		ApproveSession: function(date, startTime, endTime){
+      AXIOS.put(`/sessions/`+this.email+`?requestedDate=`+date+`&qStartTime=`+startTime.slice(0,5)+`&qEndTime=`+endTime.slice(0,5),{},{})
+      .then(response => {
+				AXIOS.get(`/sessions/`+this.email)
+				.then(response => {
+					this.sessions=response.data
+			  })
+			  .catch(e => {
+					var errorMsg = e.response.data.message
+        	window.alert(errorMsg)
+        });  
+      })
+      .catch(e => {
+        window.alert(e.response.data.message)
+      });  
+		},
+
+		CancelSession: function(date, startTime, endTime){
+      AXIOS.delete(`/sessions/`+this.email+`?date=`+date+`&startTime=`+startTime.slice(0,5)+`&endTime=`+endTime.slice(0,5),{},{})
+      .then(response => {
+				AXIOS.get(`/sessions/`+this.email)
+				.then(response => {
+					this.sessions=response.data
+			  })
+			  .catch(e => {
+					var errorMsg = e.response.data.message
+       	 	window.alert(errorMsg)
+        }); 
+       })
+      .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
+      });  
+		},
+
+		WriteReview: function(date, startTime, endTime) {
+			var message = window.prompt()
+			AXIOS.post(`/reviews/`+this.email+`?textualReview=`+message+`&date=`+date+`&startTime=`+startTime.slice(0,5)+`&endTime=`+endTime.slice(0,5),{},{})
+      .then(response => {
+			})
+      .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
+      });
+		}
 	}
 }
 
@@ -104,7 +152,7 @@ export default {
 		background-color: #f2f2f2;
 }
 	tr.approved td{
-		background-color: lightyellow;
+		background-color: lightgreen;
 	}
 
   .tab {
