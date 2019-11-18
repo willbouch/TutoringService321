@@ -21,6 +21,8 @@
 				<th scope="col">Contact</th>
 				<th scope="col">Rating</th>
 				<th scope="col">Hourly Rate</th>
+        <!--<th scope="col"></th>-->
+        <!--<th scope="col"></th>-->
 				</tr>
 			</thead>
 			<tbody>
@@ -31,13 +33,13 @@
 						<img src="@/assets/rating-star.png" width=20>
 					</td>
 					<td>{{tutor.hourlyrate}}</td>
-          <td><div class="dropdown">
+          <!--<td><div class="dropdown">
               <button class="dropbtn">Subjects</button>
               <div class="dropdown-content" v-for="subject in subjects" :key="subject">
                 <a href="#">{{subject}}</a>
               </div>
-          </div></td>
-          <td><a href="#">{{tutor.name}}'s Profile</a></td>
+          </div></td>-->
+          <!--<td><a href="#">{{tutor.name}}'s Profile</a></td>-->
 				</tr>
 			</tbody>
 		</table>
