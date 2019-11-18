@@ -50,7 +50,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>Software Consulting Lead</td>
     <td>18 hours</td>
     <td>20 hours</td>
-    <td>27 hours</td>
+    <td>33 hours</td>
     <td></td>
   </tr>
     
@@ -59,7 +59,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>Software Developer</td>
     <td>16 hours</td>
     <td>20 hours</td>
-    <td>27 hours</td>
+    <td>33 hours</td>
     <td></td>
   </tr>
 
