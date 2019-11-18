@@ -32,7 +32,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>Database Manager</td>
     <td>20 hours</td>
     <td>26 hours</td>
-    <td>30 hours</td>
+    <td>27</td>
     <td></td>
   </tr>
   
@@ -41,7 +41,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>Systems Analyst</td>
     <td>19 hours</td>
     <td>23 hours</td>
-    <td>40 hours</td>
+    <td>28</td>
     <td></td>
   </tr>
   
@@ -50,7 +50,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>Software Consulting Lead</td>
     <td>18 hours</td>
     <td>20 hours</td>
-    <td>26 hours</td>
+    <td>27 hours</td>
     <td></td>
   </tr>
     
@@ -59,7 +59,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>Software Developer</td>
     <td>16 hours</td>
     <td>20 hours</td>
-    <td>26 hours</td>
+    <td>27 hours</td>
     <td></td>
   </tr>
 
@@ -68,7 +68,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>Software Architecture Lead</td>
     <td>21 hours</td>
     <td>30 hours</td>
-    <td>40 hours</td>
+    <td>28</td>
     <td></td>
   </tr>
   
@@ -156,12 +156,12 @@ will allow tutors to select the courses they want to teach, set their hourly rat
 
   <tr>
     <td>Katie Younge</td>
-    <td></td>
+    <td>Coding the availabilities page and linking it with the backend. Issue tracking, Documentation, Worked on the build system</td>
   </tr>
   
   <tr>
     <td>Kyjauna Marshall</td>
-    <td></td>
+    <td>Coding the sessions page and dealing with session requests, integrating frontend components with the backend, worked on the build system.</td>
   </tr>
 
   <tr>
@@ -171,12 +171,12 @@ will allow tutors to select the courses they want to teach, set their hourly rat
 
   <tr>
     <td>Syed Hadi Zia Rizvi</td>
-    <td>Coding the Reviews and Received Reviews components for the front end, Integrating the components with the backend, Making the architecture model for our system,Documentation</td>
+    <td>Coding the Reviews and Received Reviews components, and the courses page for the front end, Integrating the components with the backend, Making the architecture model for our system,Documentation</td>
   </tr>
     
   <tr>
     <td>William Bouchard</td>
-    <td></td>
+    <td>Coding the login/register page, Linking components to pages, linking frontend to backend, Worked on continous integration</td>
   </tr>
   
 </table><br/><br/>
