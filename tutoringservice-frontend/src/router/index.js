@@ -5,7 +5,7 @@ import RegisterPage from '@/pages/RegisterPage'
 import MainPage from '@/pages/MainPage'
 import SessionPage from '@/pages/SessionPage'
 import AllTutorsPage from '@/pages/AllTutorsPage'
-import AvailabilitiesPage from '@/pages/AvailabilitiesPage'
+import AvailTemporaryPage from '@/pages/AvailTemporaryPage'
 import TutorReviewsPage from '@/pages/TutorReviewsPage'
 import CoursePage from '@/pages/CoursePage'
 
@@ -41,15 +41,10 @@ export default new Router({
     },
     {
 
-      path: "/availabilitiespage",
-      name: 'AvailabilitiesPage',
-      component: AvailabilitiesPage
+      path: "/availtemporarypage",
+      name: 'AvailTemporaryPage',
+      component: AvailTemporaryPage
     },
-
-    //   path: "/loginpage",
-    //   name: 'LoginPage',
-    //   component: LoginPage
-    // },
     {
       path: "/coursepage",
       name: 'CoursePage',

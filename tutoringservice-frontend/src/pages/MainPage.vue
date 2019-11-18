@@ -3,7 +3,7 @@
 		<h1>TUTOR PROFILE</h1>
 		<div class="tab">
   			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
-  			<button class="tablinks" onclick="openCity(event, 'Tokyo')">Sessions</button>
+  			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
 			  <button class="tablinks" v-on:click="toCoursePage">Courses</button>
         <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
         <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
@@ -100,7 +100,7 @@ export default {
     },
     
     toAvailabilityPage() {
-      this.$router.push('AvailabilitiesPage')
+      this.$router.push('AvailTemporaryPage')
     },
 
     toTutorReviewsPage() {
@@ -114,7 +114,7 @@ export default {
     toLoginPage() {
       AXIOS.put(`/logout`)
 		  .then(response => {
-        this.$router.push('LoginPage')
+        this.$router.push({ path: '/' })
 		  })
 		  .catch(e => {
         var errorMsg = e.response.data.message
