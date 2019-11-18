@@ -2,15 +2,14 @@
 	<div id="AvailabilitiesPage">
 			<h1 id="header">Availabilities</h1>
 	<div id="next-previous" style="float: right;">
-			<button @click="increase()">Next Week</button>
 			<button @click="decrease()">Last Week</button>
-			
+			<button @click="increase()">Next Week</button>
 	</div>
 	<div id="weekly-availabilities"></div>
 			<table id="schedule" style="width:100%">
 				<tr>
 					<th></th>
-					<th v-for="day in days" :key="day">{{day.getMonth()}}/{{day.getDate()}}</th>
+					<th v-for="day in days" :key="day"> {{monthSwitch(day.getMonth())}} {{day.getDate()}}</th> 
 				</tr>
 				<tr id="9am">
 					<td align="right"> 9:00 am </td>
@@ -148,8 +147,8 @@
 	headers: { 'Access-Control-Allow-Origin': frontendUrl }
 	})
 
-	function availabilityDto (day, startTime, endTime) {
-		this.day = day
+	function availabilityDto (date, startTime, endTime) {
+		this.date = date
 		this.startTime = startTime
 		this.endTime = endTime
 	}
@@ -161,13 +160,26 @@
 		 return {
 			 availabilities: [],
 			 days: [],
-			 n : 0
+			 n : 0,
+			 email: ''
 		 	}
 		},
 		
 		 created: function() {
 			this.n=0;
 			this.setDays();
+
+			AXIOS.get(`/user`)
+				.then(response => {
+      				this.email = response.data.email
+			})
+			.catch(e => {
+			var errorMsg = e.response.data.message
+			window.alert(errorMsg)
+			})
+
+			this.getAvailability(this.email);
+
 			//this.availabilities = AXIOS.get('/availabilities/{tutorEmail}/');
 		 },
 		
@@ -176,37 +188,113 @@
 			for(var i=0; i < this.availabilities.length; i++){
 				a=this.availabilities[i];
 				this.displayAvailability(a);
-			}	
+			}
 		},
 		
 		methods: {
+			addAvailability(email, date, startTime, endTime){
+				AXIOS.post(`/availabilities/`+email+`?date=`+date+`&startTime=`+startTime+`&endTime=`+endTime)
+				.then(response => {
+					//this.availabilities=response.data;
+				})
+				.catch(e => {
+					var errorMsg = e.response.data.message
+        			window.alert(errorMsg)
+				})
+			},
+
+			getAvailability(email){
+				AXIOS.get(`/availabilities/`+email)
+				.then(response =>{
+					this.availabilities=response.data
+				})
+				.catch(e => {
+				var errorMsg = e.response.data.message
+        		window.alert(errorMsg)
+				})	
+			},
+
+			deleteAvailability(email, date, startTime, endTime){
+				AXIOS.delete(`/availabilities/`+email+`?date=`+date+`&startTime=`+startTime+`&endTime=`+endTime)
+				.then(response => {
+					//this.availabilities=response.data;
+				})
+				.catch(e => {
+					var errorMsg = e.response.data.message
+        			window.alert(errorMsg)
+				})
+			},
+
 			setDays(){
-			var today=new Date();
-			//today.setDate(today.getDate()+this.n)
+				var today=new Date();
+				//today.setDate(today.getDate()+this.n)
 
-			var nextday0=new Date();
-			nextday0.setDate(today.getDate()+this.n)
+				var nextday0=new Date();
+				nextday0.setDate(today.getDate()+this.n)
 
-			var nextday1=new Date();
-			nextday1.setDate(today.getDate()+this.n+1);
+				var nextday1=new Date();
+				nextday1.setDate(today.getDate()+this.n+1);
 
-			var nextday2=new Date();
-			nextday2.setDate(today.getDate()+this.n+2);
+				var nextday2=new Date();
+				nextday2.setDate(today.getDate()+this.n+2);
 
-			var nextday3=new Date();
-			nextday3.setDate(today.getDate()+this.n+3);
+				var nextday3=new Date();
+				nextday3.setDate(today.getDate()+this.n+3);
 
-			var nextday4=new Date();
-			nextday4.setDate(today.getDate()+this.n+4);
+				var nextday4=new Date();
+				nextday4.setDate(today.getDate()+this.n+4);
 
-			var nextday5=new Date();
-			nextday5.setDate(today.getDate()+this.n+5);
+				var nextday5=new Date();
+				nextday5.setDate(today.getDate()+this.n+5);
 
-			var nextday6=new Date();
-			nextday6.setDate(today.getDate()+this.n+6);;
+				var nextday6=new Date();
+				nextday6.setDate(today.getDate()+this.n+6);;
 
-			this.days=[nextday0, nextday1, nextday2, nextday3, nextday4, nextday5, nextday6]
-			
+				this.days=[nextday0, nextday1, nextday2, nextday3, nextday4, nextday5, nextday6]
+				
+			},
+
+			monthSwitch(a){
+				var month;
+				switch(a){
+					case 0:
+						month="Jan";
+						break;
+					case 1: 
+						month="Feb";
+						break;
+					case 2:
+						month="March";
+						break;
+					case 3:
+						month="April";
+						break;
+					case 4:
+						month="May";
+						break;
+					case 5:
+						month="June";
+						break;
+					case 6: 
+						month="July";
+						break;
+					case 7: 
+						month="Aug";
+						break;
+					case 8: 
+						month="Sept";
+						break;
+					case 9: 
+						month="Oct";
+						break;
+					case 10: 
+						month="Nov";
+						break;
+					case 11: 
+						month="Dec";
+						break;
+				}
+				return month;
 			},
 
 			displayAvailability(a){
@@ -252,14 +340,22 @@
 				if (this.n>6){
 					this.n=this.n-7;
 				}
-				this.setDays(n-7);
-				//document.location.reload();
+				this.setDays();
+				var a;
+				for(var i=0; i < this.availabilities.length; i++){
+					a=this.availabilities[i];
+					this.displayAvailability(a);
+				}
 			},
 
 			increase(){
 				this.n=this.n+7;
 				this.setDays();
-				//document.location.reload() 
+				var a;
+				for(var i=0; i < this.availabilities.length; i++){
+					a=this.availabilities[i];
+					this.displayAvailability(a);
+				}
 			},
 			toggle(event){
 				var cell=event.target;			 
@@ -270,6 +366,14 @@
 			},
 
 			setAvailability(){
+				console.log(this.email);
+				this.getAvailability(this.email);
+				var a;
+				for(var i=0; i < this.availabilities.length; i++){
+					a=this.availabilities[i];
+					deleteAvailability(this.email, a.date.getDate(), a.startTime, a.endTime);
+				}
+				
 				var i;
 				var k;
 				var date;
@@ -307,23 +411,23 @@
 						sTime=i+8;
 						var startTime=sTime+":00";
 						var endTime=sTime+":59";
-;
-						selections.push(new availabilityDto(date, startTime, endTime));
-						AXIOS.post('/availabilities/{tutorEmail}/');
 						
+						selections.push(new availabilityDto(date, startTime, endTime));
+						console.log(selections);
 					}
-					}
-				}
-
-				var a;
-				for(var i=0; i < this.availabilities.length; i++){
-					a=this.availabilities[i];
-					this.displayAvailability(a);
 				}
 			}
 
-		},
-	}
+			this.availabilities=selections;
+
+			for(var i=0; i < this.availabilities.length; i++){
+					a=this.availabilities[i];
+					this.addAvailability(this.email, a.date, a.startTime, a.endTime);
+					this.displayAvailability(a);
+			}
+		}
+	},
+}
 </script>
 
 	<style>
