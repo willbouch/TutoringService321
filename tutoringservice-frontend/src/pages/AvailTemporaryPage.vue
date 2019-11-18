@@ -41,14 +41,18 @@
 <script>
 import axios from 'axios'
 var config = require('../../config')
+
 var frontendUrl = 'https://' + config.build.host + ':' + config.build.port
 var backendUrl = 'https://' + config.build.backendHost + ':' + config.build.backendPort
+
 var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
+
 export default {
   name: 'AvailTemporaryPage',
+
   	data() {
 	  	return {
 			startTime: '',
@@ -58,6 +62,7 @@ export default {
 			availabilities: []
     	}
   	},
+
   	created: function() {
 		AXIOS.get(`/user`)
 		.then(response => {
@@ -76,10 +81,12 @@ export default {
       		window.alert(errorMsg)
     	})
 	},
+
   	methods: {
     	toMainPage() {
       		this.$router.go(-1)
 		},
+
 		addAvailability() {
 			AXIOS.post(`/availabilities/`+this.email+`?date=`+this.date+`&startTime=`+this.startTime+`&endTime=`+this.endTime, {}, {})
 			.then(response => {
@@ -97,6 +104,7 @@ export default {
       			window.alert(errorMsg)
     		})
 		},
+
 		deleteAvailability(avail) {
 			AXIOS.delete(`/availabilities/`+this.email+`?date=`+avail.date+`&startTime=`+avail.startTime.slice(0,5)+`&endTime=`+avail.endTime.slice(0,5), {}, {})
 			.then(response => {
@@ -114,10 +122,12 @@ export default {
       			window.alert(errorMsg)
     		})
 		},
+
 		updateAvailability(avail) {
 			var date = window.prompt('Date (YYYY-MM-DD)')
 			var startTime = window.prompt('Start Time (HH:MM)')
 			var endTime = window.prompt('End Time (HH:MM)')
+
 			AXIOS.put(`/availabilities/`+this.email+`?oldDate=`+avail.date+`&oldStartTime=`+avail.startTime.slice(0,5)+`&oldEndTime=`+avail.endTime.slice(0,5)+`&newDate=`+date+`&newStartTime=`+startTime+`&newEndTime=`+endTime, {}, {})
 			.then(response => {
 				AXIOS.get(`/availabilities/`+this.email, {}, {})
@@ -151,11 +161,13 @@ export default {
   -webkit-transform: translate(-50%,-50%);
   transform: translate(-50%,-50%);
 }
+
 .tab {
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
 }
+
 /* Style the buttons that are used to open the tab content */
 .tab button {
   background-color: inherit;
@@ -166,14 +178,17 @@ export default {
   padding: 14px 16px;
   transition: 0.3s;
 }
+
 /* Change background color of buttons on hover */
 .tab button:hover {
   background-color: #ddd;
 }
+
 /* Create an active/current tablink class */
 .tab button.active {
   background-color: #ccc;
 }
+
 /* Style the tab content */
 .tabcontent {
   display: none;
@@ -181,6 +196,7 @@ export default {
   border: 1px solid #ccc;
   border-top: none;
 }
+
 /* Style inputs */
 input[type=text] {
   width: 220px;
@@ -191,6 +207,7 @@ input[type=text] {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
 /* Style the submit button */
 .glow-on-hover {
     width: 220px;
@@ -205,6 +222,7 @@ input[type=text] {
     border-radius: 10px;
 	font-weight: bold;
 }
+
 .glow-on-hover:before {
     content: '';
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
@@ -221,15 +239,19 @@ input[type=text] {
     transition: opacity .3s ease-in-out;
     border-radius: 10px;
 }
+
 .glow-on-hover:active {
     color: #000
 }
+
 .glow-on-hover:active:after {
     background: transparent;
 }
+
 .glow-on-hover:hover:before {
     opacity: 1;
 }
+
 .glow-on-hover:after {
     z-index: -1;
     content: '';
@@ -241,9 +263,11 @@ input[type=text] {
     top: 0;
     border-radius: 10px;
 }
+
 @keyframes glowing {
     0% { background-position: 0 0; }
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
 }
-</style> 
+
+</style>
