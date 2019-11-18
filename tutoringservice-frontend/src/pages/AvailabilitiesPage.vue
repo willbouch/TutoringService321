@@ -169,7 +169,7 @@
 			this.n=0;
 			this.setDays();
 
-			AXIOS.get(`/user`)
+			AXIOS.get(`/user/`)
 				.then(response => {
       				this.email = response.data.email
 			})
@@ -177,6 +177,8 @@
 			var errorMsg = e.response.data.message
 			window.alert(errorMsg)
 			})
+
+			console.log(this.email);
 
 			this.getAvailability(this.email);
 
@@ -297,6 +299,49 @@
 				return month;
 			},
 
+			monthSwitchInt(a){
+				var month;
+				switch(a){
+					case 0:
+						month=1;
+						break;
+					case 1: 
+						month=2
+						break;
+					case 2:
+						month=3;
+						break;
+					case 3:
+						month=4;
+						break;
+					case 4:
+						month=5;
+						break;
+					case 5:
+						month=6;
+						break;
+					case 6: 
+						month=7;
+						break;
+					case 7: 
+						month=8;
+						break;
+					case 8: 
+						month=9;
+						break;
+					case 9: 
+						month=10;
+						break;
+					case 10: 
+						month=11;
+						break;
+					case 11: 
+						month=12;
+						break;
+				}
+				return month;
+			},
+
 			displayAvailability(a){
 			var col;
 			var row;
@@ -365,15 +410,21 @@
 						cell.className = "available";
 			},
 
+			dateToString(date){
+				
+				var string = date.getFullYear() + "-" + this.monthSwitchInt(date.getMonth()) + "-" + this.getDate();
+				return string;	
+				
+			}, 
+			
 			setAvailability(){
-				console.log(this.email);
 				this.getAvailability(this.email);
 				var a;
 				for(var i=0; i < this.availabilities.length; i++){
 					a=this.availabilities[i];
-					deleteAvailability(this.email, a.date.getDate(), a.startTime, a.endTime);
+					//deleteAvailability(this.email, a.date.getTime(), a.startTime, a.endTime);
 				}
-				
+
 				var i;
 				var k;
 				var date;
@@ -411,9 +462,10 @@
 						sTime=i+8;
 						var startTime=sTime+":00";
 						var endTime=sTime+":59";
+						var sdate = this.dateToString(date);
 						
-						selections.push(new availabilityDto(date, startTime, endTime));
-						console.log(selections);
+						console.log(sdate);
+						selections.push(new availabilityDto(sdate, startTime, endTime));
 					}
 				}
 			}
