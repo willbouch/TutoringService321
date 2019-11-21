@@ -59,6 +59,43 @@ input[type=text] {
   box-sizing: border-box;
 }
 
+input[type=email] {
+  width: 220px;  
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=password] {
+  width: 220px;  
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="date"] {
+  background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+  width: 220px;  
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
 /* STYLE FOR COOL BUTTON */
 .glow-on-hover {
     width: 220px;

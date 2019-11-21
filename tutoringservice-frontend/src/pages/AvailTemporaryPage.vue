@@ -6,13 +6,70 @@
 		</div>
 
 		<div>
-    		<input type="text" v-model="date" placeholder="Date (YYYY-MM-DD)">
-			<input type="text" v-model="startTime" placeholder="Start Time (HH:MM)">
-			<input type="text" v-model="endTime" placeholder="End Time (HH:MM)">
-		</div>
-		<div>
+    		<input type="date" v-model="date" v-on:change="displayAvailability" placeholder="Date (YYYY-MM-DD)">
 			<button class="glow-on-hover" v-on:click="addAvailability">Add Availability</button>
 		</div>
+		<table class="table" align="center" style="width:25%">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col" style="width:40%">Time</th>
+					<th scope="col"></th>
+				</tr>
+				<tr>
+					<td align="right"> 9:00 am </td>
+					<td id="button-9" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 10:00 am </td>
+					<td id="button-10" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 11:00 am </td>
+					<td id="button-11" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 12:00 pm </td>
+					<td id="button-12" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 13:00 pm </td>
+					<td id="button-13" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 14:00 pm </td>
+					<td id="button-14" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 15:00 pm </td>
+					<td id="button-15" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 16:00 pm </td>
+					<td id="button-16" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 17:00 pm </td>
+					<td id="button-17" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 18:00 pm </td>
+					<td id="button-18" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 19:00 pm </td>
+					<td id="button-19" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 20:00 pm </td>
+					<td id="button-20" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+
 		<h1></h1>
 		<table class="table" align="center">
 			<thead class="thead-dark">
@@ -55,11 +112,8 @@ export default {
 
   	data() {
 	  	return {
-			startTime: '',
-			endTime: '',
-			date: '',
-			email: '',
-			availabilities: []
+			availabilities: [],
+			date: ''
     	}
   	},
 
@@ -83,26 +137,65 @@ export default {
 	},
 
   	methods: {
+		displayAvailability() {
+			var availWithDateStartTime = []
+			for(var i = 0; i < this.availabilities.length; i++) {
+				if(this.availabilities[i].date == this.date) {
+					availWithDateStartTime.push(this.availabilities[i].startTime)
+				}
+			}
+
+			for(var i = 0; i < availWithDateStartTime.length; i++) {
+				var startTime = availWithDateStartTime[i].slice(0,2)
+				if(startTime == '09') {
+					startTime = startTime.slice(1,2)
+				}
+				var cell = document.getElementById("button-"+startTime)
+				cell.className = "available"
+			}
+		},
+		
+		toggle(event){
+			var cell=event.target;			 
+			if (cell.className == "available")
+				cell.className = "notavailable";
+			else if(cell.className == "notavailable")
+				cell.className = "available";
+		},
+		  
     	toMainPage() {
       		this.$router.go(-1)
 		},
 
 		addAvailability() {
-			AXIOS.post(`/availabilities/`+this.email+`?date=`+this.date+`&startTime=`+this.startTime+`&endTime=`+this.endTime, {}, {})
-			.then(response => {
-				AXIOS.get(`/availabilities/`+this.email, {}, {})
+			var startTimes = []
+
+			for(var i = 9; i <= 20; i++) {
+				var cell = document.getElementById("button-"+i)
+				if(cell.className == 'available') {
+					startTimes.push(i)
+				}
+			}
+
+			for(var i = 0; i < startTimes.length; i++) {
+				var startTime = ''
+				if(startTimes[i] == '9') {
+					startTime = '09:00'
+				}
+				else {
+					startTime = startTimes[i]+':00'
+				}
+				var endTime = (startTimes[i]+1)+':00'
+
+				AXIOS.post(`/availabilities/`+this.email+`?date=`+this.date+`&startTime=`+startTime+`&endTime=`+endTime, {}, {})
 				.then(response => {
-					this.availabilities = response.data
+					this.availabilities.push(response.data)
 				})
 				.catch(e => {
       				var errorMsg = e.response.data.message
       				window.alert(errorMsg)
     			})
-			})
-			.catch(e => {
-      			var errorMsg = e.response.data.message
-      			window.alert(errorMsg)
-    		})
+			}
 		},
 
 		deleteAvailability(avail) {
@@ -157,5 +250,31 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 0px;
+}
+
+button {
+	background-color: #ddd;
+	border: none;
+	color: black;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 6px 4px;
+	cursor: pointer;
+	border-radius: 16px;
+	top: 0px;
+}
+
+td {
+	height: 10px;
+}
+
+.available{
+	background-color: greenyellow;
+}
+
+.notavailable{
+	background-color: #ff6961;
 }
 </style>

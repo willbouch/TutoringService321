@@ -10,33 +10,42 @@
         <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
 
-		<div>
-			<img src="@/assets/profile-picture.png" width=200>
-  		<label> {{ email }} </label>
-			<label>{{ rating }}</label>
-		  <div>
-        <input type="text" v-model="name" placeholder="CURRENT NAME">
-		  </div>
+    <div id="container">
       <div>
-			  <input type="text" v-model="phoneNumber" placeholder="CURRENT PHONE NUMBER">
-      </div>
-      <div>
- 			  <input type="text" v-model="hourlyRate" placeholder="CURRENT HOURLY RATE">
-      </div>
-      <div>
-  		  <button class="glow-on-hover" v-on:click="updateProfile">Update Profile</button>
-      </div>
-      <div>
-			  <input type="text" v-model="oldPassword" placeholder="Old Password">
-      </div>
-      <div>
-			  <input type="text" v-model="newPassword" placeholder="New Password">
-      </div>
-      <div>
-			  <button class="glow-on-hover" v-on:click="changePassword">Change Password</button>
+        <div>
+			    <input id="password-input-current" type="password" v-model="oldPassword" placeholder="Old Password">
+        </div>
+        <div>
+          <input type="checkbox" v-on:click="setCurrentVisible">Show Password
+        </div>
+        <div>
+			    <input id="password-input-new" type="password" v-model="newPassword" placeholder="New Password">
+        </div>
+        <div>
+          <input type="checkbox" v-on:click="setNewVisible">Show Password
+        </div>
+        <div>
+			    <button class="glow-on-hover" v-on:click="changePassword">Change Password</button>
+        </div>
       </div>
 
-		</div>
+      <div>
+  		  <label> {{ email }} </label>
+			  <label>{{ rating }}</label>
+		    <div>
+          <input type="text" v-model="name" placeholder="CURRENT NAME">
+		    </div>
+        <div>
+			    <input type="text" v-model="phoneNumber" placeholder="CURRENT PHONE NUMBER">
+        </div>
+        <div>
+ 			    <input type="text" v-model="hourlyRate" placeholder="CURRENT HOURLY RATE">
+        </div>
+        <div>
+  		    <button class="glow-on-hover" v-on:click="updateProfile">Update Profile</button>
+       </div>
+		  </div>
+    </div>
 
 	</div>
 </template>
@@ -52,6 +61,15 @@ var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
+
+function myFunction() {
+  var x = document.getElementById("password-input-current");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
 
 export default {
   name: 'MainPage',
@@ -92,6 +110,24 @@ export default {
 	},
 
   methods: {
+    setCurrentVisible() {
+      var x = document.getElementById("password-input-current");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    },
+
+    setNewVisible() {
+      var x = document.getElementById("password-input-new");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    },
+
     toSessionPage(){
       this.$router.push('SessionPage')
     },
@@ -161,8 +197,15 @@ export default {
   margin-top: 0px;
 }
 
-img {
-  margin: 8px 0;
+#container {
+  display: flex;
+  top: 50%;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  display: flex;
 }
 
 label {
