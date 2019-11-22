@@ -186,7 +186,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
 <br>In this team, we value gender equity. This is the reason why we wanted this team to be gender neutral.
 <br>We also embrace differences and we strongly believe those different backgrounds that we all have will contribute to the awesomeness of our project.</br>
 
-<b>To read our user documentation, head over to our <a href="https://github.com//McGill-ECSE321-Fall2019/project-group-2/user-support">User Support page.</a><br></b>
+<b>To read our user documentation, head over to our <a href="https://github.com//McGill-ECSE321-Fall2019/project-group-2/wiki/User-Support">User Support page.</a><br></b>
 
 <b>To see our meeting minutes, key design decisions and architecture
 framework, head over to our <a href="https://github.com/McGill-ECSE321-Fall2019/project-group-2/wiki">Wiki page.</a><br></b>
