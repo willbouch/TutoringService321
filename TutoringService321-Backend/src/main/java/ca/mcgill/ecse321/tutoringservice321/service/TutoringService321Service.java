@@ -445,9 +445,9 @@ public class TutoringService321Service {
 		//Checking if this Availability already exists
 		List<Availability> availabilities = toList(availabilityRepository.findAvailabilityByDateAndTutor(date, tutor));
 		for(Availability avail :  availabilities) {
-			if(endTime.compareTo(avail.getStartTime()) >= 0 && startTime.compareTo(avail.getStartTime()) <= 0 ||
-					startTime.compareTo(avail.getEndTime()) <= 0 && endTime.compareTo(avail.getEndTime()) >= 0 ||
-					startTime.compareTo(avail.getStartTime()) >= 0 && endTime.compareTo(avail.getEndTime()) <= 0) {
+			if(endTime.compareTo(avail.getStartTime()) > 0 && startTime.compareTo(avail.getStartTime()) < 0 ||
+					startTime.compareTo(avail.getEndTime()) < 0 && endTime.compareTo(avail.getEndTime()) > 0 ||
+					startTime.compareTo(avail.getStartTime()) > 0 && endTime.compareTo(avail.getEndTime()) < 0) {
 				throw new IllegalArgumentException("Availability conflicts with already existing availability.");
 			}
 		}
