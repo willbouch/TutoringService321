@@ -194,7 +194,7 @@ framework, head over to our wiki page:<br></b>
 
 
 <b><br>For instructions, head over to our How-to page:<br></b>
-&nbsp;&nbsp;&nbsp;&nbsp;<h2><b><a href="https://github.com/McGill-ECSE321-Fall2019/project-group-2/wiki/How-To">Group 2 How-To</a></b></h2>
+&nbsp;&nbsp;&nbsp;&nbsp;<h5><b><a href="https://github.com/McGill-ECSE321-Fall2019/project-group-2/wiki/How-To">Group 2 How-To</a></b></h5>
 
 
 
