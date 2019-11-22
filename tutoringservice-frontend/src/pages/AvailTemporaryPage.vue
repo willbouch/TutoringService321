@@ -178,14 +178,23 @@ export default {
 			}
 
 			for(var i = 0; i < startTimes.length; i++) {
+				var j = i;
 				var startTime = ''
+
 				if(startTimes[i] == '9') {
 					startTime = '09:00'
 				}
 				else {
 					startTime = startTimes[i]+':00'
 				}
-				var endTime = (startTimes[i]+1)+':00'
+
+				var increment = 1
+				while(startTimes.includes(startTimes[i]+1)) {
+					i++
+					increment++
+				}
+
+				var endTime = (startTimes[j]+increment)+':00'
 
 				AXIOS.post(`/availabilities/`+this.email+`?date=`+this.date+`&startTime=`+startTime+`&endTime=`+endTime, {}, {})
 				.then(response => {
