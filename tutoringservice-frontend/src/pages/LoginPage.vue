@@ -3,7 +3,7 @@
     <img src="@/assets/company-logo.png" width=300>
 		<h1></h1>
 		<div>
-			<input type="email" v-model="username" placeholder="Email">
+			<input type="text" v-model="username" placeholder="Email">
 		</div>
 		<div>				
 			<input type="password" v-model="password" placeholder="Password">

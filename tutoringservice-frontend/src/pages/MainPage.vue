@@ -1,6 +1,6 @@
 <template>
 	<div id="mainPage">
-		<h1>TUTOR PROFILE</h1>
+		<h1>PROFILE</h1>
 		<div class="tab">
   			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
   			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
@@ -10,10 +10,15 @@
         <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
 
+    <h1>{{ name }}'s Profile</h1>
+    <h3>Email address : {{ email }}</h3>
+    <h3>Your current rating is : {{ rating }}&#160</h3>
+
     <div id="container">
-      <div>
+      <div id="password-container">
+        <h3>Change your password</h3>
         <div>
-			    <input id="password-input-current" type="password" v-model="oldPassword" placeholder="Old Password">
+			    <input id="password-input-current" type="password" v-model="oldPassword" placeholder="Current Password">
         </div>
         <div>
           <input type="checkbox" v-on:click="setCurrentVisible">Show Password
@@ -29,17 +34,16 @@
         </div>
       </div>
 
-      <div>
-  		  <label> {{ email }} </label>
-			  <label>{{ rating }}</label>
+      <div id="information-container">
+        <h3>Update your information</h3>
 		    <div>
-          <input type="text" v-model="name" placeholder="CURRENT NAME">
+          <input type="text" v-model="name" placeholder="Name">
 		    </div>
         <div>
-			    <input type="text" v-model="phoneNumber" placeholder="CURRENT PHONE NUMBER">
+			    <input type="text" v-model="phoneNumber" placeholder="Phone Number">
         </div>
         <div>
- 			    <input type="text" v-model="hourlyRate" placeholder="CURRENT HOURLY RATE">
+ 			    <input type="text" v-model="hourlyRate" placeholder="Hourly Rate">
         </div>
         <div>
   		    <button class="glow-on-hover" v-on:click="updateProfile">Update Profile</button>
@@ -61,15 +65,6 @@ var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
-
-function myFunction() {
-  var x = document.getElementById("password-input-current");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-}
 
 export default {
   name: 'MainPage',
@@ -198,14 +193,17 @@ export default {
 }
 
 #container {
-  display: flex;
-  top: 50%;
-  position: absolute;
-  left: 50%;
-  -ms-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-  display: flex;
+  display: inline-flex;
+}
+
+#information-container {
+  margin-top: 75px;
+  margin-left: 50px;
+}
+
+#password-container {
+  margin-top: 75px;
+  margin-right: 50px;
 }
 
 label {
