@@ -4,11 +4,11 @@
         <img src="@/assets/cube.gif" width=300>
         <div id="error" class="error"></div>
         <form class="form" id="signup">
-            <input type="email" id="email" placeholder="Username" required>
-            <input type="password" id="password" placeholder="Password" required>
+        <input type="text" v-model="username" placeholder="Username" required> 
+            <input type="password" v-model="password" placeholder="Password" required>
             <button @click="loginTutor(username, password)" class="glow-on-hover">LOGIN</button>
             </form>
-            <a href="#/RegisterPage" class="loginbutton">Register</a>
+            <a href="#/RegisterPage" class="registerbutton">Register</a>
     </div>
 </div>
 
@@ -72,7 +72,7 @@ export default {
 .container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 120px 0;
+  padding: 80px 0;
   height: 750px;
   text-align: center;
 }
@@ -116,7 +116,7 @@ form input:focus {
   width: 300px;
   color: #283747;
 }
-.loginbutton {
+.registerbutton {
 
   padding-top: 30px;
   color: #EBF5FB;
