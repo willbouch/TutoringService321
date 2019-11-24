@@ -12,7 +12,7 @@
 
     <h1>{{ name }}'s Profile</h1>
     <h3>Email address : {{ email }}</h3>
-    <h3>Your current rating is : {{ rating }}&#160</h3>
+    <h3>Your current rating is : {{ rating }}</h3>
 
     <div id="container">
       <div id="password-container">

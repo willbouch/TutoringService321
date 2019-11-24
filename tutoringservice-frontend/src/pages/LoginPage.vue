@@ -1,20 +1,16 @@
 <template>
-  <div id="loginPage">
-    <img src="@/assets/company-logo.png" width=300>
-		<h1></h1>
-		<div>
-			<input type="text" v-model="username" placeholder="Email">
-		</div>
-		<div>				
-			<input type="password" v-model="password" placeholder="Password">
-		</div>
-    <div>
-			<button @click="loginTutor(username, password)" class="glow-on-hover">Login</button>
-		</div>
-    <div>
-      <a href="#/RegisterPage" class="btn btn-default">Register</a>
+  <div id="wrapper" class="wrapper">
+    <div class="container">
+        <img src="@/assets/cube.gif" width=300>
+        <div id="error" class="error"></div>
+        <form class="form" id="signup">
+            <input type="email" id="email" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button @click="loginTutor(username, password)" class="glow-on-hover">LOGIN</button>
+            </form>
+            <a href="#/RegisterPage" class="loginbutton">Register</a>
     </div>
-  </div>
+</div>
 
 </template>
 
@@ -55,56 +51,128 @@ export default {
 }
 </script>
 
-<style>
-#loginPage {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
+<style scoped>
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300);
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-weight: 300;
 }
 
-/* Style inputs */
-input[type=text] {
-  width: 220px;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+.wrapper {
+  background: #151515;
+ 
+}
+.wrapper.form-success .container h1 {
+  -webkit-transform: translateY(85px);
+          transform: translateY(85px);
+}
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 120px 0;
+  height: 750px;
+  text-align: center;
+}
+.container h1 {
+  font-size: 40px;
+  -webkit-transition-duration: 1s;
+          transition-duration: 1s;
+  -webkit-transition-timing-function: ease-in-put;
+          transition-timing-function: ease-in-put;
+  font-weight: 300;
+}
+form {
+  padding: 10px 0;
+  position: relative;
+  z-index: 2;
+}
+form input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  outline: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 250px;
+  border-radius: 3px;
+  padding: 10px 15px;
+  margin: 0 auto 10px auto;
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  -webkit-transition-duration: 0.25s;
+          transition-duration: 0.25s;
+  font-weight: 300;
+}
+form input:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+form input:focus {
+  background-color: white;
+  width: 300px;
+  color: #283747;
+}
+.loginbutton {
+
+  padding-top: 30px;
+  color: #EBF5FB;
+  border-radius: 3px;
+  width: 125px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-transition-duration: 0.25s;
+          transition-duration: 0.25s;
+}
+form button:hover {
+  background-color: #f5f7f9;
+}
+.fadeout {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s .5s, opacity .5s linear;
 }
 
-input[type=password] {
-  width: 220px;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+.fadeout2 {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s .5s, opacity .5s linear;
 }
 
-/* Style the submit button */
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+.fadein {
+  opacity: 0;
+  animation:fadeIn ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+  animation-delay: 0.5s;
+}
+
+.error {
+    color: #FDFEFE;
+}
+
+
+.hidden {
+  display:none;
+}
 .glow-on-hover {
+    padding: 10px 15px;
     width: 220px;
     height: 50px;
     border: none;
     outline: none;
-    color: #fff;
-    background: #111;
+    color: #000;
+    background: #FDFEFE;
     cursor: pointer;
     position: relative;
     z-index: 0;
     border-radius: 10px;
-	  font-weight: bold;
+	  font-weight: thin;
 }
-
 .glow-on-hover:before {
     content: '';
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
@@ -121,36 +189,33 @@ input[type=password] {
     transition: opacity .3s ease-in-out;
     border-radius: 10px;
 }
-
 .glow-on-hover:active {
-    color: #000
+    color: #FDFEFE
 }
-
 .glow-on-hover:active:after {
     background: transparent;
 }
-
 .glow-on-hover:hover:before {
     opacity: 1;
 }
-
 .glow-on-hover:after {
     z-index: -1;
     content: '';
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #111;
+    background: #FDFEFE;
     left: 0;
     top: 0;
     border-radius: 10px;
 }
-
 @keyframes glowing {
     0% { background-position: 0 0; }
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
 }
+
+
 
 
 
