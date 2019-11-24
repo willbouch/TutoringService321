@@ -1,17 +1,16 @@
 <template>
-  <div id="wrapper" class="wrapper">
+  <div id="loginPage" class="wrapper">
     <div class="container">
         <img src="@/assets/cube.gif" width=300>
         <div id="error" class="error"></div>
-        <form class="form" id="signup">
+        <form class="form" id="signin">
         <input type="text" v-model="username" placeholder="Username" required> 
             <input type="password" v-model="password" placeholder="Password" required>
             <button @click="loginTutor(username, password)" class="glow-on-hover">LOGIN</button>
             </form>
             <a href="#/RegisterPage" class="registerbutton">Register</a>
+        </div>
     </div>
-</div>
-
 </template>
 
 <script>
@@ -214,9 +213,5 @@ form button:hover {
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
 }
-
-
-
-
 
 </style>
