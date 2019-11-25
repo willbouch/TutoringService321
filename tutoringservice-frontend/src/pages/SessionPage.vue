@@ -1,12 +1,24 @@
 <template>
-  <div id="sessionPage">
+  <div id="sessionPage" class="wrapper">
+		&nbsp;&nbsp;&nbsp;
 	  <h1>SESSIONS</h1>
+		&nbsp;
+		
 		<div class="tab">
-  			<button class="tablinks" v-on:click="toMainPage">Main Menu</button>			
+  			<button class="tablinks" @click="toAvailabilityPage">Availabilities</button>
+  			<button class="tablinks" @click="toSessionPage">Sessions</button>
+			<button class="tablinks" @click="toCoursePage">Courses</button>
+        	<button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
+        	<button class="tablinks" @click="toTutorReviewsPage">Received Reviews</button>
+        	<button class="tablinks" @click="toAllTutorsPage">All Tutors</button>
+  			<button class="tablinks" @click="toMainPage">Main Menu</button>		
 		</div>
-	  
+		&nbsp;&nbsp;&nbsp;
+		
+		<form class="form">
+	  <div class="container">
 		<table class="table" align="center">
-			<thead class="thead-dark">
+			<thead class="cuter">
 				<tr>
 				<th scope="col">Date</th>
 				<th scope="col">Start Time</th>
@@ -29,7 +41,8 @@
 				</tr>
 			</tbody>
 		</table>
-	 
+	 </div>
+	 </form>
   </div>
 </template>
 
@@ -84,8 +97,37 @@ export default {
 
 	methods: {
 		toMainPage(){
-      this.$router.go(-1)
-		},
+      this.$router.push('MainPage')
+	},
+	toSessionPage(){
+      this.$router.push('SessionPage')
+    },
+	  toAllTutorsPage() {
+		  this.$router.push('AllTutorsPage')
+    },
+
+    toAvailabilityPage() {
+      this.$router.push('AvailTemporaryPage')
+    },
+
+    toTutorReviewsPage() {
+		  this.$router.push('TutorReviewsPage')
+    },
+
+    toCoursePage() {
+		  this.$router.push('CoursePage2')
+    },
+
+    toLoginPage() {
+      AXIOS.put(`/logout`)
+		  .then(response => {
+        this.$router.push({ path: '/' })
+		  })
+		  .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
+      })
+    },
 
 		ApproveSession: function(date, startTime, endTime){
       AXIOS.put(`/sessions/`+this.email+`?requestedDate=`+date+`&qStartTime=`+startTime.slice(0,5)+`&qEndTime=`+endTime.slice(0,5),{},{})
@@ -139,20 +181,15 @@ export default {
 
 <style scoped>
 @import '../style/stylesheet.css';
+@import '../style/blackandwhitebb.css';
 
 #sessionPage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #F2F3F4;
   margin-top: 0px;
-}
-.items{
-	background-color: lightgreen;
-}
-.selected {
-	background-color: lightblue;
 }
 .list-group-item:hover {
   background: #EEE;
@@ -161,7 +198,5 @@ export default {
 .approved {
 		background-color: #f2f2f2;
 }
-tr.approved td{
-	background-color: lightgreen;
-}
+
 </style>
