@@ -1,6 +1,8 @@
 <template>
 <div id ="show-courses" class="wrapper">
+    &nbsp;&nbsp;&nbsp;
 		<h1>ALL COURSES</h1>
+    &nbsp;
 		<div class="tab">
 			<button class="tablinks" @click="toAvailabilityPage">Availabilities</button>
   			<button class="tablinks" @click="toSessionPage">Sessions</button>
@@ -14,9 +16,10 @@
 
 		<form class="form">
 		<input type="text" v-model="search" placeholder="search by Subject" class="form-group-input"/>
+    &nbsp;&nbsp;&nbsp;
 		<div class="container">
 			<table class="table table-light" align="center">
-			<thead class="thead-dark">
+			<thead class="cuter">
 				<tr>
 				<th scope="col">Subject</th>
 				<th scope="col">Course Description</th>
@@ -35,10 +38,11 @@
 		</table>
 		</div>
 		</form>
-		<div class="margins">
-		<input type="text" v-model="username" class="form" placeholder="Course Code">
+		<div>
+		<input type="text" v-model="username" class="form-group-input" placeholder="Course Code">&nbsp;&nbsp;&nbsp;
 		<button @click="loginTutor(username, password)" class="glow-on-hover">REQUEST COURSE</button>
 	</div>
+  &nbsp;&nbsp;&nbsp;
 	</div>
 </template>
 
@@ -111,14 +115,14 @@ export default{
 
 <style scoped>
 @import '../style/stylesheet.css';
-
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300);
 
 #show-courses {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #FDFEFE;
+  color: #F2F3F4;
   margin-top: 0px;
 }
 
@@ -169,16 +173,19 @@ form input:focus {
 }
 .container{
   margin:center;
-  
-  
+  height: 800px;
 }
 .wrapper {
   background: #151515;
  
 }
 .cute{
-	
 	text-transform: uppercase;
+}
+.cuter{
+  background: #151515;
+  text-transform: uppercase;
+  color: #FDFEFE;
 }
 .glow-on-hover {
     padding: 10px 15px;
@@ -236,10 +243,6 @@ form input:focus {
     100% { background-position: 0 0; }
 }
 
-.margins{
-	padding-left:10px;
-	padding-right:10px;
-}
 
 
 </style>

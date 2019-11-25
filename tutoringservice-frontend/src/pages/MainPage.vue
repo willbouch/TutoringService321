@@ -139,7 +139,7 @@ export default {
     },
 
     toCoursePage() {
-		  this.$router.push('CoursePage')
+		  this.$router.push('CoursePage2')
     },
 
     toLoginPage() {
