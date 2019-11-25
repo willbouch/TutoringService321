@@ -8,21 +8,29 @@
 
 <template>
 
-	<div id="viewTutors">
+	<div id="viewTutors" class="wrapper">
+    &nbsp;&nbsp;&nbsp;
 		<h1>TUTORS</h1>
+    &nbsp;
 		<div class="tab">
-  		<button class="tablinks" v-on:click="toMainPage">Main Menu</button>			
+  		  <button class="tablinks" @click="toMainPage">Main Menu</button>
+  			<button class="tablinks" @click="toAvailabilityPage">Availabilities</button>
+  			<button class="tablinks" @click="toSessionPage">Sessions</button>
+				<button class="tablinks" @click="toCoursePage">Courses</button>
+        <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
+        <button class="tablinks" @click="toTutorReviewsPage">Received Reviews</button>
+        <button class="tablinks" @click="toAllTutorsPage">All Tutors</button>			
 	  </div>
-
-		<table class="table" align="center">
-			<thead class="thead-dark">
+    &nbsp;&nbsp;&nbsp;
+    <form class="form">
+    <div class="container">
+		<table class="table table-light" align="center">
+			<thead class="cuter">
 				<tr>
 				<th scope="col">Tutor Name</th>
 				<th scope="col">Contact</th>
 				<th scope="col">Rating</th>
 				<th scope="col">Hourly Rate</th>
-        <!--<th scope="col"></th>-->
-        <!--<th scope="col"></th>-->
 				</tr>
 			</thead>
 			<tbody>
@@ -33,16 +41,11 @@
 						<img src="@/assets/rating-star.png" width=20>
 					</td>
 					<td>{{tutor.hourlyrate}}</td>
-          <!--<td><div class="dropdown">
-              <button class="dropbtn">Subjects</button>
-              <div class="dropdown-content" v-for="subject in subjects" :key="subject">
-                <a href="#">{{subject}}</a>
-              </div>
-          </div></td>-->
-          <!--<td><a href="#">{{tutor.name}}'s Profile</a></td>-->
 				</tr>
 			</tbody>
 		</table>
+    </div>
+    </form>
 	</div>
 </template>
 
@@ -97,21 +100,51 @@ export default {
 	},
 
   methods: {
-	  toMainPage() {
-      this.$router.go(-1)
-	  }
+	 toMainPage(){
+      this.$router.push('MainPage')
+	},
+	toSessionPage(){
+      this.$router.push('SessionPage')
+    },
+	  toAllTutorsPage() {
+		  this.$router.push('AllTutorsPage')
+    },
+
+    toAvailabilityPage() {
+      this.$router.push('AvailTemporaryPage')
+    },
+
+    toTutorReviewsPage() {
+		  this.$router.push('TutorReviewsPage')
+    },
+
+    toCoursePage() {
+		  this.$router.push('CoursePage2')
+    },
+
+    toLoginPage() {
+      AXIOS.put(`/logout`)
+		  .then(response => {
+        this.$router.push({ path: '/' })
+		  })
+		  .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
+      })
+    },
   }
 }
 </script>
 
 <style>
 @import '../style/stylesheet.css';
+@import '../style/blackandwhitebb.css';
 #viewTutors {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #F8F9F9;
   margin-top: 0px;
 }
 

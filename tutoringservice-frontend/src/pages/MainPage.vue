@@ -1,6 +1,8 @@
 <template>
-	<div id="mainPage">
+	<div id="mainPage" class="wrapper">
+    &nbsp;&nbsp;&nbsp;
 		<h1>PROFILE</h1>
+    &nbsp;
 		<div class="tab">
   			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
   			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
@@ -9,8 +11,10 @@
         <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
         <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
-
-    <h1>{{ name }}'s Profile</h1>
+    &nbsp;&nbsp;&nbsp;
+    <form class="form">
+	  <div class="container">
+    <h1>{{ name }}</h1>
     <h3>Email address : {{ email }}</h3>
     <h3>Your current rating is : {{ rating }}</h3>
 
@@ -50,7 +54,8 @@
        </div>
 		  </div>
     </div>
-
+    </div>
+    </form>
 	</div>
 </template>
 
@@ -183,12 +188,14 @@ export default {
 
 <style scoped>
 @import '../style/stylesheet.css';
+@import '../style/blackandwhitebb.css';
+
 #mainPage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #D6EAF8;
   margin-top: 0px;
 }
 

@@ -1,16 +1,16 @@
 <template>
 <div id ="show-courses" class="wrapper">
     &nbsp;&nbsp;&nbsp;
-		<h1>ALL COURSES</h1>
+		<h1>COURSES</h1>
     &nbsp;
 		<div class="tab">
-			<button class="tablinks" @click="toAvailabilityPage">Availabilities</button>
-  			<button class="tablinks" @click="toSessionPage">Sessions</button>
-			<button class="tablinks" @click="toCoursePage">Courses</button>
-        	<button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
-        	<button class="tablinks" @click="toTutorReviewsPage">Received Reviews</button>
-        	<button class="tablinks" @click="toAllTutorsPage">All Tutors</button>
-  			<button class="tablinks" @click="toMainPage">Main Menu</button>
+        <button class="tablinks" v-on:click="toMainPage">Main Menu</button>
+  			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
+  			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
+				<button class="tablinks" v-on:click="toCoursePage">Courses</button>
+        <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
+        <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
+        <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
 		<br><br>
 
@@ -123,7 +123,7 @@ export default{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #F2F3F4;
+  color: #F8F9F9;
   margin-top: 0px;
 }
 

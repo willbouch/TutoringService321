@@ -3,6 +3,7 @@ form {
   position: relative;
   z-index: 2;
 }
+
 form input {
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -46,6 +47,7 @@ form input:focus {
 .container{
   margin:center;
   height: 800px;
+  color: #D6EAF8;
 }
 .wrapper {
   background: #151515;

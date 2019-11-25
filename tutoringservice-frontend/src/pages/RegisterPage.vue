@@ -1,7 +1,9 @@
 <template>
   <div id="registerPage" class="wrapper">
+    
 		<div class="container">
-      <h1></h1>
+      <h1>REGISTER AS A TUTOR</h1>
+      &nbsp;&nbsp;&nbsp;
       <form class="form" id="register">
 			<input type="text" v-model="email" placeholder="Email address">
 			<input type="text" v-model="name" placeholder="Name">	
@@ -64,6 +66,15 @@ export default {
   margin: 0;
   padding: 0;
   font-weight: 300;
+}
+
+#registerPage {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #F2F3F4;
+  margin-top: 0px;
 }
 
 .wrapper {

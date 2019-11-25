@@ -250,7 +250,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import '../style/stylesheet.css';
 #availTemporaryPage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
