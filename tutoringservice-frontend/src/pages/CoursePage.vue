@@ -5,32 +5,11 @@
 		<div class="tab">
   			<button class="tablinks" v-on:click="toMainPage">Main Menu</button>
 		</div>
-  
-
-  
-	<!-- <div class="container">
-	<ul>
-		<li v-for="subject in subjects" :key="subject">
-			{{ subject.subjectName }}
-			<ul>
-			<li v-for="course in subject.courses" :key="course">
-				{{ course.courseCode + " ----- " + course.school }}
-			</li>
-			</ul>
-		</li>
-	</ul>
-	</div> -->
 
   
 <br><br>
   <div class="container">
   <ul>
-    
-    <!-- <li><a>Zurich</a></li>
-    <li><a href="#">Geneva</a></li>
-    <li><a href="#">Winterthur</a></li>
-    <li><a href="#">Lausanne</a></li>
-    <li><a href="#">Lucerne</a></li> -->
     	<li v-for="subject in subjects" :key="subject"><a><br>
 			<b>{{ subject.subjectName }}</b>
 			<ul>

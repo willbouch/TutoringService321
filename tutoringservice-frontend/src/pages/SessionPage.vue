@@ -22,7 +22,6 @@
 					<td >{{session.date}}</td>
 					<td >{{session.startTime}}</td>
 					<td >{{session.endTime}}</td>
-					
 					<td>{{session.isApproved}}</td>
 					<td><button  :disabled="session.isApproved == true" @click="ApproveSession(session.date, session.startTime, session.endTime)" class="btn btn-success">Approve</button></td>
 					<td><button  @click="CancelSession(session.date, session.startTime, session.endTime)" class="btn btn-danger" >Decline</button></td>
@@ -138,7 +137,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 @import '../style/stylesheet.css';
 
 #sessionPage {

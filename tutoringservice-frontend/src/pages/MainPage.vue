@@ -181,7 +181,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import '../style/stylesheet.css';
 #mainPage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

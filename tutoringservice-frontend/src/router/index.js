@@ -9,6 +9,7 @@ import AvailTemporaryPage from '@/pages/AvailTemporaryPage'
 import AvailabilitiesPage from '@/pages/AvailabilitiesPage'
 import TutorReviewsPage from '@/pages/TutorReviewsPage'
 import CoursePage from '@/pages/CoursePage'
+import CoursePage2 from '@/pages/CoursePage2'
 
 
 Vue.use(Router)
@@ -46,9 +47,9 @@ export default new Router({
       component: AvailTemporaryPage
     },
     {
-      path: "/coursepage",
-      name: 'CoursePage',
-      component: CoursePage
+      path: "/coursepage2",
+      name: 'CoursePage2',
+      component: CoursePage2
     },
     {
       path: "/tutorreviewspage",
