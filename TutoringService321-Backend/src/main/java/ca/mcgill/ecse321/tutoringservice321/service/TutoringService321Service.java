@@ -409,7 +409,13 @@ public class TutoringService321Service {
 	@Transactional
 	public List<Session> getAllSessions() {
 		return toList(sessionRepository.findAll());
-	}	
+	}
+	
+	@Transactional
+	public List<Session> getAllTutorSessions(String email) {
+		Tutor tutor = getTutor(email);
+		return toList(sessionRepository.findSessionByTutor(tutor));
+	}
 
 	//====================================================================================
 	//AVAILABILITY METHODS

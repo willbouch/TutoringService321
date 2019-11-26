@@ -332,9 +332,9 @@ public class TutoringService321RestController {
 	}
 
 	@GetMapping(value = {"/sessions/{tutorEmail}", "/sessions/{tutorEmail}/"})
-	public List<SessionDto> getAllSessions(@PathVariable("tutorEmail") String tutorEmail) {
+	public List<SessionDto> getAllTutorSessions(@PathVariable("tutorEmail") String tutorEmail) {
 		List<SessionDto> dtos = new ArrayList<SessionDto>();
-		for(Session session : service.getAllSessions()) {
+		for(Session session : service.getAllTutorSessions(tutorEmail)) {
 			dtos.add(converToDto(session));
 		}
 
