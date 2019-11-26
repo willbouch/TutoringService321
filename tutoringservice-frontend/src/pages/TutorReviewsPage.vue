@@ -1,15 +1,23 @@
 <template>
-    <div id="tutorReviewsPage">
+    <div id="tutorReviewsPage" class="wrapper">
+    &nbsp;&nbsp;&nbsp;
     <h1>RECEIVED REVIEWS</h1>
+    &nbsp;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <div class="tab">
-  		<button class="tablinks" v-on:click="toMainPage">Main Menu</button>			
+  		  <button class="tablinks" @click="toMainPage">Main Menu</button>
+  			<button class="tablinks" @click="toAvailabilityPage">Availabilities</button>
+  			<button class="tablinks" @click="toSessionPage">Sessions</button>
+				<button class="tablinks" @click="toCoursePage">Courses</button>
+        <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
+        <button class="tablinks" @click="toTutorReviewsPage">Received Reviews</button>
+        <button class="tablinks" @click="toAllTutorsPage">All Tutors</button>		
 	  </div>
-
+      &nbsp;&nbsp;&nbsp;
     <div class="container">
-	<div class="card">
-	    <div class="card-body">
+	    <div class="card">
+	      <div class="card-body">
 	        <div class="row">
         	    <div class="col-md-10">
         	       <div class="clearfix"></div>
@@ -60,20 +68,50 @@ export default {
 
   methods: {
 	  toMainPage(){
-      this.$router.go(-1)
+      this.$router.push('MainPage')
+	},
+	toSessionPage(){
+      this.$router.push('SessionPage')
+    },
+	  toAllTutorsPage() {
+		  this.$router.push('AllTutorsPage')
+    },
+
+    toAvailabilityPage() {
+      this.$router.push('AvailTemporaryPage')
+    },
+
+    toTutorReviewsPage() {
+		  this.$router.push('TutorReviewsPage')
+    },
+
+    toCoursePage() {
+		  this.$router.push('CoursePage2')
+    },
+
+    toLoginPage() {
+      AXIOS.put(`/logout`)
+		  .then(response => {
+        this.$router.push({ path: '/' })
+		  })
+		  .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
+      })
     },
   }
 }
 </script>
 
 
-<style>
+<style scoped>
+@import '../style/blackandwhitebb.css';
 #tutorReviewsPage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #F8F9F9;
   margin-top: 0px;
 }
 
@@ -151,15 +189,11 @@ export default {
 .review-block-description{
 	font-size:13px;
 }
- 
-/* .card-inner{
-    margin-left: 4rem;
-}
-   */
-   .checked {
+.checked {
   color: orange;
 }
 .container{
   margin: 0 auto;
+  color: #1B2631;
 }
 </style>

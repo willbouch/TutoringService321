@@ -1,6 +1,16 @@
-	<template>
+<template>
 	<div id="AvailabilitiesPage">
 			<h1 id="header">Availabilities</h1>
+
+			<div class="tab">
+				<button class="tablinks" v-on:click="toMainPage">Main Menu</button>
+  				<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
+  				<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
+				<button class="tablinks" v-on:click="toCoursePage">Courses</button>
+        		<button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
+        		<button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
+        		<button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
+  			</div>
 	<div id="next-previous" style="float: right;">
 			<button @click="decrease()">Last Week</button>
 			<button @click="increase()">Next Week</button>
@@ -482,7 +492,7 @@
 }
 </script>
 
-	<style>
+<style scoped>
 
 	#AvailabilitiesPage {
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -559,4 +569,4 @@
 	.round {
 		border-radius: 50%;
 	}
-	</style>
+</style>

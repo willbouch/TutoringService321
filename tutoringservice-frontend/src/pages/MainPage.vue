@@ -1,6 +1,8 @@
 <template>
-	<div id="mainPage">
-		<h1>TUTOR PROFILE</h1>
+	<div id="mainPage" class="wrapper">
+    &nbsp;&nbsp;&nbsp;
+		<h1>PROFILE</h1>
+    &nbsp;
 		<div class="tab">
   			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
   			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
@@ -9,35 +11,51 @@
         <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
         <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
+    &nbsp;&nbsp;&nbsp;
+    <form class="form">
+	  <div class="container">
+    <h1>{{ name }}</h1>
+    <h3>Email address : {{ email }}</h3>
+    <h3>Your current rating is : {{ rating }}</h3>
 
-		<div>
-			<img src="@/assets/profile-picture.png" width=200>
-  		<label> {{ email }} </label>
-			<label>{{ rating }}</label>
-		  <div>
-        <input type="text" v-model="name" placeholder="CURRENT NAME">
+    <div id="container">
+      <div id="password-container">
+        <h3>Change your password</h3>
+        <div>
+			    <input id="password-input-current" type="password" v-model="oldPassword" placeholder="Current Password">
+        </div>
+        <div>
+          <input type="checkbox" v-on:click="setCurrentVisible">Show Password
+        </div>
+        <div>
+			    <input id="password-input-new" type="password" v-model="newPassword" placeholder="New Password">
+        </div>
+        <div>
+          <input type="checkbox" v-on:click="setNewVisible">Show Password
+        </div>
+        <div>
+			    <button class="glow-on-hover" v-on:click="changePassword">Change Password</button>
+        </div>
+      </div>
+
+      <div id="information-container">
+        <h3>Update your information</h3>
+		    <div>
+          <input type="text" v-model="name" placeholder="Name">
+		    </div>
+        <div>
+			    <input type="text" v-model="phoneNumber" placeholder="Phone Number">
+        </div>
+        <div>
+ 			    <input type="text" v-model="hourlyRate" placeholder="Hourly Rate">
+        </div>
+        <div>
+  		    <button class="glow-on-hover" v-on:click="updateProfile">Update Profile</button>
+       </div>
 		  </div>
-      <div>
-			  <input type="text" v-model="phoneNumber" placeholder="CURRENT PHONE NUMBER">
-      </div>
-      <div>
- 			  <input type="text" v-model="hourlyRate" placeholder="CURRENT HOURLY RATE">
-      </div>
-      <div>
-  		  <button class="glow-on-hover" v-on:click="updateProfile">Update Profile</button>
-      </div>
-      <div>
-			  <input type="text" v-model="oldPassword" placeholder="Old Password">
-      </div>
-      <div>
-			  <input type="text" v-model="newPassword" placeholder="New Password">
-      </div>
-      <div>
-			  <button class="glow-on-hover" v-on:click="changePassword">Change Password</button>
-      </div>
-
-		</div>
-
+    </div>
+    </div>
+    </form>
 	</div>
 </template>
 
@@ -92,6 +110,24 @@ export default {
 	},
 
   methods: {
+    setCurrentVisible() {
+      var x = document.getElementById("password-input-current");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    },
+
+    setNewVisible() {
+      var x = document.getElementById("password-input-new");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    },
+
     toSessionPage(){
       this.$router.push('SessionPage')
     },
@@ -108,7 +144,7 @@ export default {
     },
 
     toCoursePage() {
-		  this.$router.push('CoursePage')
+		  this.$router.push('CoursePage2')
     },
 
     toLoginPage() {
@@ -150,126 +186,31 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+@import '../style/stylesheet.css';
+@import '../style/blackandwhitebb.css';
+
 #mainPage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #D6EAF8;
   margin-top: 0px;
 }
 
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
+#container {
+  display: inline-flex;
 }
 
-/* Style the buttons that are used to open the tab content */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
+#information-container {
+  margin-top: 75px;
+  margin-left: 50px;
 }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-
-/* Style inputs */
-input[type=text] {
-  width: 220px;  
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-/* Style the submit button */
-.glow-on-hover {
-    width: 220px;
-    height: 50px;
-    border: none;
-    outline: none;
-    color: #fff;
-    background: #111;
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
-    border-radius: 10px;
-	font-weight: bold;
-}
-
-.glow-on-hover:before {
-    content: '';
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-    position: absolute;
-    top: -2px;
-    left:-2px;
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(5px);
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    animation: glowing 20s linear infinite;
-    opacity: 0;
-    transition: opacity .3s ease-in-out;
-    border-radius: 10px;
-}
-
-.glow-on-hover:active {
-    color: #000
-}
-
-.glow-on-hover:active:after {
-    background: transparent;
-}
-
-.glow-on-hover:hover:before {
-    opacity: 1;
-}
-
-.glow-on-hover:after {
-    z-index: -1;
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #111;
-    left: 0;
-    top: 0;
-    border-radius: 10px;
-}
-
-@keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
-}
-
-img {
-  margin: 8px 0;
+#password-container {
+  margin-top: 75px;
+  margin-right: 50px;
 }
 
 label {
@@ -277,10 +218,6 @@ label {
   width: 100%;
   margin: 8px 0;
   display: inline-block;
-}
-
-.review {
- float: right;
 }
 
 </style>

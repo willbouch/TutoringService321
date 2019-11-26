@@ -8,21 +8,29 @@
 
 <template>
 
-	<div id="viewTutors">
+	<div id="viewTutors" class="wrapper">
+    &nbsp;&nbsp;&nbsp;
 		<h1>TUTORS</h1>
+    &nbsp;
 		<div class="tab">
-  		<button class="tablinks" v-on:click="toMainPage">Main Menu</button>			
+  		  <button class="tablinks" @click="toMainPage">Main Menu</button>
+  			<button class="tablinks" @click="toAvailabilityPage">Availabilities</button>
+  			<button class="tablinks" @click="toSessionPage">Sessions</button>
+				<button class="tablinks" @click="toCoursePage">Courses</button>
+        <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
+        <button class="tablinks" @click="toTutorReviewsPage">Received Reviews</button>
+        <button class="tablinks" @click="toAllTutorsPage">All Tutors</button>			
 	  </div>
-
-		<table class="table" align="center">
-			<thead class="thead-dark">
+    &nbsp;&nbsp;&nbsp;
+    <form class="form">
+    <div class="container">
+		<table class="table table-light" align="center">
+			<thead class="cuter">
 				<tr>
 				<th scope="col">Tutor Name</th>
 				<th scope="col">Contact</th>
 				<th scope="col">Rating</th>
 				<th scope="col">Hourly Rate</th>
-        <!--<th scope="col"></th>-->
-        <!--<th scope="col"></th>-->
 				</tr>
 			</thead>
 			<tbody>
@@ -33,16 +41,11 @@
 						<img src="@/assets/rating-star.png" width=20>
 					</td>
 					<td>{{tutor.hourlyrate}}</td>
-          <!--<td><div class="dropdown">
-              <button class="dropbtn">Subjects</button>
-              <div class="dropdown-content" v-for="subject in subjects" :key="subject">
-                <a href="#">{{subject}}</a>
-              </div>
-          </div></td>-->
-          <!--<td><a href="#">{{tutor.name}}'s Profile</a></td>-->
 				</tr>
 			</tbody>
 		</table>
+    </div>
+    </form>
 	</div>
 </template>
 
@@ -97,107 +100,52 @@ export default {
 	},
 
   methods: {
-	  toMainPage() {
-      this.$router.go(-1)
-	  }
+	 toMainPage(){
+      this.$router.push('MainPage')
+	},
+	toSessionPage(){
+      this.$router.push('SessionPage')
+    },
+	  toAllTutorsPage() {
+		  this.$router.push('AllTutorsPage')
+    },
+
+    toAvailabilityPage() {
+      this.$router.push('AvailTemporaryPage')
+    },
+
+    toTutorReviewsPage() {
+		  this.$router.push('TutorReviewsPage')
+    },
+
+    toCoursePage() {
+		  this.$router.push('CoursePage2')
+    },
+
+    toLoginPage() {
+      AXIOS.put(`/logout`)
+		  .then(response => {
+        this.$router.push({ path: '/' })
+		  })
+		  .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
+      })
+    },
   }
 }
 </script>
 
 <style>
+@import '../style/stylesheet.css';
+@import '../style/blackandwhitebb.css';
 #viewTutors {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #F8F9F9;
   margin-top: 0px;
 }
-
-.topPage {
-  margin-left: 90%
-}
-
-.topPage button {
-  background-color: #ddd;
-  border: none;
-  color: black;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin: 6px 4px;
-  cursor: pointer;
-  border-radius: 16px;
-  top: 0px;
-}
-
-.topPage .avatar {
-  vertical-align: middle;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  top: 0px;
-}
-
-/* Table */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-  border: 1px solid #ddd;
-}
-
-th, td {
-  text-align: center;
-  padding: 16px;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-/* Dropdown Button */
-.dropbtn {
-  background-color: #20B2AA	;
-  color: black;
-  padding: 12px;
-  font-size: 16px;
-  border: none;
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 100%;
-  overflow:auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #48D1CC;}
 
 </style>

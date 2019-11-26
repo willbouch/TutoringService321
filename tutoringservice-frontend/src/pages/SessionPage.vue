@@ -1,12 +1,24 @@
 <template>
-  <div>
+  <div id="sessionPage" class="wrapper">
+		&nbsp;&nbsp;&nbsp;
 	  <h1>SESSIONS</h1>
+		&nbsp;
+		
 		<div class="tab">
-  			<button class="tablinks" v-on:click="toMainPage">Main Menu</button>			
-		</div>
-	  
+				<button class="tablinks" v-on:click="toMainPage">Main Menu</button>
+  			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
+  			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
+				<button class="tablinks" v-on:click="toCoursePage">Courses</button>
+        <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
+        <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
+        <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
+  		</div>
+		&nbsp;&nbsp;&nbsp;
+		
+		<form class="form">
+	  <div class="container">
 		<table class="table" align="center">
-			<thead class="thead-dark">
+			<thead class="cuter">
 				<tr>
 				<th scope="col">Date</th>
 				<th scope="col">Start Time</th>
@@ -22,7 +34,6 @@
 					<td >{{session.date}}</td>
 					<td >{{session.startTime}}</td>
 					<td >{{session.endTime}}</td>
-					
 					<td>{{session.isApproved}}</td>
 					<td><button  :disabled="session.isApproved == true" @click="ApproveSession(session.date, session.startTime, session.endTime)" class="btn btn-success">Approve</button></td>
 					<td><button  @click="CancelSession(session.date, session.startTime, session.endTime)" class="btn btn-danger" >Decline</button></td>
@@ -30,7 +41,8 @@
 				</tr>
 			</tbody>
 		</table>
-	 
+	 </div>
+	 </form>
   </div>
 </template>
 
@@ -85,8 +97,37 @@ export default {
 
 	methods: {
 		toMainPage(){
-      this.$router.go(-1)
-		},
+      this.$router.push('MainPage')
+	},
+	toSessionPage(){
+      this.$router.push('SessionPage')
+    },
+	  toAllTutorsPage() {
+		  this.$router.push('AllTutorsPage')
+    },
+
+    toAvailabilityPage() {
+      this.$router.push('AvailTemporaryPage')
+    },
+
+    toTutorReviewsPage() {
+		  this.$router.push('TutorReviewsPage')
+    },
+
+    toCoursePage() {
+		  this.$router.push('CoursePage2')
+    },
+
+    toLoginPage() {
+      AXIOS.put(`/logout`)
+		  .then(response => {
+        this.$router.push({ path: '/' })
+		  })
+		  .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
+      })
+    },
 
 		ApproveSession: function(date, startTime, endTime){
       AXIOS.put(`/sessions/`+this.email+`?requestedDate=`+date+`&qStartTime=`+startTime.slice(0,5)+`&qEndTime=`+endTime.slice(0,5),{},{})
@@ -139,54 +180,23 @@ export default {
 </script>
 
 <style scoped>
-	.items{
-		background-color: lightgreen;
-	}
-	.selected {
-  background-color: lightblue;
+@import '../style/stylesheet.css';
+@import '../style/blackandwhitebb.css';
+
+#sessionPage {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #F8F9F9;
+  margin-top: 0px;
 }
 .list-group-item:hover {
   background: #EEE;
   cursor: pointer;
 }
-	.approved {
+.approved {
 		background-color: #f2f2f2;
 }
-	tr.approved td{
-		background-color: lightgreen;
-	}
 
-  .tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-	
-}
-  .tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-}
-
-/* Change background color of buttons on hover */
-  .tab button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-  .tab button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-  .tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
 </style>

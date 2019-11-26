@@ -1,24 +1,19 @@
 <template>
-  <div id="registerPage">
-		<h1>REGISTER</h1>
-		<div>
+  <div id="registerPage" class="wrapper">
+    
+		<div class="container">
+      <h1>REGISTER AS A TUTOR</h1>
+      &nbsp;&nbsp;&nbsp;
+      <form class="form" id="register">
 			<input type="text" v-model="email" placeholder="Email address">
-		</div>
-		<div>				
-			<input type="text" v-model="name" placeholder="Name">
-		</div>
-		<div>				
-			<input type="password" v-model="password" placeholder="Password (8 characters)">
-		</div>
-		<div>				
-			<input type="text" v-model="phoneNumber" placeholder="Phone Number (xxx-xxx-xxxx)">
-		</div>
-		<div>				
+			<input type="text" v-model="name" placeholder="Name">	
+			<input type="password" v-model="password" placeholder="Password (8 characters)">		
+			<input type="text" v-model="phoneNumber" placeholder="Phone Number (xxx-xxx-xxxx)">				
 			<input type="text" v-model="hourlyRate" placeholder="Hourly Rate">
-		</div>
-		<div>
 			<button @click="registerTutor(email, name, password, phoneNumber, hourlyRate)" class="glow-on-hover">Register</button>
-		</div>
+      </form>
+      <a href="#/" class="backbutton">back</a>
+    </div>
   </div>
 </template>
 
@@ -63,56 +58,140 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300);
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-weight: 300;
+}
+
 #registerPage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
+  text-align: center;
+  color: #F2F3F4;
+  margin-top: 0px;
 }
 
-/* Style inputs */
-input[type=text] {
+.wrapper {
+  background: #151515;
+ 
+}
+.wrapper.form-success .container h1 {
+  -webkit-transform: translateY(85px);
+          transform: translateY(85px);
+}
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 140px 0;
+  height: 750px;
+  text-align: center;
+}
+.container h1 {
+  font-size: 40px;
+  -webkit-transition-duration: 1s;
+          transition-duration: 1s;
+  -webkit-transition-timing-function: ease-in-put;
+          transition-timing-function: ease-in-put;
+  font-weight: 300;
+}
+form {
+  padding: 0px 0;
+  position: relative;
+  z-index: 2;
+}
+form input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  outline: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 250px;
+  border-radius: 3px;
+  padding: 10px 15px;
+  margin: 0 auto 10px auto;
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  -webkit-transition-duration: 0.25s;
+          transition-duration: 0.25s;
+  font-weight: 300;
+}
+
+form input:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+form input:focus {
+  background-color: white;
   width: 300px;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  color: #EBF5FB;
 }
 
-input[type=password] {
-  width: 300px;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+form button:hover {
+  background-color: #f5f7f9;
+}
+.fadeout {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s .5s, opacity .5s linear;
 }
 
-/* Style the submit button */
+.fadeout2 {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s .5s, opacity .5s linear;
+}
+
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+.fadein {
+  opacity: 0;
+  animation:fadeIn ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+  animation-delay: 0.5s;
+}
+
+.backbutton {
+  padding-top: 40px;
+  color: #EBF5FB;
+  border-radius: 3px;
+  width: 125px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-transition-duration: 0.25s;
+          transition-duration: 0.25s;
+}
+
+.error {
+    color: #FDFEFE;
+}
+
+
+.hidden {
+  display:none;
+}
 .glow-on-hover {
-    width: 300px;
+    padding: 10px 15px;
+    width: 220px;
     height: 50px;
     border: none;
     outline: none;
-    color: #fff;
-    background: #111;
+    color: #000;
+    background: #FDFEFE;
     cursor: pointer;
     position: relative;
     z-index: 0;
     border-radius: 10px;
-	font-weight: bold;
+	  font-weight: thin;
 }
-
 .glow-on-hover:before {
     content: '';
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
@@ -129,31 +208,26 @@ input[type=password] {
     transition: opacity .3s ease-in-out;
     border-radius: 10px;
 }
-
 .glow-on-hover:active {
-    color: #000
+    color: #FDFEFE
 }
-
 .glow-on-hover:active:after {
     background: transparent;
 }
-
 .glow-on-hover:hover:before {
     opacity: 1;
 }
-
 .glow-on-hover:after {
     z-index: -1;
     content: '';
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #111;
+    background: #FDFEFE;
     left: 0;
     top: 0;
     border-radius: 10px;
 }
-
 @keyframes glowing {
     0% { background-position: 0 0; }
     50% { background-position: 400% 0; }

@@ -1,18 +1,75 @@
 <template>
   	<div id="availTemporaryPage">
-  		<h1>AVAILABILITIES</h1>
+  	<h1>AVAILABILITIES</h1>
 		<div class="tab">
   			<button	class="tablinks" v-on:click="toMainPage">Main Menu</button>			
 		</div>
 
 		<div>
-    		<input type="text" v-model="date" placeholder="Date (YYYY-MM-DD)">
-			<input type="text" v-model="startTime" placeholder="Start Time (HH:MM)">
-			<input type="text" v-model="endTime" placeholder="End Time (HH:MM)">
-		</div>
-		<div>
+    		<input type="date" v-model="date" v-on:change="displayAvailability" placeholder="Date (YYYY-MM-DD)">
 			<button class="glow-on-hover" v-on:click="addAvailability">Add Availability</button>
 		</div>
+		<table class="table" align="center" style="width:25%">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col" style="width:40%">Time</th>
+					<th scope="col"></th>
+				</tr>
+				<tr>
+					<td align="right"> 9:00 am </td>
+					<td id="button-9" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 10:00 am </td>
+					<td id="button-10" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 11:00 am </td>
+					<td id="button-11" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 12:00 pm </td>
+					<td id="button-12" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 13:00 pm </td>
+					<td id="button-13" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 14:00 pm </td>
+					<td id="button-14" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 15:00 pm </td>
+					<td id="button-15" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 16:00 pm </td>
+					<td id="button-16" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 17:00 pm </td>
+					<td id="button-17" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 18:00 pm </td>
+					<td id="button-18" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 19:00 pm </td>
+					<td id="button-19" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				<tr>
+					<td align="right"> 20:00 pm </td>
+					<td id="button-20" class='notavailable' v-on:click="toggle"></td>
+				</tr>
+				
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+
 		<h1></h1>
 		<table class="table" align="center">
 			<thead class="thead-dark">
@@ -55,11 +112,8 @@ export default {
 
   	data() {
 	  	return {
-			startTime: '',
-			endTime: '',
-			date: '',
-			email: '',
-			availabilities: []
+			availabilities: [],
+			date: ''
     	}
   	},
 
@@ -83,26 +137,74 @@ export default {
 	},
 
   	methods: {
+		displayAvailability() {
+			var availWithDateStartTime = []
+			for(var i = 0; i < this.availabilities.length; i++) {
+				if(this.availabilities[i].date == this.date) {
+					availWithDateStartTime.push(this.availabilities[i].startTime)
+				}
+			}
+
+			for(var i = 0; i < availWithDateStartTime.length; i++) {
+				var startTime = availWithDateStartTime[i].slice(0,2)
+				if(startTime == '09') {
+					startTime = startTime.slice(1,2)
+				}
+				var cell = document.getElementById("button-"+startTime)
+				cell.className = "available"
+			}
+		},
+		
+		toggle(event){
+			var cell=event.target;			 
+			if (cell.className == "available")
+				cell.className = "notavailable";
+			else if(cell.className == "notavailable")
+				cell.className = "available";
+		},
+		  
     	toMainPage() {
       		this.$router.go(-1)
 		},
 
 		addAvailability() {
-			AXIOS.post(`/availabilities/`+this.email+`?date=`+this.date+`&startTime=`+this.startTime+`&endTime=`+this.endTime, {}, {})
-			.then(response => {
-				AXIOS.get(`/availabilities/`+this.email, {}, {})
+			var startTimes = []
+
+			for(var i = 9; i <= 20; i++) {
+				var cell = document.getElementById("button-"+i)
+				if(cell.className == 'available') {
+					startTimes.push(i)
+				}
+			}
+
+			for(var i = 0; i < startTimes.length; i++) {
+				var j = i;
+				var startTime = ''
+
+				if(startTimes[i] == '9') {
+					startTime = '09:00'
+				}
+				else {
+					startTime = startTimes[i]+':00'
+				}
+
+				var increment = 1
+				while(startTimes.includes(startTimes[i]+1)) {
+					i++
+					increment++
+				}
+
+				var endTime = (startTimes[j]+increment)+':00'
+
+				AXIOS.post(`/availabilities/`+this.email+`?date=`+this.date+`&startTime=`+startTime+`&endTime=`+endTime, {}, {})
 				.then(response => {
-					this.availabilities = response.data
+					this.availabilities.push(response.data)
 				})
 				.catch(e => {
       				var errorMsg = e.response.data.message
       				window.alert(errorMsg)
     			})
-			})
-			.catch(e => {
-      			var errorMsg = e.response.data.message
-      			window.alert(errorMsg)
-    		})
+			}
 		},
 
 		deleteAvailability(avail) {
@@ -148,126 +250,40 @@ export default {
 }
 </script>
 
-<style>
-#loginPage {
+<style scoped>
+@import '../style/stylesheet.css';
+#availTemporaryPage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
   color: #2c3e50;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
+  margin-top: 0px;
 }
 
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
+button {
+	background-color: #ddd;
+	border: none;
+	color: black;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 6px 4px;
+	cursor: pointer;
+	border-radius: 16px;
+	top: 0px;
 }
 
-/* Style the buttons that are used to open the tab content */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
+td {
+	height: 10px;
 }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
+.available{
+	background-color: greenyellow;
 }
 
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
+.notavailable{
+	background-color: #ff6961;
 }
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-
-/* Style inputs */
-input[type=text] {
-  width: 220px;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-/* Style the submit button */
-.glow-on-hover {
-    width: 220px;
-    height: 50px;
-    border: none;
-    outline: none;
-    color: #fff;
-    background: #111;
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
-    border-radius: 10px;
-	font-weight: bold;
-}
-
-.glow-on-hover:before {
-    content: '';
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-    position: absolute;
-    top: -2px;
-    left:-2px;
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(5px);
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    animation: glowing 20s linear infinite;
-    opacity: 0;
-    transition: opacity .3s ease-in-out;
-    border-radius: 10px;
-}
-
-.glow-on-hover:active {
-    color: #000
-}
-
-.glow-on-hover:active:after {
-    background: transparent;
-}
-
-.glow-on-hover:hover:before {
-    opacity: 1;
-}
-
-.glow-on-hover:after {
-    z-index: -1;
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #111;
-    left: 0;
-    top: 0;
-    border-radius: 10px;
-}
-
-@keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
-}
-
 </style>
