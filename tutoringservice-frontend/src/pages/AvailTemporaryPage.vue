@@ -1,15 +1,20 @@
 <template>
-  	<div id="availTemporaryPage">
-  	<h1>AVAILABILITIES</h1>
+  	<div id="availTemporaryPage" class="wrapper">
 		<div class="tab">
-  			<button	class="tablinks" v-on:click="toMainPage">Main Menu</button>			
-		</div>
-
+  			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
+  			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
+			<button class="tablinks" v-on:click="toCoursePage">Courses</button>
+        	<button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
+        	<button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
+        	<button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
+			<button class="tablinks" v-on:click="toMainPage">Profile</button>
+  		</div>
+		<h1>AVAILABILITIES</h1>
 		<div>
     		<input type="date" v-model="date" v-on:change="displayAvailability" placeholder="Date (YYYY-MM-DD)">
 			<button class="glow-on-hover" v-on:click="addAvailability">Add Availability</button>
 		</div>
-		<table class="table" align="center" style="width:25%">
+		<table class="table table-light table-hover" align="center" style="width:25%">
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col" style="width:40%">Time</th>
@@ -71,7 +76,7 @@
 		</table>
 
 		<h1></h1>
-		<table class="table" align="center">
+		<table class="table table-light table-hover" align="center">
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">Date</th>
@@ -163,9 +168,38 @@ export default {
 				cell.className = "available";
 		},
 		  
-    	toMainPage() {
-      		this.$router.go(-1)
-		},
+    toMainPage(){
+      this.$router.push('MainPage')
+	},
+	toSessionPage(){
+      this.$router.push('SessionPage')
+    },
+	  toAllTutorsPage() {
+		  this.$router.push('AllTutorsPage')
+    },
+
+    toAvailabilityPage() {
+      this.$router.push('AvailTemporaryPage')
+    },
+
+    toTutorReviewsPage() {
+		  this.$router.push('TutorReviewsPage')
+    },
+
+    toCoursePage() {
+		  this.$router.push('CoursePage2')
+    },
+
+    toLoginPage() {
+      AXIOS.put(`/logout`)
+		  .then(response => {
+        this.$router.push({ path: '/' })
+		  })
+		  .catch(e => {
+        var errorMsg = e.response.data.message
+        window.alert(errorMsg)
+      })
+    },
 
 		addAvailability() {
 			var startTimes = []
@@ -252,6 +286,7 @@ export default {
 
 <style scoped>
 @import '../style/stylesheet.css';
+@import '../style/blackandwhitebb.css';
 #availTemporaryPage {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

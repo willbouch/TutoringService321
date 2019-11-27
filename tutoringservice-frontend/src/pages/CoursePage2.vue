@@ -1,8 +1,5 @@
 <template>
 <div id ="show-courses" class="wrapper">
-    &nbsp;&nbsp;&nbsp;
-		<h1>COURSES</h1>
-    &nbsp;
 		<div class="tab">
         <button class="tablinks" v-on:click="toMainPage">Main Menu</button>
   			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
@@ -12,13 +9,14 @@
         <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
         <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
-		<br><br>
-
+    &nbsp;
+		<h1>COURSES</h1>
+  &nbsp;
 		<form class="form">
 		<input type="text" v-model="search" placeholder="search by Subject" class="form-group-input"/>
-    &nbsp;&nbsp;&nbsp;
+    &nbsp;
 		<div class="container">
-			<table class="table table-light" align="center">
+			<table class="table table-light table-hover" align="center">
 			<thead class="cuter">
 				<tr>
 				<th scope="col">Subject</th>

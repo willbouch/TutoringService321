@@ -1,23 +1,21 @@
 <template>
   <div id="sessionPage" class="wrapper">
-		&nbsp;&nbsp;&nbsp;
-	  <h1>SESSIONS</h1>
-		&nbsp;
 		
 		<div class="tab">
-				<button class="tablinks" v-on:click="toMainPage">Main Menu</button>
   			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
   			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
 				<button class="tablinks" v-on:click="toCoursePage">Courses</button>
         <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
         <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
         <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
+				<button class="tablinks" v-on:click="toMainPage">Profile</button>
   		</div>
-		&nbsp;&nbsp;&nbsp;
-		
+		&nbsp;
+		<h1>SESSIONS</h1>
+		&nbsp;
 		<form class="form">
 	  <div class="container">
-		<table class="table" align="center">
+		<table class="table table-hover" align="center">
 			<thead class="cuter">
 				<tr>
 				<th scope="col">Date</th>

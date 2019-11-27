@@ -12,7 +12,7 @@
 			<input type="text" v-model="hourlyRate" placeholder="Hourly Rate">
 			<button @click="registerTutor(email, name, password, phoneNumber, hourlyRate)" class="glow-on-hover">REGISTER</button>
       </form>
-      <a href="#/" class="backbutton">back</a>
+      <a href="#/LoginPage" class="backbutton">back</a>
     </div>
   </div>
 </template>

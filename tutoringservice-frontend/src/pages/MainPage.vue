@@ -1,8 +1,5 @@
 <template>
 	<div id="mainPage" class="wrapper">
-    &nbsp;&nbsp;&nbsp;
-		<h1>PROFILE</h1>
-    &nbsp;
 		<div class="tab">
   			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
   			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
@@ -11,7 +8,9 @@
         <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
         <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
 		</div>
-    &nbsp;&nbsp;&nbsp;
+    &nbsp;
+    <h1>PROFILE</h1>
+    &nbsp;
     <form class="form">
 	  <div class="container">
     <h1>{{ name }}</h1>
@@ -195,17 +194,19 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #D6EAF8;
+  color: #FDFEFE;
   margin-top: 0px;
 }
 
 #container {
   display: inline-flex;
+   background-color: white;
 }
 
 #information-container {
   margin-top: 75px;
   margin-left: 50px;
+  
 }
 
 #password-container {
