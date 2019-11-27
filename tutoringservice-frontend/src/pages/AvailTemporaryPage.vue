@@ -1,19 +1,23 @@
 <template>
   	<div id="availTemporaryPage" class="wrapper">
 		<div class="tab">
-  			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
-  			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
-			<button class="tablinks" v-on:click="toCoursePage">Courses</button>
+  			<button class="tablinks" @click="toMainPage">Profile</button>	
+        	<button class="tablinks" @click="toCoursePage">Courses</button>
+  			<button class="tablinks" @click="toAvailabilityPage">Availabilities</button>
+  			<button class="tablinks" @click="toSessionPage">Sessions</button>
         	<button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
-        	<button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
-        	<button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
-			<button class="tablinks" v-on:click="toMainPage">Profile</button>
+        	<button class="tablinks" @click="toTutorReviewsPage">Received Reviews</button>
+        	<button class="tablinks" @click="toAllTutorsPage">All Tutors</button>	
   		</div>
+		  &nbsp;
 		<h1>AVAILABILITIES</h1>
+		&nbsp;
 		<div>
     		<input type="date" v-model="date" v-on:change="displayAvailability" placeholder="Date (YYYY-MM-DD)">
-			<button class="glow-on-hover" v-on:click="addAvailability">Add Availability</button>
+			&nbsp;
+			<button class="glow-on-hover" v-on:click="addAvailability">ADD AVAILABILITY</button>
 		</div>
+		&nbsp;
 		<table class="table table-light table-hover" align="center" style="width:25%">
 			<thead class="thead-dark">
 				<tr>
@@ -292,23 +296,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #F8F9F9;
   margin-top: 0px;
 }
 
-button {
-	background-color: #ddd;
-	border: none;
-	color: black;
-	padding: 10px 20px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	margin: 6px 4px;
-	cursor: pointer;
-	border-radius: 16px;
-	top: 0px;
-}
 
 td {
 	height: 10px;

@@ -2,13 +2,13 @@
   <div id="sessionPage" class="wrapper">
 		
 		<div class="tab">
-  			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
-  			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
-				<button class="tablinks" v-on:click="toCoursePage">Courses</button>
+  			<button class="tablinks" @click="toMainPage">Profile</button>	
+        <button class="tablinks" @click="toCoursePage">Courses</button>
+  			<button class="tablinks" @click="toAvailabilityPage">Availabilities</button>
+  			<button class="tablinks" @click="toSessionPage">Sessions</button>
         <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
-        <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
-        <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
-				<button class="tablinks" v-on:click="toMainPage">Profile</button>
+        <button class="tablinks" @click="toTutorReviewsPage">Received Reviews</button>
+        <button class="tablinks" @click="toAllTutorsPage">All Tutors</button>	
   		</div>
 		&nbsp;
 		<h1>SESSIONS</h1>

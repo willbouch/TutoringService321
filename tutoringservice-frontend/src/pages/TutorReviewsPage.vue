@@ -1,20 +1,19 @@
 <template>
     <div id="tutorReviewsPage" class="wrapper">
-    &nbsp;&nbsp;&nbsp;
-    <h1>RECEIVED REVIEWS</h1>
-    &nbsp;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <div class="tab">
-  		  <button class="tablinks" @click="toMainPage">Main Menu</button>
+        <button class="tablinks" @click="toMainPage">Profile</button>	
+        <button class="tablinks" @click="toCoursePage">Courses</button>
   			<button class="tablinks" @click="toAvailabilityPage">Availabilities</button>
   			<button class="tablinks" @click="toSessionPage">Sessions</button>
-				<button class="tablinks" @click="toCoursePage">Courses</button>
         <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
         <button class="tablinks" @click="toTutorReviewsPage">Received Reviews</button>
-        <button class="tablinks" @click="toAllTutorsPage">All Tutors</button>		
+        <button class="tablinks" @click="toAllTutorsPage">All Tutors</button>	
 	  </div>
-      &nbsp;&nbsp;&nbsp;
+    &nbsp;
+    <h1>RECEIVED REVIEWS</h1>
+      &nbsp;
     <div class="container">
 	    <div class="card">
 	      <div class="card-body">

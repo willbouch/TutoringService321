@@ -1,55 +1,65 @@
 <template>
 	<div id="mainPage" class="wrapper">
 		<div class="tab">
-  			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
-  			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
-			  <button class="tablinks" v-on:click="toCoursePage">Courses</button>
+  			<button class="tablinks" @click="toMainPage">Profile</button>	
+        <button class="tablinks" @click="toCoursePage">Courses</button>
+  			<button class="tablinks" @click="toAvailabilityPage">Availabilities</button>
+  			<button class="tablinks" @click="toSessionPage">Sessions</button>
         <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
-        <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
-        <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
+        <button class="tablinks" @click="toTutorReviewsPage">Received Reviews</button>
+        <button class="tablinks" @click="toAllTutorsPage">All Tutors</button>	
 		</div>
     &nbsp;
     <h1>PROFILE</h1>
     &nbsp;
     <form class="form">
 	  <div class="container">
-    <h1>{{ name }}</h1>
+    <h2>{{ name }}</h2>
     <h3>Email address : {{ email }}</h3>
     <h3>Your current rating is : {{ rating }}</h3>
-
+    &nbsp;
     <div id="container">
       <div id="password-container">
         <h3>Change your password</h3>
+        &nbsp;
         <div>
 			    <input id="password-input-current" type="password" v-model="oldPassword" placeholder="Current Password">
         </div>
+        
         <div>
           <input type="checkbox" v-on:click="setCurrentVisible">Show Password
         </div>
+        &nbsp;
         <div>
 			    <input id="password-input-new" type="password" v-model="newPassword" placeholder="New Password">
         </div>
+        
         <div>
           <input type="checkbox" v-on:click="setNewVisible">Show Password
         </div>
+        &nbsp;
         <div>
-			    <button class="glow-on-hover" v-on:click="changePassword">Change Password</button>
+			    <button class="glow-on-hover" v-on:click="changePassword">CHANGE PASSWORD</button>
         </div>
       </div>
 
       <div id="information-container">
         <h3>Update your information</h3>
+         &nbsp;
 		    <div>
           <input type="text" v-model="name" placeholder="Name">
 		    </div>
+         
         <div>
 			    <input type="text" v-model="phoneNumber" placeholder="Phone Number">
         </div>
+         
         <div>
  			    <input type="text" v-model="hourlyRate" placeholder="Hourly Rate">
         </div>
+         
         <div>
-  		    <button class="glow-on-hover" v-on:click="updateProfile">Update Profile</button>
+  		    <button class="glow-on-hover" v-on:click="updateProfile">UPDATE</button>
        </div>
 		  </div>
     </div>
@@ -126,6 +136,9 @@ export default {
         x.type = "password";
       }
     },
+    toMainPage(){
+      this.$router.push('MainPage')
+	},
 
     toSessionPage(){
       this.$router.push('SessionPage')
@@ -200,7 +213,6 @@ export default {
 
 #container {
   display: inline-flex;
-   background-color: white;
 }
 
 #information-container {

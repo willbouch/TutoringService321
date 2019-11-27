@@ -67,8 +67,8 @@ form input:focus {
     height: 50px;
     border: none;
     outline: none;
-    color: #000;
-    background: #FDFEFE;
+    color: #FBFCFC;
+    background: #151515;
     cursor: pointer;
     position: relative;
     z-index: 0;
@@ -92,7 +92,7 @@ form input:focus {
     border-radius: 10px;
 }
 .glow-on-hover:active {
-    color: #FDFEFE
+    color: #151515
 }
 .glow-on-hover:active:after {
     background: transparent;
@@ -106,7 +106,7 @@ form input:focus {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #FDFEFE;
+    background: #151515;
     left: 0;
     top: 0;
     border-radius: 10px;

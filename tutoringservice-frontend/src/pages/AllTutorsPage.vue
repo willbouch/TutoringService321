@@ -10,13 +10,13 @@
 
 	<div id="viewTutors" class="wrapper">
 		<div class="tab">
+  			<button class="tablinks" @click="toMainPage">Profile</button>	
+        <button class="tablinks" @click="toCoursePage">Courses</button>
   			<button class="tablinks" @click="toAvailabilityPage">Availabilities</button>
   			<button class="tablinks" @click="toSessionPage">Sessions</button>
-				<button class="tablinks" @click="toCoursePage">Courses</button>
         <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
         <button class="tablinks" @click="toTutorReviewsPage">Received Reviews</button>
-        <button class="tablinks" @click="toAllTutorsPage">All Tutors</button>			
-        <button class="tablinks" @click="toMainPage">Profile</button>
+        <button class="tablinks" @click="toAllTutorsPage">All Tutors</button>	
 	  </div>
     &nbsp;
     <h1>TUTORS</h1>
