@@ -172,6 +172,21 @@ form button:hover {
     border-radius: 10px;
 	  font-weight: thin;
 }
+.glow-on-hover {
+    padding: 10px 15px;
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #FBFCFC;
+    background: #151515;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    border-width: 15px;
+	  font-weight: thin;
+}
 .glow-on-hover:before {
     content: '';
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
@@ -184,7 +199,7 @@ form button:hover {
     width: calc(100% + 4px);
     height: calc(100% + 4px);
     animation: glowing 20s linear infinite;
-    opacity: 0;
+    opacity: 1;
     transition: opacity .3s ease-in-out;
     border-radius: 10px;
 }

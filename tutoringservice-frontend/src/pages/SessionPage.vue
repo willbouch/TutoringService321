@@ -92,10 +92,10 @@ export default {
 	methods: {
 		isReadyForReview(session){
 			if(session.isApproved
-			&& session.date.substring(0,4) <= this.today.getFullYear()
-			&& session.date.substring(5,7) <= (this.today.getMonth() + 1)
-			&& session.date.substring(8,10) <= this.today.getDate() 
-			&& session.endTime.substring(0,2) <= this.today.getHours()) {
+			&& (session.date.substring(0,4) <= this.today.getFullYear()
+			|| session.date.substring(5,7) <= (this.today.getMonth() + 1)
+			|| session.date.substring(8,10) <= this.today.getDate() 
+			|| session.endTime.substring(0,2) <= this.today.getHours())) {
 				return false
 			}
 			return true

@@ -25,9 +25,9 @@
         <div>
 			    <input id="password-input-current" type="password" v-model="oldPassword" placeholder="Current Password">
         </div>
-        
+          <label @mouseover="setCurrentVisible" @mouseout="setCurrentVisible">See password</label>
         <div>
-          <input type="checkbox" v-on:click="setCurrentVisible">Show Password
+          
         </div>
         &nbsp;
         <div>
@@ -35,8 +35,7 @@
         </div>
         
         <div>
-          <input type="checkbox" v-on:click="setNewVisible">Show Password
-        </div>
+          <label @mouseover="setNewVisible" @mouseout="setNewVisible">See password</label>        </div>
         &nbsp;
         <div>
 			    <button class="glow-on-hover" v-on:click="changePassword">CHANGE PASSWORD</button>
