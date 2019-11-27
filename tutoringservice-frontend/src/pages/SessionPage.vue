@@ -37,7 +37,7 @@
 					<td>{{session.isApproved}}</td>
 					<td><button  :disabled="session.isApproved == true" @click="ApproveSession(session.date, session.startTime, session.endTime)" class="btn btn-success">Approve</button></td>
 					<td><button  @click="CancelSession(session.date, session.startTime, session.endTime)" class="btn btn-danger" >Decline</button></td>
-					<td><button  @click="WriteReview(session.date, session.startTime, session.endTime)" class="btn btn-warning" >Write Review</button></td>
+					<td><button  :disabled="isReadyForReview(session)" @click="WriteReview(session.date, session.startTime, session.endTime)" class="btn btn-warning" >Write Review</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -64,6 +64,7 @@ export default {
 	data() {
     return {
 			email:'',
+			today: new Date,
 			sessions:[]
     }
 	},
@@ -71,16 +72,11 @@ export default {
 		AXIOS.get(`/user`)
 		.then(response => {
 			var email = response.data.email
-			AXIOS.post(`/sessions/`+email+`/?date=2020-05-05&startTime=13:00&endTime=14:00`)
+			AXIOS.get(`/sessions/`+email)
 			.then(response => {
-				AXIOS.post(`/sessions/`+email+`/?date=2020-07-05&startTime=15:00&endTime=16:00`)
-				.then(response => {
-					this.sessions.push(response.data)
-				})
-				.catch(e => {
-					window.alert(e.response.data.message)
-				})
-				this.sessions.push(response.data)
+				if(response.data.length != 0) {
+					this.sessions = response.data
+				}
 			})
 			.catch(e => {
 				window.alert(e.response.data.message)
@@ -96,6 +92,16 @@ export default {
 	},
 
 	methods: {
+		isReadyForReview(session){
+			if(session.isApproved
+			&& session.date.substring(0,4) <= this.today.getFullYear()
+			&& session.date.substring(5,7) <= (this.today.getMonth() + 1)
+			&& session.date.substring(8,10) <= this.today.getDate() 
+			&& session.endTime.substring(0,2) <= this.today.getHours()) {
+				return false
+			}
+			return true
+		},
 		toMainPage(){
       this.$router.push('MainPage')
 	},
