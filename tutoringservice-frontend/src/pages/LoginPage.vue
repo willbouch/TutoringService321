@@ -8,7 +8,7 @@
             <input type="password" v-model="password" placeholder="Password" required>
             <button @click="loginTutor(username, password)" class="glow-on-hover">LOGIN</button>
             </form>
-            <a href="#/RegisterPage" class="registerbutton">Register</a>
+            <a href="#/RegisterPage" class="registerbutton">REGISTER</a>
         </div>
     </div>
 </template>
@@ -71,7 +71,7 @@ export default {
 .container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 80px 0;
+  padding: 30px 0;
   height: 750px;
   text-align: center;
 }
@@ -164,12 +164,27 @@ form button:hover {
     height: 50px;
     border: none;
     outline: none;
-    color: #000;
-    background: #FDFEFE;
+    color: #FBFCFC;
+    background: #151515;
     cursor: pointer;
     position: relative;
     z-index: 0;
     border-radius: 10px;
+	  font-weight: thin;
+}
+.glow-on-hover {
+    padding: 10px 15px;
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #FBFCFC;
+    background: #151515;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    border-width: 15px;
 	  font-weight: thin;
 }
 .glow-on-hover:before {
@@ -184,12 +199,12 @@ form button:hover {
     width: calc(100% + 4px);
     height: calc(100% + 4px);
     animation: glowing 20s linear infinite;
-    opacity: 0;
+    opacity: 1;
     transition: opacity .3s ease-in-out;
     border-radius: 10px;
 }
 .glow-on-hover:active {
-    color: #FDFEFE
+    color: #151515
 }
 .glow-on-hover:active:after {
     background: transparent;
@@ -203,7 +218,7 @@ form button:hover {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #FDFEFE;
+    background: #151515;
     left: 0;
     top: 0;
     border-radius: 10px;

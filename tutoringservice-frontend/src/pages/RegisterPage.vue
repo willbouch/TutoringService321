@@ -10,9 +10,9 @@
 			<input type="password" v-model="password" placeholder="Password (8 characters)">		
 			<input type="text" v-model="phoneNumber" placeholder="Phone Number (xxx-xxx-xxxx)">				
 			<input type="text" v-model="hourlyRate" placeholder="Hourly Rate">
-			<button @click="registerTutor(email, name, password, phoneNumber, hourlyRate)" class="glow-on-hover">Register</button>
+			<button @click="registerTutor(email, name, password, phoneNumber, hourlyRate)" class="glow-on-hover">REGISTER</button>
       </form>
-      <a href="#/" class="backbutton">back</a>
+      <a href="#/LoginPage" class="backbutton">back</a>
     </div>
   </div>
 </template>
@@ -132,7 +132,7 @@ form input:hover {
 form input:focus {
   background-color: white;
   width: 300px;
-  color: #EBF5FB;
+  color: #283747;
 }
 
 form button:hover {
@@ -184,8 +184,8 @@ form button:hover {
     height: 50px;
     border: none;
     outline: none;
-    color: #000;
-    background: #FDFEFE;
+    color: #FBFCFC;
+    background: #151515;
     cursor: pointer;
     position: relative;
     z-index: 0;
@@ -209,7 +209,7 @@ form button:hover {
     border-radius: 10px;
 }
 .glow-on-hover:active {
-    color: #FDFEFE
+    color: #151515
 }
 .glow-on-hover:active:after {
     background: transparent;
@@ -223,7 +223,7 @@ form button:hover {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #FDFEFE;
+    background: #151515;
     left: 0;
     top: 0;
     border-radius: 10px;

@@ -1,23 +1,21 @@
 <template>
   <div id="sessionPage" class="wrapper">
-		&nbsp;&nbsp;&nbsp;
-	  <h1>SESSIONS</h1>
-		&nbsp;
 		
 		<div class="tab">
-				<button class="tablinks" v-on:click="toMainPage">Main Menu</button>
-  			<button class="tablinks" v-on:click="toAvailabilityPage">Availabilities</button>
-  			<button class="tablinks" v-on:click="toSessionPage">Sessions</button>
-				<button class="tablinks" v-on:click="toCoursePage">Courses</button>
+  			<button class="tablinks" @click="toMainPage">Profile</button>	
+        <button class="tablinks" @click="toCoursePage">Courses</button>
+  			<button class="tablinks" @click="toAvailabilityPage">Availabilities</button>
+  			<button class="tablinks" @click="toSessionPage">Sessions</button>
         <button class="tablinks" style="float:right" v-on:click="toLoginPage">Logout</button>
-        <button class="tablinks" v-on:click="toTutorReviewsPage">Received Reviews</button>
-        <button class="tablinks" v-on:click="toAllTutorsPage">All Tutors</button>
+        <button class="tablinks" @click="toTutorReviewsPage">Received Reviews</button>
+        <button class="tablinks" @click="toAllTutorsPage">All Tutors</button>	
   		</div>
-		&nbsp;&nbsp;&nbsp;
-		
+		&nbsp;
+		<h1>SESSIONS</h1>
+		&nbsp;
 		<form class="form">
 	  <div class="container">
-		<table class="table" align="center">
+		<table class="table table-hover" align="center">
 			<thead class="cuter">
 				<tr>
 				<th scope="col">Date</th>
@@ -37,7 +35,7 @@
 					<td>{{session.isApproved}}</td>
 					<td><button  :disabled="session.isApproved == true" @click="ApproveSession(session.date, session.startTime, session.endTime)" class="btn btn-success">Approve</button></td>
 					<td><button  @click="CancelSession(session.date, session.startTime, session.endTime)" class="btn btn-danger" >Decline</button></td>
-					<td><button  @click="WriteReview(session.date, session.startTime, session.endTime)" class="btn btn-warning" >Write Review</button></td>
+					<td><button  :disabled="isReadyForReview(session)" @click="WriteReview(session.date, session.startTime, session.endTime)" class="btn btn-warning" >Write Review</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -64,6 +62,7 @@ export default {
 	data() {
     return {
 			email:'',
+			today: new Date,
 			sessions:[]
     }
 	},
@@ -71,16 +70,11 @@ export default {
 		AXIOS.get(`/user`)
 		.then(response => {
 			var email = response.data.email
-			AXIOS.post(`/sessions/`+email+`/?date=2020-05-05&startTime=13:00&endTime=14:00`)
+			AXIOS.get(`/sessions/`+email)
 			.then(response => {
-				AXIOS.post(`/sessions/`+email+`/?date=2020-07-05&startTime=15:00&endTime=16:00`)
-				.then(response => {
-					this.sessions.push(response.data)
-				})
-				.catch(e => {
-					window.alert(e.response.data.message)
-				})
-				this.sessions.push(response.data)
+				if(response.data.length != 0) {
+					this.sessions = response.data
+				}
 			})
 			.catch(e => {
 				window.alert(e.response.data.message)
@@ -96,6 +90,16 @@ export default {
 	},
 
 	methods: {
+		isReadyForReview(session){
+			if(session.isApproved
+			&& (session.date.substring(0,4) <= this.today.getFullYear()
+			|| session.date.substring(5,7) <= (this.today.getMonth() + 1)
+			|| session.date.substring(8,10) <= this.today.getDate() 
+			|| session.endTime.substring(0,2) <= this.today.getHours())) {
+				return false
+			}
+			return true
+		},
 		toMainPage(){
       this.$router.push('MainPage')
 	},

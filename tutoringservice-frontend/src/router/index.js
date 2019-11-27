@@ -8,8 +8,9 @@ import AllTutorsPage from '@/pages/AllTutorsPage'
 import AvailTemporaryPage from '@/pages/AvailTemporaryPage'
 import AvailabilitiesPage from '@/pages/AvailabilitiesPage'
 import TutorReviewsPage from '@/pages/TutorReviewsPage'
-import CoursePage from '@/pages/CoursePage'
 import CoursePage2 from '@/pages/CoursePage2'
+import Welcome from '@/pages/Welcome'
+import StudentPage from '@/pages/StudentPage'
 
 
 Vue.use(Router)
@@ -18,6 +19,16 @@ export default new Router({
   routes: [
     {
       path: "/",
+      name: 'Welcome',
+      component: Welcome
+    },
+    {
+      path: "/studentpage",
+      name: 'StudentPage',
+      component: StudentPage
+    },
+    {
+      path: "/loginpage",
       name: 'LoginPage',
       component: LoginPage
     },
