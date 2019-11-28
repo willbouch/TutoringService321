@@ -1,5 +1,6 @@
 	<template>
 		<div id="availTemporaryPage" class="wrapper">
+			<img src="../assets/321tutor.png">
 			<div class="tab">
 				<button class="tablinks" @click="toMainPage">Profile</button>	
 				<button class="tablinks" @click="toCoursePage">Courses</button>
