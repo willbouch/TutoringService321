@@ -34,7 +34,7 @@
 					<td >{{session.endTime}}</td>
 					<td>{{session.isApproved}}</td>
 					<td><button  :disabled="session.isApproved == true" @click="ApproveSession(session.date, session.startTime, session.endTime)" class="btn btn-success">Approve</button></td>
-					<td><button  :disaled="session.isApproved == true" @click="CancelSession(session.date, session.startTime, session.endTime)" class="btn btn-danger" >Decline</button></td>
+					<td><button  :disabled="session.isApproved == true" @click="CancelSession(session.date, session.startTime, session.endTime)" class="btn btn-danger" >Decline</button></td>
 					<td><button  :disabled="isReadyForReview(session)" @click="WriteReview(session.date, session.startTime, session.endTime)" class="btn btn-warning" >Write Review</button></td>
 				</tr>
 			</tbody>
@@ -94,8 +94,7 @@ export default {
 			if(session.isApproved
 			&& (session.date.substring(0,4) <= this.today.getFullYear()
 			&& session.date.substring(5,7) <= (this.today.getMonth() + 1)
-			&& session.date.substring(8,10) <= this.today.getDate() 
-			&& session.endTime.substring(0,2) <= this.today.getHours())) {
+			&& session.date.substring(8,10) <= this.today.getDate())) {
 				return false
 			}
 			return true
