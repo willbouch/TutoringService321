@@ -33,7 +33,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>20 hours</td>
     <td>26 hours</td>
     <td>35 hours</td>
-    <td></td>
+    <td>30 hours</td>
   </tr>
   
   <tr>
@@ -42,7 +42,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>19 hours</td>
     <td>23 hours</td>
     <td>45 hours</td>
-    <td></td>
+    <td>30 hours</td>
   </tr>
   
   <tr>
@@ -50,7 +50,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>Software Consulting Lead</td>
     <td>18 hours</td>
     <td>20 hours</td>
-    <td>33 hours</td>
+    <td>30 hours</td>
     <td></td>
   </tr>
     
@@ -60,7 +60,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>16 hours</td>
     <td>20 hours</td>
     <td>33 hours</td>
-    <td></td>
+    <td>30 hours</td>
   </tr>
 
   <tr>
@@ -69,7 +69,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>21 hours</td>
     <td>30 hours</td>
     <td>45 hours</td>
-    <td></td>
+    <td>30 hours</td>
   </tr>
   
  </table><br/><br/>
@@ -180,7 +180,41 @@ will allow tutors to select the courses they want to teach, set their hourly rat
   </tr>
   
 </table><br/><br/>
-<h2></h2>
+
+<i>Deliverable 4-Individual Roles</i></br>
+<b>The contributions of the members for this deliverable can be found below:</b>
+<table>
+  <tr>
+    <th><b>NAME</th> 
+    <th><b>Contributions</th>
+  </tr>
+
+  <tr>
+    <td>Katie Younge</td>
+    <td>!!!</td>
+  </tr>
+  
+  <tr>
+    <td>Kyjauna Marshall</td>
+    <td>Finishing of the web-app frontend for it to be ready for the presentation</td>
+  </tr>
+
+  <tr>
+    <td>Sharon Kattar</td>
+    <td>!!!</td>
+  </tr>
+
+  <tr>
+    <td>Syed Hadi Zia Rizvi</td>
+    <td>!!!</td>
+  </tr>
+    
+  <tr>
+    <td>William Bouchard</td>
+    <td> Finishing of the web-app frontend for it to be ready for the presentation</td>
+  </tr>
+  
+</table><br/><br/>
 
 
 <br>In this team, we value gender equity. This is the reason why we wanted this team to be gender neutral.
