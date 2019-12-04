@@ -103,6 +103,8 @@ public class TutoringService321Service {
 	public Tutor updateTutor(String email, String name, String phoneNumber,
 			int hourlyRate) {
 		Tutor tutor = getTutor(email);
+		
+		//Sanity checks
 		if (tutor==null) {
 			throw new IllegalArgumentException("The tutor with that email could not be found.");
 		}
@@ -119,7 +121,7 @@ public class TutoringService321Service {
 			throw new IllegalArgumentException("Phone number has to be 10 character long.");
 		}
 
-
+		//we set the new attributes
 		tutor.setEmail(email);
 		tutor.setName(name);
 		tutor.setPhoneNumber(phoneNumber);
@@ -131,6 +133,8 @@ public class TutoringService321Service {
 	@Transactional
 	public Tutor changePassword(String tutorEmail, String oldPassword, String newPassword) {
 		Tutor tutor = getTutor(tutorEmail);
+		
+		//Sanity checks
 		if(tutor==null) {
 			throw new IllegalArgumentException("Tutor could not be found.");
 		}
@@ -144,6 +148,7 @@ public class TutoringService321Service {
 			throw new IllegalArgumentException("Password has to be at least 8 characters long.");
 		}
 
+		//We set the password
 		tutor.setPassword(newPassword);
 		loggedUser = tutor;
 		return tutor;
@@ -153,6 +158,7 @@ public class TutoringService321Service {
 	public void deleteTutor(String email) {
 		Tutor tutor = tutorRepository.findTutorByEmail(email);
 
+		//Make sure that we found the tutor
 		if(tutor != null) {
 			tutorRepository.delete(tutor);
 		}
@@ -163,9 +169,6 @@ public class TutoringService321Service {
 
 	@Transactional
 	public Tutor getTutor(String email) {
-		//		if(!email.matches(".{1,}@.{1,}\\..{2,3}")) {
-		//			throw new IllegalArgumentException("The email should be in the format of <example@something.ca/com/etc.>.");
-		//		}
 		Tutor tutor = tutorRepository.findTutorByEmail(email);
 		return tutor;
 	}
@@ -379,6 +382,10 @@ public class TutoringService321Service {
 		}
 		
 		//Then we check for overlap
+		//Overlap might occur in 3 different ways : 
+		//1.starts before and ends during a current one
+		//2.starts after the start of a current one and ends before the ending of a current one
+		//3.starts before the ending of a current one and ends after
 		for(Session aSession : approvedSessions) {
 			if(endTime.compareTo(aSession.getStarTime()) >= 0 && startTime.compareTo(aSession.getStarTime()) <= 0 ||
 					startTime.compareTo(aSession.getEndTime()) <= 0 && endTime.compareTo(aSession.getEndTime()) >= 0 ||
@@ -449,6 +456,10 @@ public class TutoringService321Service {
 		}
 
 		//Checking if this Availability already exists
+		//Overlap might occur in 3 different ways : 
+		//1.starts before and ends during a current one
+		//2.starts after the start of a current one and ends before the ending of a current one
+		//3.starts before the ending of a current one and ends after
 		List<Availability> availabilities = toList(availabilityRepository.findAvailabilityByDateAndTutor(date, tutor));
 		for(Availability avail :  availabilities) {
 			if(endTime.compareTo(avail.getStartTime()) > 0 && startTime.compareTo(avail.getStartTime()) < 0 ||
@@ -512,6 +523,8 @@ public class TutoringService321Service {
 	public List<Availability> getAllTutorAvailabilities(String tutorEmail) {
 
 		List<Availability> list = toList(availabilityRepository.findAll());
+		
+		//We filter to only get the tutor's avail
 		List<Availability> tutorAvailabilities = new ArrayList<Availability>();
 		for(Availability availability : list) {
 			if(availability.getTutor().getEmail().equals(tutorEmail)) {
