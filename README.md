@@ -51,7 +51,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
     <td>18 hours</td>
     <td>20 hours</td>
     <td>30 hours</td>
-    <td></td>
+    <td>30 hours</td>
   </tr>
     
   <tr>
