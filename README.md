@@ -191,7 +191,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
 
   <tr>
     <td>Katie Younge</td>
-    <td>!!!</td>
+    <td> Coded the Login activity for the Android app. Also holds the lead for fixing the major bug with tutor email. Collaborated with Hadi and Sharon to integrate the Android app.</td>
   </tr>
   
   <tr>
@@ -206,7 +206,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
 
   <tr>
     <td>Syed Hadi Zia Rizvi</td>
-    <td>!!!</td>
+    <td> Coded the Dashboard and Sessions activities for the Android app. Also wrote the user documentation for the Android app in the project wiki. Collaborated with Sharon and Katie to integrate the Android app.</td>
   </tr>
     
   <tr>
