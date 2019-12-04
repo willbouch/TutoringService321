@@ -201,7 +201,7 @@ will allow tutors to select the courses they want to teach, set their hourly rat
 
   <tr>
     <td>Sharon Kattar</td>
-    <td>!!!</td>
+    <td> Coded the Availability activity, My Availability activity, and Set Availability activity for the Android app. Also wrote key decisions and bug explanation in the wiki. Collaborated with Hadi and Katie to integrate the Android app.</td>
   </tr>
 
   <tr>
